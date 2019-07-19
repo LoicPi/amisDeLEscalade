@@ -29,7 +29,7 @@ public class HibernateConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource( dataSource() );
         sessionFactory.setPackagesToScan( new String[] {
-                "com.adle.projet.model"
+                "com.adle.projet.entity"
         } );
         sessionFactory.setHibernateProperties( hibernateProperties() );
         return sessionFactory;
