@@ -1,5 +1,6 @@
 .nav-link{
 	border : 1px solid blue;
+	margin : 2px;
 	background-color: blue;
 	color: white;
 }
@@ -10,4 +11,7 @@
 .error{
 	color : red;
 	font-weight: bold;
+}
+.requis{
+	color : red;
 }

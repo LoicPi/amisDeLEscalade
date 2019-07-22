@@ -19,7 +19,7 @@
  		<div class="container">
 			<header class="row col-sm-12">
 
-        		<img class="col-sm-12 col-md-4 offset-md-4" src="image/logo.png" />
+        		<img class="col-sm-12 col-md-4 offset-md-4" src="<c:url value="/resources/image/logo.png"/>" />
 
         		<nav class="row nav nav-pills nav-justified flex-column flex-sm-row">          
             		<a class="nav-link nav-item" href="#"> <span class="fa fa-home"></span> Accueil </a>
@@ -50,25 +50,25 @@
       					</div>
       
        					<div class="form-group">
-       						<label for="lastname" class="col-md-3 control-label">Pseudo <span class="requis">*</span></label>
+       						<label for="nickName">Pseudo <span class="requis">*</span></label>
        						<form:input path="nickName" class="form-control" type="text" placeholder="Pseudo"/>
-       						<form:errors path="lastName" class="error" />
+       						<form:errors path="nickName" class="error" />
       					</div>
 
       					<div class="form-group">
-       						<label for="email" class="col-md-3 control-label">Email <span class="requis">*</span></label>
+       						<label for="email">Email <span class="requis">*</span></label>
 							<form:input path="email" class="form-control" type="email" placeholder="email@gmail.com"/>
         					<form:errors path="email" class="error" />
       					</div>
       					
       					<div class="form-group">
-       						<label for="password" class="col-md-3 control-label">Mot de Passe <span class="requis">*</span></label>
+       						<label for="password">Mot de Passe <span class="requis">*</span></label>
         					<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>
         					<form:errors path="password" cssClass="error" />
       					</div>
 
       					<div class="form-group">
-        					<button type="submit" class="btn btn-succes btn-lg float-right">S'incrire</button>
+        					<button type="submit" class="btn btn-success btn-lg float-right">S'incrire</button>
       					</div>
       				 </form:form>	
 				</div>
