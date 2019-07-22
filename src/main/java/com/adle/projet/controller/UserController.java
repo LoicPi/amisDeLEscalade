@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.User;
 import com.adle.projet.service.UserService;
+import com.adle.projet.validator.UserValidator;
 
 /**
  * Controller for User
@@ -28,7 +29,10 @@ import com.adle.projet.service.UserService;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserValidator userValidator;
+
+    @Autowired
+    private UserService   userService;
 
     /*
      * ***************************** List of User *****************************
@@ -79,6 +83,8 @@ public class UserController {
      */
     @PostMapping( "/saveUser" )
     public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel ) {
+        userValidator.validate( theUser, result );
+
         if ( result.hasErrors() ) {
             theModel.addAttribute( "user", theUser );
             return "registration";

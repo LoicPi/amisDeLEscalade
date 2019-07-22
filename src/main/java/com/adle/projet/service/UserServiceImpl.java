@@ -1,6 +1,7 @@
 package com.adle.projet.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUser( int theId ) {
-        // TODO Auto-generated method stub
         return userDAO.getUser( theId );
+    }
+
+    @Override
+    public Optional<User> findUserWithEmail( String email ) {
+        return userDAO.getUsers().stream()
+                .filter( user -> user.getEmail().equals( email ) )
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> findUserWithNickName( String nickName ) {
+        return userDAO.getUsers().stream()
+                .filter( user -> user.getNickName().equals( nickName ) )
+                .findFirst();
     }
 
 }
