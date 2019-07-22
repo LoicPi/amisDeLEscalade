@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Utilisateur</title>
+		<title>Inscription</title>
 		<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/all.css" />" rel="stylesheet">
  		<link href="<c:url value="/resources/css/stylesheet.css" />" rel="stylesheet">
@@ -39,13 +39,13 @@
       					
       					<div class="form-group">
        						<label for="firstname">Nom <span class="requis">*</span></label>
-       						<form:input path="firstName" class="form-control" type="text" placeholder="nom" />
+       						<form:input path="firstName" class="form-control" type="text" placeholder="Nom" />
        						<form:errors path="firstName" cssClass="error" />
       					</div>
       
             			<div class="form-group">
        						<label for="lastname">Prénom <span class="requis">*</span></label>
-        					<form:input path="lastName" class="form-control" type="text" placeholder="prénom"/>
+        					<form:input path="lastName" class="form-control" type="text" placeholder="Prénom"/>
         					<form:errors path="lastName" class="error" />
       					</div>
       
@@ -65,10 +65,12 @@
        						<label for="password">Mot de Passe <span class="requis">*</span></label>
         					<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>
         					<form:errors path="password" cssClass="error" />
+        					<p class="font-italic"> Le mot de passe doit contenir 8 à 15 caractères avec au moins une lettre miniscule, majuscule, un chiffre
+       						et un caractère spéciaux parmi $@%*+-_!</p>
       					</div>
 
       					<div class="form-group">
-        					<button type="submit" class="btn btn-success btn-lg float-right">S'incrire</button>
+        					<button type="submit" class="btn btn-success btn-lg float-right">Valider</button>
       					</div>
       				 </form:form>	
 				</div>

@@ -25,10 +25,13 @@ public class UserValidator implements Validator {
     public void validate( Object obj, Errors errors ) {
         User user = (User) obj;
 
-        Pattern pattern = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+        Pattern patternEmail = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
                 Pattern.CASE_INSENSITIVE );
 
-        if ( !( pattern.matcher( user.getEmail() ).matches() ) ) {
+        Pattern patternPassword = Pattern.compile(
+                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", Pattern.CASE_INSENSITIVE );
+
+        if ( !( patternEmail.matcher( user.getEmail() ).matches() ) ) {
             errors.rejectValue( "email", "user.email.invalid" );
         }
 
@@ -39,7 +42,9 @@ public class UserValidator implements Validator {
         if ( userService.findUserWithNickName( user.getNickName() ).isPresent() ) {
             errors.rejectValue( "nickName", "userValidator.nickName.know" );
         }
-
+        if ( !( patternPassword.matcher( user.getPassword() ).matches() ) ) {
+            errors.rejectValue( "password", "userValidator.password.invalid" );
+        }
     }
 
 }
