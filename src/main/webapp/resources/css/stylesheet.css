@@ -1,0 +1,13 @@
+.nav-link{
+	border : 1px solid blue;
+	background-color: blue;
+	color: white;
+}
+.nav{
+	width : 100%;
+	margin : 40px;
+}
+.error{
+	color : red;
+	font-weight: bold;
+}

@@ -63,7 +63,7 @@ public class UserController {
     public String showFormForAdd( Model theModel ) {
         User theUser = new User();
         theModel.addAttribute( "user", theUser );
-        return "inscription_user";
+        return "registration";
     }
 
     /**
@@ -81,7 +81,7 @@ public class UserController {
     public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel ) {
         if ( result.hasErrors() ) {
             theModel.addAttribute( "user", theUser );
-            return "inscription_user";
+            return "registration";
         }
         userService.saveUser( theUser );
         return "redirect:/compte/liste";
@@ -105,6 +105,6 @@ public class UserController {
             Model theModel ) {
         User theUser = userService.getUser( theId );
         theModel.addAttribute( "user", theUser );
-        return "inscription_user";
+        return "registration";
     }
 }
