@@ -17,4 +17,6 @@ public interface UserService {
 
     public Optional<User> findUserWithNickName( String nickName );
 
+    public List<User> findUserByEmail( String email );
+
 }

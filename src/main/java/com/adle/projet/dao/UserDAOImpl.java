@@ -52,4 +52,13 @@ public class UserDAOImpl implements UserDAO {
         return theUser;
     }
 
+    @Override
+    public List<User> findUserByEmail( String email ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<User> query = currentSession.createNamedQuery( "User_findByEmail", User.class );
+        query.setParameter( "email", email );
+        List<User> userResult = query.getResultList();
+        return userResult;
+    }
+
 }

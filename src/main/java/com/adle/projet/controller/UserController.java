@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.User;
 import com.adle.projet.service.UserService;
+import com.adle.projet.validator.UserLoggValidator;
 import com.adle.projet.validator.UserValidator;
 
 /**
@@ -29,10 +30,13 @@ import com.adle.projet.validator.UserValidator;
 public class UserController {
 
     @Autowired
-    private UserValidator userValidator;
+    private UserValidator     userValidator;
 
     @Autowired
-    private UserService   userService;
+    private UserLoggValidator userLoggValidator;
+
+    @Autowired
+    private UserService       userService;
 
     /*
      * ***************************** List of User *****************************
@@ -112,5 +116,27 @@ public class UserController {
         User theUser = userService.getUser( theId );
         theModel.addAttribute( "user", theUser );
         return "registration";
+    }
+
+    /**
+     * 
+     * @param theModel
+     * @return
+     */
+    @GetMapping( "/connexion" )
+    public String showFormForLogin( Model theModel ) {
+        User theUser = new User();
+        theModel.addAttribute( "user", theUser );
+        return "logg";
+    }
+
+    @PostMapping( "/logUser" )
+    public String logUser( @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel ) {
+        userLoggValidator.validate( theUser, result );
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "user", theUser );
+            return "logg";
+        }
+        return "redirect:/compte/utilisateur";
     }
 }

@@ -13,6 +13,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table( name = "users" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "User_findByEmail", query = "from User where email = :email" ),
+} )
 /**
  * Created User Bean Defined by id, firstName, lastName, nickName, email,
  * password

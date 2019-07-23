@@ -12,4 +12,6 @@ public interface UserDAO {
 
     public User getUser( int theId );
 
+    public List<User> findUserByEmail( String email );
+
 }

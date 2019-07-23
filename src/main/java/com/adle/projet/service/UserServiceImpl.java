@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService {
                 .findFirst();
     }
 
+    @Override
+    public List<User> findUserByEmail( String email ) {
+        return userDAO.findUserByEmail( email );
+    }
+
 }

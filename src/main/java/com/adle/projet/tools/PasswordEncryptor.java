@@ -12,4 +12,15 @@ public class PasswordEncryptor {
         return hashed_password;
     }
 
+    public static boolean checkPassword( String passwordLogg, String passwordUserStored ) {
+        boolean password_verified = false;
+
+        if ( null == passwordUserStored || !passwordUserStored.startsWith( "$2a$" ) )
+            throw new java.lang.IllegalArgumentException( "Invalid password hash provided for comparison" );
+
+        password_verified = BCrypt.checkpw( passwordLogg, passwordUserStored );
+
+        return ( password_verified );
+    }
+
 }
