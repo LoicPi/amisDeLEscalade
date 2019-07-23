@@ -2,6 +2,8 @@ package com.adle.projet.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -127,16 +130,29 @@ public class UserController {
     public String showFormForLogin( Model theModel ) {
         User theUser = new User();
         theModel.addAttribute( "user", theUser );
-        return "logg";
+        return "account_login";
     }
 
     @PostMapping( "/logUser" )
-    public String logUser( @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel ) {
+    public String logUser( @ModelAttribute( "user" ) User theUser, BindingResult result, HttpServletRequest request ) {
         userLoggValidator.validate( theUser, result );
+
+        HttpSession session = request.getSession();
+
         if ( result.hasErrors() ) {
-            theModel.addAttribute( "user", theUser );
-            return "logg";
+            session.setAttribute( "user", theUser );
+            return "account_login";
+        } else {
+            User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
+            session.setAttribute( "userLoginId", userLogin.getId() );
+            return "redirect:/compte/utilisateur/" + userLogin.getId();
         }
-        return "redirect:/compte/utilisateur";
+    }
+
+    @GetMapping( "/{userId}" )
+    public String showFormForAccountUser( @PathVariable( "userId" ) int userId, Model theModel ) {
+        User theUser = userService.getUser( userId );
+        theModel.addAttribute( "user", theUser );
+        return "user_view";
     }
 }
