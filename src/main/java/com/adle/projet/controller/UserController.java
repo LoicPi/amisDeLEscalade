@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.User;
 import com.adle.projet.service.UserService;
+import com.adle.projet.tools.PasswordEncryptor;
 import com.adle.projet.validator.UserValidator;
 
 /**
@@ -89,6 +90,7 @@ public class UserController {
             theModel.addAttribute( "user", theUser );
             return "registration";
         }
+        theUser.setPassword( PasswordEncryptor.hashPassword( theUser.getPassword() ) );
         userService.saveUser( theUser );
         return "redirect:/compte/liste";
     }

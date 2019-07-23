@@ -17,15 +17,15 @@
 	
 	<body>
  		<div class="container">
-			<header class="row col-sm-12">
+			<header class="container">
 
-        		<img class="col-sm-12 col-md-4 offset-md-4" src="<c:url value="/resources/image/logo.png"/>" />
+        		<img class="col-sm-12 col-md-4 offset-md-4 img" src="<c:url value="/resources/image/logo.png"/>" />
 
         		<nav class="row nav nav-pills nav-justified flex-column flex-sm-row">          
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-home"></span> Accueil </a>
+            		<a class="nav-link nav-item" href="<c:url value="/"/>"> <span class="fa fa-home"></span> Accueil </a>
             		<a class="nav-link nav-item" href="#"> <span class="fa fa-mountain"></span> Site d'escalade </a>
             		<a class="nav-link nav-item" href="#"> <span class="fa fa-book"></span> Topo </a>
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-user-circle"></span>    Compte </a>
+            		<a class="nav-link nav-item" href="<c:url value="/compte/inscription"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
         		</nav>
       		</header>
    			<div class="card">
