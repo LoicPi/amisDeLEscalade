@@ -1,5 +1,7 @@
 package com.adle.projet.validator;
 
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +33,37 @@ public class UserLoggValidator implements Validator {
         String userEmail = user.getEmail();
         String userPassword = user.getPassword();
 
+        Pattern patternEmail = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+                Pattern.CASE_INSENSITIVE );
+
+        Pattern patternPassword = Pattern.compile(
+                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", Pattern.CASE_INSENSITIVE );
+
         if ( userEmail.equals( "" ) ) {
             logger.info( "Email is emmpty." );
             errors.rejectValue( "email", "userLoggValidator.email.empty" );
         }
+
+        if ( !userEmail.equals( "" ) && !( patternEmail.matcher( user.getEmail() ).matches() ) ) {
+            logger.info( "Email is not correct." );
+            errors.rejectValue( "email", "userLoggValidator.email.invalid" );
+        }
+
         if ( userPassword.equals( "" ) ) {
             logger.info( "Password is emmpty." );
             errors.rejectValue( "password", "userLoggValidator.password.empty" );
         }
+
+        if ( !userPassword.equals( "" ) && !( patternPassword.matcher( user.getPassword() ).matches() ) ) {
+            logger.info( "Password is not correct." );
+            errors.rejectValue( "password", "userLoggValidator.password.invalid" );
+        }
+
         if ( !userEmail.equals( "" ) && !( userService.findUserWithEmail( userEmail ) ).isPresent() ) {
             logger.info( "Email does not exist." );
             errors.rejectValue( "email", "userLoggValidator.email.exist" );
         }
+
         if ( !userPassword.equals( "" ) && userService.findUserWithEmail( userEmail ).isPresent() ) {
             logger.info( "Email exist." );
             User userCheck = userService.findUserByEmail( userEmail ).get( 0 );
