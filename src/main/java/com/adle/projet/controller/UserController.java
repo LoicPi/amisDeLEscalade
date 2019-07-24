@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.adle.projet.entity.Role;
 import com.adle.projet.entity.User;
+import com.adle.projet.service.RoleService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.UserLoggValidator;
 import com.adle.projet.validator.UserValidator;
@@ -41,6 +43,9 @@ public class UserController {
     @Autowired
     private UserService       userService;
 
+    @Autowired
+    private RoleService       roleService;
+
     /*
      * ***************************** List of User *****************************
      */
@@ -54,7 +59,9 @@ public class UserController {
     @GetMapping( "/liste" )
     public String listUsers( Model theModel ) {
         List<User> theUsers = userService.getUsers();
+        List<Role> theRoles = roleService.getRoles();
         theModel.addAttribute( "users", theUsers );
+        theModel.addAttribute( "roles", theRoles );
         return "list_users";
     }
 
@@ -73,7 +80,9 @@ public class UserController {
     @GetMapping( "/inscription" )
     public String showFormForAdd( Model theModel ) {
         User theUser = new User();
+        List<Role> roles = roleService.getRoles();
         theModel.addAttribute( "user", theUser );
+        theModel.addAttribute( "roles", roles );
         return "registration";
     }
 

@@ -17,15 +17,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    @Override
     public List<User> getUsers() {
         return userDAO.getUsers();
     }
 
+    @Override
     public void saveUser( User theUser ) {
         userDAO.saveUser( theUser );
 
     }
 
+    @Override
     public User getUser( int theId ) {
         return userDAO.getUser( theId );
     }
