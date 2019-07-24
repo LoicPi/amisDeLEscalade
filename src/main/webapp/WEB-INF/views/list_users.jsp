@@ -45,6 +45,7 @@
        						<th>Pseudo</th>
        						<th>Email</th>
        						<th>Mot de Passe</th>
+       						<th>Role</th>
        						<th>Action</th>
       					</tr>
       					</thead>
@@ -64,6 +65,7 @@
         						<td>${tempUser.nickName}</td>
         						<td>${tempUser.email}</td>
         						<td>${tempUser.password}</td>
+        						<td>${tempUser.userRole}</td>
         						<td>
          							<!-- display the update link -->
          							<a href="${updateLink}">Modifier</a>

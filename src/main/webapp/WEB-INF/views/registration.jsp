@@ -68,9 +68,16 @@
         					<p class="font-italic"> Le mot de passe doit contenir 8 à 15 caractères avec au moins une lettre miniscule, majuscule, un chiffre
        						et un caractère spéciaux parmi $@%*+-_!</p>
       					</div>
+      					
+      					<div class="form-group">
+       						<label for="roleUser">Membre</label>
+							<br/>
+								<form:checkboxes path="roleUser" element="div class='col-md-6 checkbox'" items="${roles}" itemLabel = "roleName" itemValue = "id"/>
+      					</div>
+      					
 
       					<div class="form-group">
-        					<button type="submit" class="btn btn-success btn-lg float-right">Valider</button>
+        					<button type="submit" class="btn btn-success btn-lg float-right">S'inscrire</button>
       					</div>
       				 </form:form>	
 				</div>
