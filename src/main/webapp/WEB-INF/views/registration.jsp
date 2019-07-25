@@ -70,11 +70,9 @@
       					</div>
       					
       					<div class="form-group">
-       						<label for="roleUser">Membre</label>
-							<br/>
-								<form:checkboxes path="roleUser" element="div class='col-md-6 checkbox'" items="${roles}" itemLabel = "roleName" itemValue = "id"/>
+      						<label for="userMember">Membre de l'association</label>
+       						<form:checkbox path="userMember" element="div class='col-md-6 checkbox'" value="true"/>
       					</div>
-      					
 
       					<div class="form-group">
         					<button type="submit" class="btn btn-success btn-lg float-right">S'inscrire</button>
