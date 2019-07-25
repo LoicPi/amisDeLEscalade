@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.User;
-import com.adle.projet.service.RoleService;
 import com.adle.projet.tools.PasswordEncryptor;
 
 @Repository
@@ -21,9 +20,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Autowired
-    private RoleService    roleService;
 
     /**
      * Function return the list of users in database
@@ -44,7 +40,6 @@ public class UserDAOImpl implements UserDAO {
     public void saveUser( User theUser ) {
         Session currentSession = sessionFactory.getCurrentSession();
         theUser.setPassword( PasswordEncryptor.hashPassword( theUser.getPassword() ) );
-        theUser.setUserRole( roleService.findRoleById( theUser.getUserMember() ) );
         currentSession.saveOrUpdate( theUser );
     }
 
