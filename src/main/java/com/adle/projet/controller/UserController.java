@@ -141,10 +141,18 @@ public class UserController {
      * @return
      */
     @GetMapping( "/connexion" )
-    public String showFormForLogin( Model theModel ) {
-        User theUser = new User();
-        theModel.addAttribute( "user", theUser );
-        return "account_login";
+    public String showFormForLogin( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            User theUser = new User();
+            theModel.addAttribute( "user", theUser );
+            return "account_login";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+            return "redirect:/compte/moncompte";
+        }
     }
 
     @PostMapping( "/logUser" )
