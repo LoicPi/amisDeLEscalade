@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,15 +97,21 @@ public class UserController {
      * @return list page
      */
     @PostMapping( "/saveUser" )
-    public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel ) {
+    public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
+            HttpServletRequest request ) {
         userValidator.validate( theUser, result );
+        HttpSession session = request.getSession();
 
         if ( result.hasErrors() ) {
             theModel.addAttribute( "user", theUser );
             return "registration";
         }
+        if ( theUser.getUserMember() ) {
+            theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
+        }
         userService.saveUser( theUser );
-        return "redirect:/compte/liste";
+        session.setAttribute( "userLoginId", theUser.getId() );
+        return "redirect:/compte/moncompte";
     }
 
     /*
@@ -154,12 +159,14 @@ public class UserController {
         } else {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
             session.setAttribute( "userLoginId", userLogin.getId() );
-            return "redirect:/compte/utilisateur/" + userLogin.getId();
+            return "redirect:/compte/moncompte";
         }
     }
 
-    @GetMapping( "/{userId}" )
-    public String showFormForAccountUser( @PathVariable( "userId" ) int userId, Model theModel ) {
+    @GetMapping( "/moncompte" )
+    public String showFormForAccountUser( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
         User theUser = userService.getUser( userId );
         theModel.addAttribute( "user", theUser );
         return "user_view";
