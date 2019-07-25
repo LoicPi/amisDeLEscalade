@@ -38,9 +38,22 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public Role findRoleById( int id ) {
+    public Role findUserRoleByCode( Boolean userMember ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Role theRole = currentSession.get( Role.class, id );
+        Query<Role> query = currentSession.createNamedQuery( "Role_findByCode", Role.class );
+        Role theRole;
+        String roleCode;
+
+        if ( userMember ) {
+            roleCode = "member";
+            query.setParameter( "roleCode", roleCode );
+            theRole = query.getSingleResult();
+        } else {
+            roleCode = "normal";
+            query.setParameter( "roleCode", roleCode );
+            theRole = query.getSingleResult();
+        }
+
         return theRole;
     }
 

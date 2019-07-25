@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "roles" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Role_findByCode", query = "from Role where roleCode = :roleCode" ),
+} )
 
 public class Role {
 
@@ -25,6 +28,11 @@ public class Role {
     @Column( name = "role_name" )
     @Size( max = 20, min = 3 )
     private String     roleName;
+
+    /** Colonne qui va avoir un string afin d'effectuer un where dessus **/
+    @Column( name = "role_code" )
+    @Size( max = 20, min = 3 )
+    private String     roleCode;
 
     @OneToMany( mappedBy = "userRole" )
     private List<User> users = new ArrayList<>();
@@ -47,6 +55,14 @@ public class Role {
 
     public void setRoleName( String roleName ) {
         this.roleName = roleName;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode( String roleCode ) {
+        this.roleCode = roleCode;
     }
 
     public List<User> getUsers() {

@@ -10,6 +10,6 @@ public interface RoleService {
 
     public List<Role> getRoles();
 
-    public Role findRoleById( int id );
+    public Role findUserRoleByCode( Boolean userMember );
 
 }

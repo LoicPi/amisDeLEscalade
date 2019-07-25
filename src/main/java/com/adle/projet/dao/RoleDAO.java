@@ -10,6 +10,6 @@ public interface RoleDAO {
 
     public List<Role> getRoles();
 
-    public Role findRoleById( int id );
+    public Role findUserRoleByCode( Boolean userMember );
 
 }

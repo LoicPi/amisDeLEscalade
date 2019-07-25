@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -62,7 +63,8 @@ public class User {
     @JoinColumn( name = "role_id" )
     private Role    userRole;
 
-    private Integer userMember;
+    @Transient
+    private Boolean userMember;
 
     public User() {
 
@@ -124,11 +126,11 @@ public class User {
         this.userRole = userRole;
     }
 
-    public Integer getUserMember() {
+    public Boolean getUserMember() {
         return userMember;
     }
 
-    public void setUserMember( Integer userMember ) {
+    public void setUserMember( Boolean userMember ) {
         this.userMember = userMember;
     }
 
