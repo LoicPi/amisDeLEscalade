@@ -129,10 +129,13 @@ public class UserController {
 
     @GetMapping( "/maj" )
     public String showFormForUpdate( @RequestParam( "userId" ) int theId,
-            Model theModel ) {
-        User theUser = userService.getUser( theId );
+            Model theModel, HttpServletRequest request ) {
+
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User theUser = userService.getUser( userId );
         theModel.addAttribute( "user", theUser );
-        return "registration";
+        return "user_uptade";
     }
 
     /**
