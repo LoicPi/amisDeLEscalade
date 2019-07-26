@@ -69,7 +69,7 @@
       				</div>
       				
       				<c:url var="updateLink" value="/compte/maj">
-        				<c:param name="userId" value="${tempUser.id}" />
+        				<c:param name="userId" value="${user.id}" />
        				</c:url>
       				
       				<div class="form-group">
