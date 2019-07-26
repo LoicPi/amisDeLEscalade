@@ -67,19 +67,21 @@
 							</form>
       					</div>
       				</div>
+      				<div class="row bouton">
+      					<c:url var="updateLink" value="/compte/maj">
+        					<c:param name="userId" value="${user.id}" />
+       					</c:url>
       				
-      				<c:url var="updateLink" value="/compte/maj">
-        				<c:param name="userId" value="${user.id}" />
-       				</c:url>
+      					<div class="form-group col-md-4 col-sm-12">
+        					<a class="btn btn-info btn-lg" href="${updateLink}" role="button">Modifier</a>
+      					</div>
       				
-      				<div class="form-group">
-        				<a class="btn btn-success btn-lg float-right" href="${updateLink}" role="button">Modifier</a>
-      				</div>
+      				<c:url var="deconnexionLink" value="/compte/deconnexion"/>
 
-      					<!--<div class="form-group">
-       						<label for="firstname">Nom <span class="requis">*</span></label>
-       						<p>${user.firstName}</p>
-      					</div>	  -->
+      				<div class="form-group col-md-4 offset-md-4 col-sm-12">
+        				<a class="btn btn-danger btn-lg" href="${deconnexionLink}" role="button">Deconnexion</a>
+      				</div>
+      				</div>
 
     		</div>
 		</div>
