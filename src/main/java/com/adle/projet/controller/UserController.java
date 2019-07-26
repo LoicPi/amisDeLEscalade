@@ -180,4 +180,11 @@ public class UserController {
         theModel.addAttribute( "user", theUser );
         return "user_view";
     }
+
+    @GetMapping( "/deconnexion" )
+    public String showFormForDeconnectionUser( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/compte/connexion";
+    }
 }
