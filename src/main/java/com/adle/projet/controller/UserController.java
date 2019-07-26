@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.Role;
 import com.adle.projet.entity.User;
@@ -128,8 +127,7 @@ public class UserController {
      */
 
     @GetMapping( "/maj" )
-    public String showFormForUpdate( @RequestParam( "userId" ) int theId,
-            Model theModel, HttpServletRequest request ) {
+    public String showFormForUpdate( Model theModel, HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userLoginId" );
