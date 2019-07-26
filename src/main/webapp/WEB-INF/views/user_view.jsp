@@ -28,17 +28,59 @@
             		<a class="nav-link nav-item" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
         		</nav>
       		</header>
-      		   			<div class="card">
-   				<div class="card-header text-center">
-     				<h3>Inscription</h3>
-    			</div>
-    			<div class="card-body">
-      					
-      					<div class="form-group">
+      		<div class="container">
+				<h1>Mon Compte</h1>
+				<hr>
+					<div class="row">
+						<div class="col-md-9 personal-info">
+							<!--<div class="alert alert-info alert-dismissable">
+								<a class="panel-close close" data-dismiss="alert">×</a> 
+								  <i class="fas fa-info-circle"></i>
+								Votre qualité de membre prend 48h.
+							</div>-->
+							<h3>Mes informations personnelles</h3>
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<label class="col-lg-3 control-label">Nom :</label>
+									<div class="col-lg-8">
+										${user.firstName }
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-3 control-label">Prénom :</label>
+									<div class="col-lg-8">
+										${user.lastName }
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-3 control-label">Pseudo :</label>
+									<div class="col-lg-8">
+										${user.nickName }
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-3 control-label">E-mail :</label>
+									<div class="col-lg-8">
+										${user.email }
+									</div>
+								</div>
+							</form>
+      					</div>
+      				</div>
+      				
+      				<c:url var="updateLink" value="/compte/maj">
+        				<c:param name="userId" value="${tempUser.id}" />
+       				</c:url>
+      				
+      				<div class="form-group">
+        				<a class="btn btn-success btn-lg float-right" href="${updateLink}" role="button">Modifier</a>
+      				</div>
+
+      					<!--<div class="form-group">
        						<label for="firstname">Nom <span class="requis">*</span></label>
        						<p>${user.firstName}</p>
-      					</div>	
-				</div>
+      					</div>	  -->
+
     		</div>
 		</div>
 	</body>
