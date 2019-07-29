@@ -70,6 +70,12 @@
       					</div>
       					
       					<div class="form-group">
+       						<label for="passwordControl">Répetez votre Mot de Passe <span class="requis">*</span></label>
+        					<form:input path="passwordControl" class="form-control" type="password" placeholder="Répétez votre Mot de Passe"/>
+        					<form:errors path="passwordControl" cssClass="error" />
+      					</div>
+      					
+      					<div class="form-group">
       						<label for="userMember">Membre de l'association</label>
        						<form:checkbox path="userMember" element="div class='col-md-6 checkbox'" value="true"/>
       					</div>
