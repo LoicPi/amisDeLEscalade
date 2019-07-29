@@ -53,6 +53,15 @@ public class UserValidator implements Validator {
             logger.info( "Password is not correct." );
             errors.rejectValue( "password", "userValidator.password.invalid" );
         }
-    }
 
+        if ( user.getPasswordControl().equals( "" ) ) {
+            logger.info( "PasswordControl is empty." );
+            errors.rejectValue( "password", "userValidator.passwordControl.empty" );
+        }
+
+        if ( !( user.getPassword().equals( user.getPasswordControl() ) ) ) {
+            logger.info( "Password and PasswordControl is not the same." );
+            errors.rejectValue( "passwordControl", "userValidator.passwordControl.invalid" );
+        }
+    }
 }
