@@ -73,5 +73,6 @@ public class UserLoggValidator implements Validator {
                 errors.rejectValue( "password", "userLoggValidator.password.wrong" );
             }
         }
+
     }
 }
