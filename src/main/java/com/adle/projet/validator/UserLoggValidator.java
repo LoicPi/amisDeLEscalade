@@ -40,7 +40,7 @@ public class UserLoggValidator implements Validator {
                 "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", Pattern.CASE_INSENSITIVE );
 
         if ( userEmail.equals( "" ) ) {
-            logger.info( "Email is emmpty." );
+            logger.info( "Email is empty." );
             errors.rejectValue( "email", "userLoggValidator.email.empty" );
         }
 
@@ -50,7 +50,7 @@ public class UserLoggValidator implements Validator {
         }
 
         if ( userPassword.equals( "" ) ) {
-            logger.info( "Password is emmpty." );
+            logger.info( "Password is empty." );
             errors.rejectValue( "password", "userLoggValidator.password.empty" );
         }
 
