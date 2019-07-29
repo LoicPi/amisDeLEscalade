@@ -34,7 +34,7 @@
 					<div class="row">
 						<div class="col-md-9 personal-info">
 							<h3>Mes informations personnelles</h3>
-							<form:form action="saveUser" class="form" method="post" modelAttribute="user">
+							<form:form action="updateUser" class="form" method="post" modelAttribute="user">
 							
 								<form:hidden path="id" />
 							
@@ -54,7 +54,7 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-lg-3 control-label" for=nickname>Prénom :</label>
+									<label class="col-lg-3 control-label" for=nickname>Pseudo :</label>
 									<div class="col-lg-8">
 										<form:input path="nickName" class="form-control" type="text" placeholder="${user.nickName}" />
 										<form:errors path="nickName" cssClass="error" />
@@ -62,7 +62,7 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-lg-3 control-label" for=email>Prénom :</label>
+									<label class="col-lg-3 control-label" for=email>Email :</label>
 									<div class="col-lg-8">
 										<form:input path="email" class="form-control" type="email" placeholder="${user.email}" />
 										<form:errors path="email" cssClass="error" />
@@ -70,18 +70,13 @@
 								</div>
 
 								<div class="form-group">
-									<label class="col-lg-3 control-label" for=email>Prénom :</label>
+									<label class="col-lg-3 control-label" for=email>Password :</label>
 									<div class="col-lg-8">
-										<form:input path="email" class="form-control" type="password" placeholder="${user.password}" />
-										<form:errors path="email" cssClass="error" />
+										<form:input path="password" class="form-control" type="password" placeholder="${user.password}" />
+										<form:errors path="password" cssClass="error" />
 									</div>
 								</div>
-								
-								<div class="form-group">
-      								<label for="userMember">Membre de l'association</label>
-       								<form:checkbox path="userMember" element="div class='col-md-6 checkbox'" value="true"/>
-      							</div>
-								      				
+							      				
       							<div class="form-group">
         							<button type="submit" class="btn btn-success btn-lg float-right">Sauvegarder les modifications</button>
       							</div>
