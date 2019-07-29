@@ -64,6 +64,9 @@ public class User {
     private Role    userRole;
 
     @Transient
+    private String  passwordControl;
+
+    @Transient
     private Boolean userMember;
 
     public User() {
@@ -124,6 +127,14 @@ public class User {
 
     public void setUserRole( Role userRole ) {
         this.userRole = userRole;
+    }
+
+    public String getPasswordControl() {
+        return passwordControl;
+    }
+
+    public void setPasswordControl( String passwordControl ) {
+        this.passwordControl = passwordControl;
     }
 
     public Boolean getUserMember() {
