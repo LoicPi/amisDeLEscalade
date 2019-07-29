@@ -19,4 +19,6 @@ public interface UserService {
 
     public List<User> findUserByEmail( String email );
 
+    public void updateUser( User theUser );
+
 }
