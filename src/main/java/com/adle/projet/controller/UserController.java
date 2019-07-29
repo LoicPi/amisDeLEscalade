@@ -19,7 +19,11 @@ import com.adle.projet.entity.Role;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.RoleService;
 import com.adle.projet.service.UserService;
+import com.adle.projet.tools.PasswordEncryptor;
 import com.adle.projet.validator.UserLoggValidator;
+import com.adle.projet.validator.UserUpdateEmailValidator;
+import com.adle.projet.validator.UserUpdateNickNameValidator;
+import com.adle.projet.validator.UserUpdatePasswordValidator;
 import com.adle.projet.validator.UserValidator;
 
 /**
@@ -33,16 +37,25 @@ import com.adle.projet.validator.UserValidator;
 public class UserController {
 
     @Autowired
-    private UserValidator     userValidator;
+    private UserValidator               userValidator;
 
     @Autowired
-    private UserLoggValidator userLoggValidator;
+    private UserLoggValidator           userLoggValidator;
 
     @Autowired
-    private UserService       userService;
+    private UserUpdateEmailValidator    userUpdateEmailValidator;
 
     @Autowired
-    private RoleService       roleService;
+    private UserUpdateNickNameValidator userUpdateNickNameValidator;
+
+    @Autowired
+    private UserUpdatePasswordValidator userUptadePasswordValidator;
+
+    @Autowired
+    private UserService                 userService;
+
+    @Autowired
+    private RoleService                 roleService;
 
     /*
      * ***************************** List of User *****************************
@@ -51,6 +64,7 @@ public class UserController {
      * Page for list of user
      * 
      * @param theModel
+     *            attribute to page jsp
      * @return list page
      */
 
@@ -93,7 +107,9 @@ public class UserController {
      *            result of validation form
      * @param theModel
      *            attribute to page jsp
-     * @return list page
+     * @param request
+     *            information on the session
+     * @return user page
      */
     @PostMapping( "/saveUser" )
     public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
@@ -122,13 +138,12 @@ public class UserController {
      * @param theId
      *            id of database for user
      * @param theModel
-     *            attibute to page jsp
-     * @return register page
+     *            attribute to page jsp
+     * @return update page
      */
 
     @GetMapping( "/maj" )
     public String showFormForUpdate( Model theModel, HttpServletRequest request ) {
-
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userLoginId" );
         User theUser = userService.getUser( userId );
@@ -137,9 +152,57 @@ public class UserController {
     }
 
     /**
+     * Process after submit button click on user_update page
+     * 
+     * @param theUser
+     *            User on page
+     * @param result
+     *            for errors on page
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return user page
+     */
+
+    @PostMapping( "/updateUser" )
+    public String updateUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User userUpdate = userService.getUser( userId );
+        if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
+            userUpdateNickNameValidator.validate( theUser, result );
+        }
+        if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
+            userUpdateEmailValidator.validate( theUser, result );
+        }
+
+        if ( !PasswordEncryptor.checkPassword( theUser.getPassword(), userUpdate.getPassword() ) ) {
+            userUptadePasswordValidator.validate( theUser, result );
+        }
+
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "user", theUser );
+            return "user_uptade";
+        } else {
+            userService.updateUser( theUser );
+            session.setAttribute( "userLoginId", theUser.getId() );
+            return "redirect:/compte/moncompte";
+        }
+    }
+
+    /*
+     * **************************** User Connexion ****************************
+     */
+    /**
+     * Page to connect user
      * 
      * @param theModel
-     * @return
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return account login
      */
     @GetMapping( "/connexion" )
     public String showFormForLogin( Model theModel, HttpServletRequest request ) {
@@ -156,6 +219,17 @@ public class UserController {
         }
     }
 
+    /**
+     * Process after submit button click on account_login page
+     * 
+     * @param theUser
+     *            User on page
+     * @param result
+     *            for errors on page
+     * @param request
+     *            information on the session
+     * @return user account page
+     */
     @PostMapping( "/logUser" )
     public String logUser( @ModelAttribute( "user" ) User theUser, BindingResult result, HttpServletRequest request ) {
         userLoggValidator.validate( theUser, result );
@@ -172,6 +246,19 @@ public class UserController {
         }
     }
 
+    /*
+     * **************************** User Page ****************************
+     */
+
+    /**
+     * User account page
+     * 
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return user account page
+     */
     @GetMapping( "/moncompte" )
     public String showFormForAccountUser( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -181,6 +268,19 @@ public class UserController {
         return "user_view";
     }
 
+    /*
+     * **************************** User Log Out ****************************
+     */
+
+    /**
+     * Page to log out user
+     * 
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            attribute to page jsp
+     * @return account login
+     */
     @GetMapping( "/deconnexion" )
     public String showFormForDeconnectionUser( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
