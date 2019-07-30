@@ -25,7 +25,16 @@
             		<a class="nav-link nav-item" href="<c:url value="/"/>"> <span class="fa fa-home"></span> Accueil </a>
             		<a class="nav-link nav-item" href="#"> <span class="fa fa-mountain"></span> Site d'escalade </a>
             		<a class="nav-link nav-item" href="#"> <span class="fa fa-book"></span> Topo </a>
-            		<a class="nav-link nav-item" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
+            		<a class="nav-link nav-item" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    
+           				<c:choose>
+            				<c:when test="${empty sessionScope}">
+            					Compte
+            				</c:when>
+            				<c:otherwise>
+            					<c:out value ="${user.nickName }"/>
+            				</c:otherwise>
+            			</c:choose>            		
+           			</a>
         		</nav>
       		</header>
       		<div class="container">
