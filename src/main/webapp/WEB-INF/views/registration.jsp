@@ -28,7 +28,7 @@
             		<a class="nav-link nav-item" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
         		</nav>
       		</header>
-      		<div class="col-md-6 mx-auto">
+      		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Inscription</h3>
@@ -78,7 +78,7 @@
       					
       						<div class="form-group">
       							<label for="userMember">Membre de l'association</label>
-       							<form:checkbox path="userMember" element="div class='col-md-6 checkbox'" value="true"/>
+       							<form:checkbox path="userMember" element="div class='col-md-8 checkbox'" value="true"/>
        							<p class="font-italic">Cochez la case si vous êtes membre de l'association "Les amis de l'escalade"</p>
       						</div>
 							<div class="row bouton text-center">

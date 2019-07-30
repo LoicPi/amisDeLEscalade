@@ -29,32 +29,36 @@
         		</nav>
       		</header>
       		
-      		<div class="card">
-   				<div class="card-header text-center">
-     				<h3>Connexion</h3>
-    			</div>
-    			<div class="card-body">
-     				<form:form action="logUser" class="form" method="post" modelAttribute="user"> 
+      		<div class="col-md-6 mx-auto">
+   				<div class="card border-secondary">
+   					<div class="card-header text-center">
+     					<h3>Connexion</h3>
+    				</div>
+    				<div class="card-body">
+     					<form:form action="logUser" class="form" method="post" modelAttribute="user"> 
       					
-      					<div class="form-group">
-       						<label for="email">Email <span class="requis">*</span></label>
-							<form:input path="email" class="form-control" type="email" placeholder="email@gmail.com"/>
-        					<form:errors path="email" class="error" />
-      					</div>
+      						<div class="form-group">
+       							<label for="email">Email <span class="requis">*</span></label>
+								<form:input path="email" class="form-control" type="email" placeholder="email@gmail.com"/>
+        						<form:errors path="email" class="error" />
+      						</div>
       
-      					<div class="form-group">
-       						<label for="password">Mot de Passe <span class="requis">*</span></label>
-        					<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>
-        					<form:errors path="password" cssClass="error" />
-      					</div>
+      						<div class="form-group">
+       							<label for="password">Mot de Passe <span class="requis">*</span></label>
+        						<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>
+        						<form:errors path="password" cssClass="error" />
+      						</div>
       					
-    					<div class="form-group">
-        					<button type="submit" class="btn btn-success btn-lg float-right">Valider</button>
-      					</div>
-      				</form:form>
+    						<div class="form-group">
+        						<button type="submit" class="btn btn-success btn-lg float-right">Valider</button>
+      						</div>
+      					</form:form>
+      				</div>
       			</div>
       		</div>
-      		<p> Pas encore inscrit ? Inscrivez-vous vite sur cette <a href="<c:url value="/compte/inscription"/>">page</a>.</p>
+      		<div class="col-md-6 mx-auto"> 
+      			Pas encore inscrit ? Rendez-vous vite sur la page d'<a href="<c:url value="/compte/inscription"/>">inscription</a>.
+      		</div>
 		</div>
 	</body>
 </html>
