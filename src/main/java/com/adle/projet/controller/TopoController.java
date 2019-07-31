@@ -44,7 +44,7 @@ public class TopoController {
      *            information on the session
      * @return
      */
-    @GetMapping( "/creationTopo" )
+    @GetMapping( "/creationtopo" )
     public String formForTopoCreation( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
@@ -54,8 +54,8 @@ public class TopoController {
         } else {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
             User theUser = userService.getUser( userId );
-            Topo theTopo = new Topo();
             theModel.addAttribute( "user", theUser );
+            Topo theTopo = new Topo();
             theModel.addAttribute( "topo", theTopo );
             return "registration_topo";
         }
@@ -66,8 +66,11 @@ public class TopoController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User theUser = userService.getUser( userId );
+        theTopo.setUserId( theUser );
         topoService.saveTopo( theTopo );
-        session.setAttribute( "userLoginId", theTopo.getIdUser() );
+        session.setAttribute( "userLoginId", theUser.getId() );
         return "redirect:/compte/moncompte";
     }
 
