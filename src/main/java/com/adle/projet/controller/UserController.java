@@ -71,9 +71,7 @@ public class UserController {
     @GetMapping( "/liste" )
     public String listUsers( Model theModel ) {
         List<User> theUsers = userService.getUsers();
-        List<Role> theRoles = roleService.getRoles();
         theModel.addAttribute( "users", theUsers );
-        theModel.addAttribute( "roles", theRoles );
         return "list_users";
     }
 
