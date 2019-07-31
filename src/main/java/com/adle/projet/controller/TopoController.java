@@ -1,5 +1,7 @@
 package com.adle.projet.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +35,27 @@ public class TopoController {
     private TopoService topoService;
 
     /*
+     * ************************* List of Topo *************************
+     */
+
+    /**
+     * Return the page containing all topos
+     * 
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return topos list page
+     * 
+     */
+    @GetMapping( " " )
+    public String listTopos( Model theModel, HttpServletRequest request ) {
+        List<Topo> theTopos = topoService.getTopos();
+        theModel.addAttribute( "topos", theTopos );
+        return "list_topos";
+    }
+
+    /*
      * ************************* Registration of Topo *************************
      */
     /**
@@ -42,7 +65,7 @@ public class TopoController {
      *            attribute to page jsp
      * @param request
      *            information on the session
-     * @return
+     * @return topo registration page
      */
     @GetMapping( "/creationtopo" )
     public String formForTopoCreation( Model theModel, HttpServletRequest request ) {
@@ -61,6 +84,17 @@ public class TopoController {
         }
     }
 
+    /**
+     * Page to save topos
+     * 
+     * @param theTopo
+     *            topo create on registration_topo page
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the user account page
+     */
     @PostMapping( "/saveTopo" )
     public String saveUser( @ModelAttribute( "topo" ) Topo theTopo, Model theModel,
             HttpServletRequest request ) {
