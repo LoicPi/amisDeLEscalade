@@ -1,7 +1,5 @@
 package com.adle.projet.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -28,7 +24,7 @@ public class Topo {
     @Size( max = 60, min = 3 )
     private String  topoName;
 
-    @Column( name = "topo_desriptive" )
+    @Column( name = "topo_descriptive" )
     @Size( max = 300, min = 10 )
     private String  topoDescriptive;
 
@@ -36,16 +32,19 @@ public class Topo {
     @Size( max = 100, min = 3 )
     private String  topoLocation;
 
+    @Column( name = "topo_department" )
+    private Integer topoDepartment;
+
     @Column( name = "topo_releaseDate" )
-    @Temporal( TemporalType.DATE )
-    private Date    topoReleaseDate;
+    @Size( max = 10, min = 10 )
+    private String  topoReleaseDate;
 
     @Column( name = "topo_availability" )
-    private Boolean topoAvailability;
+    private Boolean topoAvailability = false;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User    idUser;
+    private User    userId;
 
     public Topo() {
 
@@ -83,11 +82,19 @@ public class Topo {
         this.topoLocation = topoLocation;
     }
 
-    public Date getTopoReleaseDate() {
+    public Integer getTopoDepartment() {
+        return topoDepartment;
+    }
+
+    public void setTopoDepartment( Integer topoDepartment ) {
+        this.topoDepartment = topoDepartment;
+    }
+
+    public String getTopoReleaseDate() {
         return topoReleaseDate;
     }
 
-    public void setTopoReleaseDate( Date topoReleaseDate ) {
+    public void setTopoReleaseDate( String topoReleaseDate ) {
         this.topoReleaseDate = topoReleaseDate;
     }
 
@@ -99,18 +106,18 @@ public class Topo {
         this.topoAvailability = topoAvailability;
     }
 
-    public User getIdUser() {
-        return idUser;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setIdUser( User idUser ) {
-        this.idUser = idUser;
+    public void setUserId( User userId ) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "Topo {id=" + id + ", topoName =" + topoName + ", topoDescriptive =" + topoDescriptive +
                 ",topoLocation =" + topoLocation + ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
-                topoAvailability + ", idUser =" + idUser + "}";
+                topoAvailability + ", userId =" + userId + "}";
     }
 }
