@@ -1,5 +1,8 @@
 package com.adle.projet.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -32,42 +36,45 @@ public class User {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     @Column( name = "id" )
-    private Integer id;
+    private Integer    id;
 
     @Column( name = "first_name" )
     @Size( max = 20, min = 3, message = "{user.firstName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un nom" )
-    private String  firstName;
+    private String     firstName;
 
     @Column( name = "last_name" )
     @Size( max = 20, min = 3, message = "{user.lastName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un prénom" )
-    private String  lastName;
+    private String     lastName;
 
     @Column( name = "nick_name", unique = true )
     @Size( max = 20, min = 3, message = "{user.nickName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un pseudo" )
-    private String  nickName;
+    private String     nickName;
 
     @Column( name = "email", unique = true )
     @Email( message = "{user.email.invalid}" )
     @NotEmpty( message = "Merci de rentrer un email" )
-    private String  email;
+    private String     email;
 
     @Column( name = "password" )
     @Size( min = 8, message = "{user.password.invalid}" )
     @NotEmpty( message = "Merci de rentrer un mot de passe" )
-    private String  password;
+    private String     password;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "role_id" )
-    private Role    userRole;
+    private Role       userRole;
 
     @Transient
-    private String  passwordControl;
+    private String     passwordControl;
 
     @Transient
-    private Boolean userMember;
+    private Boolean    userMember;
+
+    @OneToMany( mappedBy = "userId" )
+    private List<Topo> topos = new ArrayList<>();
 
     public User() {
 
@@ -143,6 +150,14 @@ public class User {
 
     public void setUserMember( Boolean userMember ) {
         this.userMember = userMember;
+    }
+
+    public List<Topo> getTopos() {
+        return topos;
+    }
+
+    public void setTopos( List<Topo> topos ) {
+        this.topos = topos;
     }
 
     @Override
