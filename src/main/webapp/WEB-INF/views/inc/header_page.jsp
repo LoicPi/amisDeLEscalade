@@ -7,7 +7,7 @@
 <nav class="row nav nav-pills nav-justified flex-column flex-sm-row">          
 	<a class="nav-link nav-item" href="<c:url value="/"/>"> <span class="fa fa-home"></span> Accueil </a>
     <a class="nav-link nav-item" href="#"> <span class="fa fa-mountain"></span> Site d'escalade </a>
-    <a class="nav-link nav-item" href="#"> <span class="fa fa-book"></span> Topo </a>
+    <a class="nav-link nav-item" href="<c:url value="/topo/creationtopo"/>"> <span class="fa fa-book"></span> Topo </a>
     <a class="nav-link nav-item" id="lastNav" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>
     	<c:choose>
             <c:when test="${empty sessionScope}">
