@@ -7,26 +7,13 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Inscription</title>
-		<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/all.css" />" rel="stylesheet">
- 		<link href="<c:url value="/resources/css/stylesheet.css" />" rel="stylesheet">
- 		<script src="<c:url value="/resources/js/jquery-3.4.1.min.js" />"></script> 
-		<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-		<script src="<c:url value="/resources/js/all.js" />"></script>
+		<c:import url="inc/head_page.jsp" />
 	</head>
 	
 	<body>
  		<div class="container">
 			<header class="container">
-
-        		<img class="col-sm-12 col-md-4 offset-md-4 img" src="<c:url value="/resources/image/logo.png"/>" />
-
-        		<nav class="row nav nav-pills nav-justified flex-column flex-sm-row">          
-            		<a class="nav-link nav-item" href="<c:url value="/"/>"> <span class="fa fa-home"></span> Accueil </a>
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-mountain"></span> Site d'escalade </a>
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-book"></span> Topo </a>
-            		<a class="nav-link nav-item" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
-        		</nav>
+        		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
