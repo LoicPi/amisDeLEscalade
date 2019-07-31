@@ -44,7 +44,7 @@
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoCountry">Département <span class="requis">*</span></label>
+       							<label for="topoCountry">Pays <span class="requis">*</span></label>
        							<form:input path="topoCountry" class="form-control" type="text" placeholder="Pays du topo" />
        							<form:errors path="topoCountry" class="error" />
       						</div>
