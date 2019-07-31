@@ -16,24 +16,26 @@ import javax.validation.constraints.Size;
 public class Topo {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer id;
 
     @Column( name = "topo_name" )
-    @Size( max = 60, min = 3 )
+    @Size( max = 100, min = 3 )
     private String  topoName;
 
+    @Column( name = "topo_city" )
+    private String  topoCity;
+
+    @Column( name = "topo_county" )
+    private Integer topoCounty;
+
+    @Column( name = "topo_country" )
+    private String  topoCountry;
+
     @Column( name = "topo_descriptive" )
-    @Size( max = 300, min = 10 )
+    @Size( max = 600, min = 10 )
     private String  topoDescriptive;
-
-    @Column( name = "topo_location" )
-    @Size( max = 100, min = 3 )
-    private String  topoLocation;
-
-    @Column( name = "topo_department" )
-    private Integer topoDepartment;
 
     @Column( name = "topo_releaseDate" )
     @Size( max = 10, min = 10 )
@@ -66,28 +68,36 @@ public class Topo {
         this.topoName = topoName;
     }
 
+    public String getTopoCity() {
+        return topoCity;
+    }
+
+    public void setTopoCity( String topoCity ) {
+        this.topoCity = topoCity;
+    }
+
+    public Integer getTopoCounty() {
+        return topoCounty;
+    }
+
+    public void setTopoCounty( Integer topoCounty ) {
+        this.topoCounty = topoCounty;
+    }
+
+    public String getTopoCountry() {
+        return topoCountry;
+    }
+
+    public void setTopoCountry( String topoCountry ) {
+        this.topoCountry = topoCountry;
+    }
+
     public String getTopoDescriptive() {
         return topoDescriptive;
     }
 
     public void setTopoDescriptive( String topoDescriptive ) {
         this.topoDescriptive = topoDescriptive;
-    }
-
-    public String getTopoLocation() {
-        return topoLocation;
-    }
-
-    public void setTopoLocation( String topoLocation ) {
-        this.topoLocation = topoLocation;
-    }
-
-    public Integer getTopoDepartment() {
-        return topoDepartment;
-    }
-
-    public void setTopoDepartment( Integer topoDepartment ) {
-        this.topoDepartment = topoDepartment;
     }
 
     public String getTopoReleaseDate() {
@@ -116,8 +126,9 @@ public class Topo {
 
     @Override
     public String toString() {
-        return "Topo {id=" + id + ", topoName =" + topoName + ", topoDescriptive =" + topoDescriptive +
-                ",topoLocation =" + topoLocation + ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
+        return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity + ",topoCounty =" + topoCounty
+                + ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
+                ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
                 topoAvailability + ", userId =" + userId + "}";
     }
 }
