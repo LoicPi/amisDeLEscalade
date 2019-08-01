@@ -184,7 +184,11 @@ public class UserController {
             theModel.addAttribute( "user", theUser );
             return "user_uptade";
         } else {
-            userService.updateUser( theUser );
+            userUpdate.setFirstName( theUser.getFirstName() );
+            userUpdate.setLastName( theUser.getLastName() );
+            userUpdate.setNickName( theUser.getNickName() );
+            userUpdate.setEmail( theUser.getEmail() );
+            userService.updateUser( userUpdate );
             session.setAttribute( "userLoginId", theUser.getId() );
             return "redirect:/compte/moncompte";
         }
