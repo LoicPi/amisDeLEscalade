@@ -48,7 +48,7 @@ public class TopoController {
      * @return topos list page
      * 
      */
-    @GetMapping( " " )
+    @GetMapping( "/" )
     public String listTopos( Model theModel, HttpServletRequest request ) {
         List<Topo> theTopos = topoService.getTopos();
         theModel.addAttribute( "topos", theTopos );
@@ -71,9 +71,7 @@ public class TopoController {
     public String formForTopoCreation( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
-            User theUser = new User();
-            theModel.addAttribute( "user", theUser );
-            return "account_login";
+            return "redirect:/compte/connexion";
         } else {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
             User theUser = userService.getUser( userId );
