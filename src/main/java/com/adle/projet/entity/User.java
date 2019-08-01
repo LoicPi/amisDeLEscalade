@@ -63,7 +63,7 @@ public class User {
     @NotEmpty( message = "Merci de rentrer un mot de passe" )
     private String     password;
 
-    @ManyToOne( fetch = FetchType.LAZY )
+    @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "role_id" )
     private Role       userRole;
 
@@ -146,6 +146,11 @@ public class User {
 
     public Boolean getUserMember() {
         return userMember;
+    }
+
+    @Transient
+    public boolean isMember() {
+        return userRole.getRoleCode().equals( "member" );
     }
 
     public void setUserMember( Boolean userMember ) {

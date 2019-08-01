@@ -62,7 +62,7 @@
 										<a class="offset-md-4 col-md-4"><c:out value="${ user.email }" /></a>
 									</label>
 								</div>
-								<c:if test="${ user.userMember = true}">
+								<c:if test="${ user.member }">
 									<div class="form-group">
 										<label class="control-label">
 											<a class="col-md-4">Vous êtes membre de l'association <em>"Les amis de l'escalade"</em></a>
