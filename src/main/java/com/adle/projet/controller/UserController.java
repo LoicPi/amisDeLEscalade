@@ -69,10 +69,15 @@ public class UserController {
      */
 
     @GetMapping( "/liste" )
-    public String listUsers( Model theModel ) {
-        List<User> theUsers = userService.getUsers();
-        theModel.addAttribute( "users", theUsers );
-        return "list_users";
+    public String listUsers( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            List<User> theUsers = userService.getUsers();
+            theModel.addAttribute( "users", theUsers );
+            return "list_users";
+        }
     }
 
     /*
@@ -143,10 +148,14 @@ public class UserController {
     @GetMapping( "/maj" )
     public String showFormForUpdate( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User theUser = userService.getUser( userId );
-        theModel.addAttribute( "user", theUser );
-        return "user_uptade";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+            return "user_uptade";
+        }
     }
 
     /**
@@ -264,10 +273,14 @@ public class UserController {
     @GetMapping( "/moncompte" )
     public String showFormForAccountUser( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User theUser = userService.getUser( userId );
-        theModel.addAttribute( "user", theUser );
-        return "user_view";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+            return "user_view";
+        }
     }
 
     /*
@@ -286,7 +299,11 @@ public class UserController {
     @GetMapping( "/deconnexion" )
     public String showFormForDeconnectionUser( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        session.invalidate();
-        return "redirect:/compte/connexion";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            session.invalidate();
+            return "redirect:/compte/connexion";
+        }
     }
 }
