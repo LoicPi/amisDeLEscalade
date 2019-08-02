@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -63,6 +64,11 @@ public class Topo {
 
     public Topo() {
 
+    }
+
+    @Transient
+    public Integer idUser() {
+        return userId.getId();
     }
 
     public Integer getId() {
