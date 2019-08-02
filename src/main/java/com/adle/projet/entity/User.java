@@ -80,6 +80,11 @@ public class User {
 
     }
 
+    @Transient
+    public boolean isMember() {
+        return userRole.getRoleCode().equals( "member" );
+    }
+
     public Integer getId() {
         return id;
     }
@@ -146,11 +151,6 @@ public class User {
 
     public Boolean getUserMember() {
         return userMember;
-    }
-
-    @Transient
-    public boolean isMember() {
-        return userRole.getRoleCode().equals( "member" );
     }
 
     public void setUserMember( Boolean userMember ) {
