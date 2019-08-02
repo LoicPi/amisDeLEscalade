@@ -13,6 +13,19 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "topos" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Topo_findByUserId", query = "from Topo where user_id = :userId" ),
+} )
+/**
+ * Created Topo Bean Defined by id, name, city, county, country, descriptive,
+ * releaseDate, avaibility
+ * 
+ * Join with User Bean by userId
+ * 
+ * @author Loïc
+ *
+ */
+
 public class Topo {
 
     @Id
