@@ -81,10 +81,10 @@
     											<h5 class="mb-1"><c:out value="${topo.topoName }" /></h5>
     											<c:choose>
     												<c:when test ="${ !topoAvailability }">
-    													<a class="btn btn-success btn-sm">Disponible</a>
+    													<small>Disponible</small>
     												</c:when>
     												<c:otherwise>
-    													<a class="btn btn-warning btn-sm">Prété</a>
+    													<small>Prété</small>
     												</c:otherwise>
     											</c:choose>
     										</div>
