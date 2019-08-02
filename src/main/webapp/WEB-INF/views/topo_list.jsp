@@ -32,18 +32,18 @@
       						</thead>
 							<tbody>
       							<c:forEach items="${topos}" var="topo">		
-       								<!-- link to Edit detail of toipo
-       								<c:url var="viewTopo" value="/topo/affichageTopo">
+   
+       								<c:url var="viewTopo" value="/topo/vuetopo">
         								<c:param name="topoId" value="${topo.id}" />
-       								</c:url> -->
+       								</c:url>
        						
        								<tr>
         								<td>${topo.topoName}</td>
         								<td>${topo.topoCity}</td>
         								<td>${topo.topoCounty}</td>
-        								<!--  <td>
+        								<td>
          									<a href="${viewTopo}">Detail</a>
-        								</td>-->
+        								</td>
 									</tr>
 								</c:forEach>
 							</tbody>
