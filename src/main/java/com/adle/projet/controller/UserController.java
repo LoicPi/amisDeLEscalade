@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.entity.Role;
+import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.RoleService;
+import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.tools.PasswordEncryptor;
 import com.adle.projet.validator.UserLoggValidator;
@@ -56,6 +58,9 @@ public class UserController {
 
     @Autowired
     private RoleService                 roleService;
+
+    @Autowired
+    private TopoService                 topoService;
 
     /*
      * ***************************** List of User *****************************
@@ -278,7 +283,9 @@ public class UserController {
         } else {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
             User theUser = userService.getUser( userId );
+            List<Topo> topos = topoService.findTopoByUserId( userId );
             theModel.addAttribute( "user", theUser );
+            theModel.addAttribute( "topos", topos );
             return "user_view";
         }
     }
