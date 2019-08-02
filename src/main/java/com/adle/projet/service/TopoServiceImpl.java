@@ -38,4 +38,9 @@ public class TopoServiceImpl implements TopoService {
 
     }
 
+    @Override
+    public List<Topo> findTopoByUserId( int userId ) {
+        return topoDAO.findTopoByUserId( userId );
+    }
+
 }

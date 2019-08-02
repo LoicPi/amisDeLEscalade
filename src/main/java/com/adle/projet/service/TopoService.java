@@ -14,4 +14,5 @@ public interface TopoService {
 
     public void updateTopo( Topo topo );
 
+    public List<Topo> findTopoByUserId( int userId );
 }
