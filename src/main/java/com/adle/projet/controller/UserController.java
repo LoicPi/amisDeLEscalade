@@ -81,7 +81,7 @@ public class UserController {
         } else {
             List<User> theUsers = userService.getUsers();
             theModel.addAttribute( "users", theUsers );
-            return "list_users";
+            return "user_list";
         }
     }
 
@@ -103,7 +103,7 @@ public class UserController {
         List<Role> roles = roleService.getRoles();
         theModel.addAttribute( "user", theUser );
         theModel.addAttribute( "roles", roles );
-        return "registration";
+        return "user_registration";
     }
 
     /**
@@ -127,7 +127,7 @@ public class UserController {
 
         if ( result.hasErrors() ) {
             theModel.addAttribute( "user", theUser );
-            return "registration";
+            return "user_registration";
         }
         if ( theUser.getUserMember() ) {
             theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
