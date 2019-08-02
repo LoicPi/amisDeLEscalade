@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
@@ -50,9 +51,15 @@ public class TopoController {
      */
     @GetMapping( "/" )
     public String listTopos( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+        }
         List<Topo> theTopos = topoService.getTopos();
         theModel.addAttribute( "topos", theTopos );
-        return "list_topos";
+        return "topo_list";
     }
 
     /*
@@ -78,7 +85,7 @@ public class TopoController {
             theModel.addAttribute( "user", theUser );
             Topo theTopo = new Topo();
             theModel.addAttribute( "topo", theTopo );
-            return "registration_topo";
+            return "topo_registration";
         }
     }
 
@@ -102,8 +109,27 @@ public class TopoController {
         User theUser = userService.getUser( userId );
         theTopo.setUserId( theUser );
         topoService.saveTopo( theTopo );
-        session.setAttribute( "userLoginId", theUser.getId() );
-        return "redirect:/compte/moncompte";
+        session.setAttribute( "userLoginId", userId );
+        session.setAttribute( "topoId", theTopo.getId() );
+        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+    }
+
+    /*
+     * ************************* Registration of Topo *************************
+     */
+
+    @GetMapping( "/vuetopo" )
+    public String formForTopoView( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+        }
+        Topo theTopo = topoService.getTopo( topoId );
+        theModel.addAttribute( "topo", theTopo );
+        return "topo_view";
     }
 
 }
