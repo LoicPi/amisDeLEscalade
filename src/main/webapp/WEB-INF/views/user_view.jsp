@@ -88,6 +88,8 @@
     												</c:otherwise>
     											</c:choose>
     										</div>
+    										<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
+    										<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
     									</div>
     								</c:forEach>
     							</div>		
