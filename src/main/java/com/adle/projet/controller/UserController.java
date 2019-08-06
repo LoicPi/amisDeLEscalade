@@ -129,9 +129,7 @@ public class UserController {
             theModel.addAttribute( "user", theUser );
             return "user_registration";
         }
-        if ( theUser.getUserMember() ) {
-            theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-        }
+        theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
         userService.saveUser( theUser );
         session.setAttribute( "userLoginId", theUser.getId() );
         return "redirect:/compte/moncompte";
