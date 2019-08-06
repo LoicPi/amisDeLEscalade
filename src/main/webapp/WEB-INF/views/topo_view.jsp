@@ -52,7 +52,11 @@
 									<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoCounty }" /></label>
 								</div>
 								<div class="form-group row justify-content-center">
-									<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Descritpion :</label>
+									<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Pays :</label>
+									<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoCountry }" /></label>
+								</div>
+								<div class="form-group row justify-content-center">
+									<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Description :</label>
 									<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoDescriptive }" /></label>
 								</div>
 								<div class="form-group row justify-content-center">
