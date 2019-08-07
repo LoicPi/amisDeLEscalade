@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
+import com.adle.projet.validator.TopoValidator;
 
 /**
  * Controller for Topo
@@ -30,10 +33,13 @@ import com.adle.projet.service.UserService;
 public class TopoController {
 
     @Autowired
-    private UserService userService;
+    private UserService   userService;
 
     @Autowired
-    private TopoService topoService;
+    private TopoService   topoService;
+
+    @Autowired
+    private TopoValidator topoValidator;
 
     /*
      * ************************* List of Topo *************************
@@ -98,13 +104,14 @@ public class TopoController {
      *            attribute to page jsp
      * @param request
      *            information on the session
-     * @return the user account page
+     * @return the topo view
      */
     @PostMapping( "/saveTopo" )
-    public String saveUser( @ModelAttribute( "topo" ) Topo theTopo, Model theModel,
+    public String saveUser( @ModelAttribute( "topo" ) Topo theTopo, Model theModel, BindingResult result,
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
+        topoValidator.validate( theTopo, result );
         Integer userId = (Integer) session.getAttribute( "userLoginId" );
         User theUser = userService.getUser( userId );
         theTopo.setUserId( theUser );
@@ -115,9 +122,20 @@ public class TopoController {
     }
 
     /*
-     * ************************* Registration of Topo *************************
+     * ************************* Topo Page *************************
      */
 
+    /**
+     * Page of details on topo
+     * 
+     * @param topoId
+     *            the id of the topo
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return topo view
+     */
     @GetMapping( "/vuetopo" )
     public String formForTopoView( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
@@ -129,7 +147,56 @@ public class TopoController {
         }
         Topo theTopo = topoService.getTopo( topoId );
         theModel.addAttribute( "topo", theTopo );
+        session.setAttribute( "topoId", theTopo.getId() );
         return "topo_view";
+    }
+
+    /*
+     * ************************* Topo Update *************************
+     */
+
+    @GetMapping( "/majtopo" )
+    public String formForTopoUpdate( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            Integer topoId = (Integer) session.getAttribute( "topoId" );
+            Topo theTopo = topoService.getTopo( topoId );
+            Integer topoUserId = theTopo.idUser();
+            if ( !topoUserId.equals( userId ) ) {
+                return "redirect:/";
+            } else {
+                theModel.addAttribute( "topo", theTopo );
+                return "topo_update";
+            }
+        }
+    }
+
+    @PostMapping( "/updatetopo" )
+    public String updateTopo( @Valid @ModelAttribute( "topo" ) Topo theTopo, BindingResult result, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        topoValidator.validate( theTopo, result );
+        Integer topoId = (Integer) session.getAttribute( "topoId" );
+        Topo topoUpdate = topoService.getTopo( topoId );
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "topo", theTopo );
+            return "redirect:/topo/maj";
+        } else {
+            topoUpdate.setTopoName( theTopo.getTopoName() );
+            topoUpdate.setTopoCity( theTopo.getTopoCity() );
+            topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
+            topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
+            topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
+            topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
+            topoService.updateTopo( topoUpdate );
+            session.setAttribute( "userLoginId", userId );
+            session.setAttribute( "topo", topoUpdate );
+            return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
+        }
     }
 
 }
