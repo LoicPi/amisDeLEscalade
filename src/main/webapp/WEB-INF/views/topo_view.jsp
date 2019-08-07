@@ -20,7 +20,7 @@
    					<div class="card-header text-center row justify-content-between">
 						<h1><c:out value="${ topo.topoName }" /></h1>
 						<c:choose>
-							<c:when test="${idUser.equals(user.id)}">	
+							<c:when test="${(user.id).equals((topo.userId).id)}">	
 								<c:url var="editTopoLink" value="/topo/majtopo">
         								<c:param name="topoId" value="${topo.id}" />
        							</c:url>
@@ -28,10 +28,10 @@
         								<c:param name="topoId" value="${topo.id}" />
        								</c:url>
 								<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${editTopoLink}" role="button">Editer topo</a>
+        								<a class="btn btn-info btn-sm" href="${editTopoLink}" role="button">Editer</a>
       							</div>
       							<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${deleteTopoLink}" role="button">Supprimer topo</a>
+        								<a class="btn btn-info btn-sm" href="${deleteTopoLink}" role="button">Supprimer</a>
       							</div>
 							</c:when>
 							<c:otherwise>
