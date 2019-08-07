@@ -35,7 +35,7 @@ public class Topo {
     private Integer id;
 
     @Column( name = "topo_name" )
-    @Size( max = 100, min = 3 )
+    @Size( max = 100, min = 3, message = "{topo.name.invalid}" )
     private String  topoName;
 
     @Column( name = "topo_city" )
@@ -48,11 +48,11 @@ public class Topo {
     private String  topoCountry;
 
     @Column( name = "topo_descriptive" )
-    @Size( max = 600, min = 10 )
+    @Size( max = 600, min = 10, message = "{topo.descriptive.invalid}" )
     private String  topoDescriptive;
 
     @Column( name = "topo_releaseDate" )
-    @Size( max = 10, min = 10 )
+    @Size( max = 10, min = 10, message = "{topo.descriptive.invalid}" )
     private String  topoReleaseDate;
 
     @Column( name = "topo_availability" )
