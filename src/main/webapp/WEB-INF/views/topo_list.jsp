@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Inscription</title>
+		<title>Topos</title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
