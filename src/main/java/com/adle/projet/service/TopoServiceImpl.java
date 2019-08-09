@@ -43,4 +43,10 @@ public class TopoServiceImpl implements TopoService {
         return topoDAO.findTopoByUserId( userId );
     }
 
+    @Override
+    public void deleteTopo( int theId ) {
+        topoDAO.deleteTopo( theId );
+
+    }
+
 }

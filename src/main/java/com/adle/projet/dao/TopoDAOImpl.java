@@ -68,4 +68,11 @@ public class TopoDAOImpl implements TopoDAO {
         logger.info( "Topo List : " + query.getResultList() );
         return topoResult;
     }
+
+    @Override
+    public void deleteTopo( int theId ) {
+        Session session = sessionFactory.getCurrentSession();
+        Topo theTopo = session.byId( Topo.class ).load( theId );
+        session.delete( theTopo );
+    }
 }
