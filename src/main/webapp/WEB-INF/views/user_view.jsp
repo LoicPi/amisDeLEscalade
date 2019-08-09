@@ -89,7 +89,13 @@
     											</c:choose>
     										</div>
     										<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
-    										<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
+    										<div class="d-flex w-100 justify-content-between">
+    											<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
+    											<c:url var="viewTopo" value="/topo/vuetopo">
+        											<c:param name="topoId" value="${topo.id}" />
+       											</c:url>
+    											<a class="btn btn-info btn-sm" href="${viewTopo}" role="button">Editer</a>
+    										</div>
     									</div>
     								</c:forEach>
     							</div>		
