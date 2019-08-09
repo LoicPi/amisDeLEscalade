@@ -199,4 +199,10 @@ public class TopoController {
         }
     }
 
+    @GetMapping( "/deletetopo" )
+    public String deleteTopo( @RequestParam( "topoId" ) int theId ) {
+        topoService.deleteTopo( theId );
+        return "redirect:/topo/";
+    }
+
 }
