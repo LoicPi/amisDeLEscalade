@@ -24,7 +24,7 @@
 								<c:url var="editTopoLink" value="/topo/majtopo">
         								<c:param name="topoId" value="${topo.id}" />
        							</c:url>
-								<c:url var="deleteTopoLink" value="/topo/supprimertopo">
+								<c:url var="deleteTopoLink" value="/topo/deletetopo">
         								<c:param name="topoId" value="${topo.id}" />
        								</c:url>
 								<div class="col-lg-2 col-sm-6">
