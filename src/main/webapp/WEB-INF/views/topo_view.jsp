@@ -17,29 +17,8 @@
       		</header>
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
-   					<div class="card-header text-center row justify-content-between">
-						<h1><c:out value="${ topo.topoName }" /></h1>
-						<c:choose>
-							<c:when test="${(user.id).equals((topo.userId).id)}">	
-								<c:url var="editTopoLink" value="/topo/majtopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       							</c:url>
-								<c:url var="deleteTopoLink" value="/topo/deletetopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-								<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${editTopoLink}" role="button">Editer</a>
-      							</div>
-      							<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${deleteTopoLink}" role="button">Supprimer</a>
-      							</div>
-							</c:when>
-							<c:otherwise>
-								<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="" role="button">Reserver topo</a>
-      							</div>
-							</c:otherwise>
-						</c:choose>
+   					<div class="card-header">
+						<h1 class="text-center"><c:out value="${ topo.topoName }" /></h1>
 					</div>
 					<div class="card-body">
 						<form class="form-horizontal" role="form">
@@ -64,6 +43,24 @@
 									<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoReleaseDate }" /></label>
 								</div>
       					</form>
+      					<hr>
+						<div class="row justify-content-around">
+							<c:choose>
+								<c:when test="${(user.id).equals((topo.userId).id)}">	
+									<c:url var="editTopoLink" value="/topo/majtopo">
+        								<c:param name="topoId" value="${topo.id}" />
+       								</c:url>
+									<c:url var="deleteTopoLink" value="/topo/deletetopo">
+        								<c:param name="topoId" value="${topo.id}" />
+       								</c:url>
+        							<a class="btn btn-info btn-sm  col-4" href="${editTopoLink}" role="button">Editer</a>
+        							<a class="btn btn-danger btn-sm col-4" href="${deleteTopoLink}" role="button">Supprimer</a>
+								</c:when>
+								<c:otherwise>
+        							<a class="btn btn-info btn-sm col-4" href="" role="button">Reserver topo</a>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 			</div>
