@@ -37,7 +37,7 @@ public class UserValidator implements Validator {
 
         if ( !( patternEmail.matcher( user.getEmail() ).matches() ) ) {
             logger.info( "Email is not correct." );
-            errors.rejectValue( "email", "userValidator.email.invalid" );
+            errors.rejectValue( "email", "user.email.invalid" );
         }
 
         if ( userService.findUserWithEmail( user.getEmail() ).isPresent() ) {

@@ -31,12 +31,12 @@ public class UserUpdatePasswordValidator implements Validator {
 
         if ( userPassword.equals( "" ) ) {
             logger.info( "Password is empty." );
-            errors.rejectValue( "password", "userUpdatePasswordValidator.password.empty" );
+            errors.rejectValue( "password", "userLoggValidator.password.empty" );
         }
 
         if ( !userPassword.equals( "" ) && !( patternPassword.matcher( user.getPassword() ).matches() ) ) {
             logger.info( "Password is not correct." );
-            errors.rejectValue( "password", "userUpdatePasswordValidator.password.invalid" );
+            errors.rejectValue( "password", "userValidator.password.invalid" );
         }
     }
 

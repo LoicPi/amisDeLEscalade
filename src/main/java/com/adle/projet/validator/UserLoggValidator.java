@@ -46,7 +46,7 @@ public class UserLoggValidator implements Validator {
 
         if ( !userEmail.equals( "" ) && !( patternEmail.matcher( user.getEmail() ).matches() ) ) {
             logger.info( "Email is not correct." );
-            errors.rejectValue( "email", "userLoggValidator.email.invalid" );
+            errors.rejectValue( "email", "user.email.invalid" );
         }
 
         if ( userPassword.equals( "" ) ) {
@@ -56,7 +56,7 @@ public class UserLoggValidator implements Validator {
 
         if ( !userPassword.equals( "" ) && !( patternPassword.matcher( user.getPassword() ).matches() ) ) {
             logger.info( "Password is not correct." );
-            errors.rejectValue( "password", "userLoggValidator.password.invalid" );
+            errors.rejectValue( "password", "userValidator.password.invalid" );
         }
 
         if ( !userEmail.equals( "" ) && !( userService.findUserWithEmail( userEmail ) ).isPresent() ) {

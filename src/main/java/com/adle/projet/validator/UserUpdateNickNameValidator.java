@@ -36,7 +36,7 @@ public class UserUpdateNickNameValidator implements Validator {
 
         if ( userService.findUserWithNickName( userNickName ).isPresent() ) {
             logger.info( "NickName already exists in the database." );
-            errors.rejectValue( "nickName", "userUpdateNickNameValidator.nickName.know" );
+            errors.rejectValue( "nickName", "userValidator.nickName.know" );
         }
 
     }

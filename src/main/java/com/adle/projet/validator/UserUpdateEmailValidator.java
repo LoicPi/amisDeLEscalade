@@ -36,17 +36,17 @@ public class UserUpdateEmailValidator implements Validator {
 
         if ( userEmail.equals( "" ) ) {
             logger.info( "Email is empty." );
-            errors.rejectValue( "email", "userUpdateEmailValidator.email.empty" );
+            errors.rejectValue( "email", "userLoggValidator.email.empty" );
         }
 
         if ( !userEmail.equals( "" ) && !( patternEmail.matcher( user.getEmail() ).matches() ) ) {
             logger.info( "Email is not correct." );
-            errors.rejectValue( "email", "userUpdateEmailValidator.email.invalid" );
+            errors.rejectValue( "email", "user.email.invalid" );
         }
 
         if ( userService.findUserWithEmail( user.getEmail() ).isPresent() ) {
             logger.info( "Email already exists in the database." );
-            errors.rejectValue( "email", "userUpdateEmailValidator.email.know" );
+            errors.rejectValue( "email", "userValidator.email.know" );
         }
 
     }
