@@ -57,14 +57,6 @@
 										<form:errors path="email" cssClass="error" />
 									</div>
 								</div>
-
-								<div class="form-group">
-									<label class="col-md-3 control-label" for=email>Password :</label>
-									<div class="col-md-8">
-										<form:input path="password" class="form-control" type="password" placeholder="${user.password}" />
-										<form:errors path="password" cssClass="error" />
-									</div>
-								</div>
 							      				
       							<div class="form-group">
         							<button type="submit" class="btn btn-success btn-lg float-right">Modifier</button>

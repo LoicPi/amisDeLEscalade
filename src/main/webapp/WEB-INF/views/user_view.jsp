@@ -26,15 +26,13 @@
 								  	<i class="fas fa-info-circle"></i>
 									Votre qualité de membre prend 48h.
 								</div>-->
-								<div class="row justify-content-between">
-									<h3 class="col-lg-8 col-sm-6">Mes infos</h3>
+								<div class="row justify-content-around">
+									<h4 class="col-lg-8 col-6">Mes infos</h4>
 
 									<c:url var="updateLink" value="/compte/maj">
         								<c:param name="userId" value="${user.id}" />
        								</c:url>
-      								<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${updateLink}" role="button">Modifier</a>
-      								</div>
+        							<a class="btn btn-info btn-sm" href="${updateLink}" role="button">Modifier</a>
       							</div>
 								<hr>
 								<form class="form-horizontal" role="form">
@@ -54,6 +52,15 @@
 										<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">E-mail :</label>
 										<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ user.email }" /></label>
 									</div>
+									<div class="form-group row justify-content-center">
+										<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Mot de Passe :</label>
+										<label class="col-md-6 col-10 col-form-label form-control-label border">
+											<c:url var="updatePassword" value="/compte/majmdp">
+        										<c:param name="userId" value="${user.id}" />
+       										</c:url>
+        									<a class="btn btn-info btn-sm col-6" href="${updatePassword}" role="button">Modifier</a>
+										</label>
+									</div>
 									<c:if test="${ user.member }">
 										<div class="form-group">
 											<label class="control-label">
@@ -61,17 +68,15 @@
 											</label>
 										</div>
 									</c:if>
-      							</form>
-      							<hr>
-      							<div class="row justify-content-between">
+      							</form>									
+								<hr>
+      							<div class="row justify-content-around">
 									<h4 class="col-lg-8 col-sm-6">Mes topos</h4>
 
 									<c:url var="createTopoLink" value="/topo/creationtopo">
         								<c:param name="userId" value="${user.id}" />
        								</c:url>
-      								<div class="col-lg-2 col-sm-6">
-        								<a class="btn btn-info btn-sm" href="${createTopoLink}" role="button">Créer topo</a>
-      								</div>
+        							<a class="btn btn-info btn-sm" href="${createTopoLink}" role="button">Créer topo</a>
       							</div>
       							<hr>
       							<div class="list-group">
