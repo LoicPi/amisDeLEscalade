@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.entity.Role;
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
@@ -188,10 +189,6 @@ public class UserController {
             userUpdateEmailValidator.validate( theUser, result );
         }
 
-        if ( !PasswordEncryptor.checkPassword( theUser.getPassword(), userUpdate.getPassword() ) ) {
-            userUptadePasswordValidator.validate( theUser, result );
-        }
-
         if ( result.hasErrors() ) {
             theModel.addAttribute( "user", theUser );
             return "user_uptade";
@@ -311,4 +308,44 @@ public class UserController {
             return "redirect:/compte/connexion";
         }
     }
+
+    /*
+     * ************************* User Password Change *************************
+     */
+
+    @GetMapping( "/majmdp" )
+    public String showFormForChangePasswordUser( Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            UpdateUser theUser = new UpdateUser();
+            session.setAttribute( "userLoginId", userId );
+            theModel.addAttribute( "updateUser", theUser );
+            return "user_changepassword";
+        }
+    }
+
+    @PostMapping( "/updatePassword" )
+    public String updatePassword( @Valid @ModelAttribute( "updateUser" ) UpdateUser theUser, BindingResult result,
+            Model theModel, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User userToUpdate = userService.getUser( userId );
+        if ( !PasswordEncryptor.checkPassword( theUser.getOldPassword(), userToUpdate.getPassword() ) ) {
+            userUptadePasswordValidator.validate( theUser, result );
+        }
+
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "user", theUser );
+            return "user_changepassword";
+        } else {
+            userToUpdate.setPassword( PasswordEncryptor.hashPassword( theUser.getNewPassword() ) );
+            userService.updateUser( userToUpdate );
+            session.setAttribute( "userLoginId", userToUpdate.getId() );
+            return "redirect:/compte/moncompte";
+        }
+    }
+
 }
