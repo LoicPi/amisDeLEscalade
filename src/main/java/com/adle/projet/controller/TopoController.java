@@ -155,6 +155,15 @@ public class TopoController {
      * ************************* Topo Update *************************
      */
 
+    /**
+     * Page to update topo
+     * 
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return topo_update view
+     */
     @GetMapping( "/majtopo" )
     public String formForTopoUpdate( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -199,6 +208,17 @@ public class TopoController {
         }
     }
 
+    /*
+     * ************************* Topo Delete *************************
+     */
+
+    /**
+     * Page to delete a topo
+     * 
+     * @param theId
+     *            the id of the topo
+     * @return view of the topo's list
+     */
     @GetMapping( "/deletetopo" )
     public String deleteTopo( @RequestParam( "topoId" ) int theId ) {
         topoService.deleteTopo( theId );
