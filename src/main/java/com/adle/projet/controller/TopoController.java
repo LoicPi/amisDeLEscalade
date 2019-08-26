@@ -238,7 +238,7 @@ public class TopoController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User userBooker = userService.getUser( userId );
+        User userTaker = userService.getUser( userId );
         Topo theTopo = topoService.getTopo( topoId );
         User userLender = theTopo.getUserId();
         theTopo.setTopoAvailability( false );
@@ -248,8 +248,8 @@ public class TopoController {
         String mailSubject = "Demande de réservation sur le topo : " + theTopo.getTopoName();
         String mailText = "Bonjour " + userLender.getLastName() +
                 "\n\nVotre topo " + theTopo.getTopoName() + " a fait l'objet d'une réservation par "
-                + userBooker.getNickName() + "." +
-                "\n\nMerci de lui envoyer un message à l'adresse suivante " + userBooker.getEmail()
+                + userTaker.getNickName() + "." +
+                "\n\nMerci de lui envoyer un message à l'adresse mail suivante " + userTaker.getEmail()
                 + " afin de convenir des modalités de prêt du topo." +
                 "\n\nN'oubliez pas de remettre en 'disponible' le topo lors de son retour ou si finalement le prêt ne se fait pas."
                 +
