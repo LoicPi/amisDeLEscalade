@@ -99,7 +99,7 @@
     											<c:url var="viewTopo" value="/topo/vuetopo">
         											<c:param name="topoId" value="${topo.id}" />
        											</c:url>
-    											<a class="btn btn-info btn-sm" href="${viewTopo}" role="button">Editer</a>
+    											<a class="btn btn-info btn-sm" href="${viewTopo}" role="button">Détail</a>
     										</div>
     									</div>
     								</c:forEach>
