@@ -36,6 +36,13 @@
         <artifactId>spring-orm</artifactId>
         <version>${spring.version}</version>
     </dependency>
+    
+    <!-- Spring context support -->
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context-support</artifactId>
+    	<version>${spring.version}</version>
+	</dependency>
  
     <!-- Hibernate Core -->
     <dependency>
@@ -113,6 +120,13 @@
     	<groupId>org.mindrot</groupId>
     	<artifactId>jbcrypt</artifactId>
     	<version>0.4</version>
+	</dependency>
+	
+	<!-- java mail dependencies -->
+	<dependency>
+   		<groupId>javax.mail</groupId>
+   		<artifactId>mail</artifactId>
+   		<version>1.4.7</version>
 	</dependency>
 	
   </dependencies>
