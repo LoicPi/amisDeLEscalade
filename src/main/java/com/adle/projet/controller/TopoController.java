@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
+import com.adle.projet.service.EmailService;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.TopoValidator;
@@ -40,6 +41,9 @@ public class TopoController {
 
     @Autowired
     private TopoValidator topoValidator;
+
+    @Autowired
+    private EmailService  emailService;
 
     /*
      * ************************* List of Topo *************************
@@ -225,4 +229,34 @@ public class TopoController {
         return "redirect:/topo/";
     }
 
+    /*
+     * ************************* Topo Booking *************************
+     */
+
+    @GetMapping( "bookingtopo" )
+    public String bookTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User userBooker = userService.getUser( userId );
+        Topo theTopo = topoService.getTopo( topoId );
+        User userLender = theTopo.getUserId();
+        theTopo.setTopoAvailability( false );
+        topoService.updateTopo( theTopo );
+
+        String mailTo = userLender.getEmail();
+        String mailSubject = "Demande de réservation sur le topo : " + theTopo.getTopoName();
+        String mailText = "Bonjour " + userLender.getLastName() +
+                "\n\nVotre topo " + theTopo.getTopoName() + " a fait l'objet d'une réservation par "
+                + userBooker.getNickName() + "." +
+                "\n\nMerci de lui envoyer un message à l'adresse suivante " + userBooker.getEmail()
+                + " afin de convenir des modalités de prêt du topo." +
+                "\n\nN'oubliez pas de remettre en 'disponible' le topo lors de son retour ou si finalement le prêt ne se fait pas."
+                +
+                "\n\nCordialement," +
+                "\n\nLes amis de l'escalade";
+        emailService.sendSimpleMessage( mailTo, mailSubject, mailText );
+
+        return "redirect:/topo/vuetopo/";
+    }
 }
