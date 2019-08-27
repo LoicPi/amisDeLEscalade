@@ -85,11 +85,11 @@
     										<div class="d-flex w-100 justify-content-between">
     											<h5 class="mb-1"><c:out value="${topo.topoName }" /></h5>
     											<c:choose>
-    												<c:when test ="${ !topoAvailability }">
-    													<small>Disponible</small>
+    												<c:when test ="${ topo.availability }">
+    													<small>Prété</small>
     												</c:when>
     												<c:otherwise>
-    													<small>Prété</small>
+    													<small>Disponible</small>
     												</c:otherwise>
     											</c:choose>
     										</div>

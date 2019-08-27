@@ -71,6 +71,11 @@ public class Topo {
         return userId.getId();
     }
 
+    @Transient
+    public boolean isAvailability() {
+        return topoAvailability;
+    }
+
     public Integer getId() {
         return id;
     }
