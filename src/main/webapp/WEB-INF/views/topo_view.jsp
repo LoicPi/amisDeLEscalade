@@ -57,7 +57,10 @@
         							<a class="btn btn-danger btn-sm col-4" href="${deleteTopoLink}" role="button">Supprimer</a>
 								</c:when>
 								<c:otherwise>
-        							<a class="btn btn-info btn-sm col-4" href="" role="button">Reserver topo</a>
+									<c:url var="bookTopoLink" value="/topo/bookingtopo">
+        								<c:param name="topoId" value="${topo.id}" />
+       								</c:url>
+        							<a class="btn btn-info btn-sm col-4" href="${bookTopoLink}" role="button">Réserver ce Topo</a>
 								</c:otherwise>
 							</c:choose>
 						</div>
