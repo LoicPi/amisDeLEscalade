@@ -123,17 +123,20 @@ public class UserController {
     @PostMapping( "/saveUser" )
     public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
-        userValidator.validate( theUser, result );
         HttpSession session = request.getSession();
-
-        if ( result.hasErrors() ) {
-            theModel.addAttribute( "user", theUser );
-            return "user_registration";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            userValidator.validate( theUser, result );
+            if ( result.hasErrors() ) {
+                theModel.addAttribute( "user", theUser );
+                return "user_registration";
+            }
+            theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
+            userService.saveUser( theUser );
+            session.setAttribute( "userLoginId", theUser.getId() );
+            return "redirect:/compte/moncompte";
         }
-        theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-        userService.saveUser( theUser );
-        session.setAttribute( "userLoginId", theUser.getId() );
-        return "redirect:/compte/moncompte";
     }
 
     /*
@@ -180,26 +183,30 @@ public class UserController {
     public String updateUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User userUpdate = userService.getUser( userId );
-        if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
-            userUpdateNickNameValidator.validate( theUser, result );
-        }
-        if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
-            userUpdateEmailValidator.validate( theUser, result );
-        }
-
-        if ( result.hasErrors() ) {
-            theModel.addAttribute( "user", theUser );
-            return "user_uptade";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
         } else {
-            userUpdate.setFirstName( theUser.getFirstName() );
-            userUpdate.setLastName( theUser.getLastName() );
-            userUpdate.setNickName( theUser.getNickName() );
-            userUpdate.setEmail( theUser.getEmail() );
-            userService.updateUser( userUpdate );
-            session.setAttribute( "userLoginId", theUser.getId() );
-            return "redirect:/compte/moncompte";
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User userUpdate = userService.getUser( userId );
+            if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
+                userUpdateNickNameValidator.validate( theUser, result );
+            }
+            if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
+                userUpdateEmailValidator.validate( theUser, result );
+            }
+
+            if ( result.hasErrors() ) {
+                theModel.addAttribute( "user", theUser );
+                return "user_uptade";
+            } else {
+                userUpdate.setFirstName( theUser.getFirstName() );
+                userUpdate.setLastName( theUser.getLastName() );
+                userUpdate.setNickName( theUser.getNickName() );
+                userUpdate.setEmail( theUser.getEmail() );
+                userService.updateUser( userUpdate );
+                session.setAttribute( "userLoginId", theUser.getId() );
+                return "redirect:/compte/moncompte";
+            }
         }
     }
 
@@ -243,17 +250,20 @@ public class UserController {
      */
     @PostMapping( "/logUser" )
     public String logUser( @ModelAttribute( "user" ) User theUser, BindingResult result, HttpServletRequest request ) {
-        userLoggValidator.validate( theUser, result );
 
         HttpSession session = request.getSession();
-
-        if ( result.hasErrors() ) {
-            session.setAttribute( "user", theUser );
-            return "account_login";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
         } else {
-            User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
-            session.setAttribute( "userLoginId", userLogin.getId() );
-            return "redirect:/compte/moncompte";
+            userLoggValidator.validate( theUser, result );
+            if ( result.hasErrors() ) {
+                session.setAttribute( "user", theUser );
+                return "account_login";
+            } else {
+                User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
+                session.setAttribute( "userLoginId", userLogin.getId() );
+                return "redirect:/compte/moncompte";
+            }
         }
     }
 
@@ -331,20 +341,24 @@ public class UserController {
     public String updatePassword( @Valid @ModelAttribute( "updateUser" ) UpdateUser theUser, BindingResult result,
             Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User userToUpdate = userService.getUser( userId );
-        if ( !PasswordEncryptor.checkPassword( theUser.getOldPassword(), userToUpdate.getPassword() ) ) {
-            userUptadePasswordValidator.validate( theUser, result );
-        }
-
-        if ( result.hasErrors() ) {
-            theModel.addAttribute( "user", theUser );
-            return "user_changepassword";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
         } else {
-            userToUpdate.setPassword( PasswordEncryptor.hashPassword( theUser.getNewPassword() ) );
-            userService.updateUser( userToUpdate );
-            session.setAttribute( "userLoginId", userToUpdate.getId() );
-            return "redirect:/compte/moncompte";
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User userToUpdate = userService.getUser( userId );
+            if ( !PasswordEncryptor.checkPassword( theUser.getOldPassword(), userToUpdate.getPassword() ) ) {
+                userUptadePasswordValidator.validate( theUser, result );
+            }
+
+            if ( result.hasErrors() ) {
+                theModel.addAttribute( "user", theUser );
+                return "user_changepassword";
+            } else {
+                userToUpdate.setPassword( PasswordEncryptor.hashPassword( theUser.getNewPassword() ) );
+                userService.updateUser( userToUpdate );
+                session.setAttribute( "userLoginId", userToUpdate.getId() );
+                return "redirect:/compte/moncompte";
+            }
         }
     }
 

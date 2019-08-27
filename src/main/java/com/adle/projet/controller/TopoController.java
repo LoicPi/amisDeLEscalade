@@ -115,14 +115,18 @@ public class TopoController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        topoValidator.validate( theTopo, result );
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User theUser = userService.getUser( userId );
-        theTopo.setUserId( theUser );
-        topoService.saveTopo( theTopo );
-        session.setAttribute( "userLoginId", userId );
-        session.setAttribute( "topoId", theTopo.getId() );
-        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            topoValidator.validate( theTopo, result );
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theTopo.setUserId( theUser );
+            topoService.saveTopo( theTopo );
+            session.setAttribute( "userLoginId", userId );
+            session.setAttribute( "topoId", theTopo.getId() );
+            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+        }
     }
 
     /*
@@ -191,24 +195,28 @@ public class TopoController {
     public String updateTopo( @Valid @ModelAttribute( "topo" ) Topo theTopo, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        topoValidator.validate( theTopo, result );
-        Integer topoId = (Integer) session.getAttribute( "topoId" );
-        Topo topoUpdate = topoService.getTopo( topoId );
-        if ( result.hasErrors() ) {
-            theModel.addAttribute( "topo", theTopo );
-            return "redirect:/topo/maj";
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
         } else {
-            topoUpdate.setTopoName( theTopo.getTopoName() );
-            topoUpdate.setTopoCity( theTopo.getTopoCity() );
-            topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
-            topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
-            topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
-            topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
-            topoService.updateTopo( topoUpdate );
-            session.setAttribute( "userLoginId", userId );
-            session.setAttribute( "topo", topoUpdate );
-            return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            topoValidator.validate( theTopo, result );
+            Integer topoId = (Integer) session.getAttribute( "topoId" );
+            Topo topoUpdate = topoService.getTopo( topoId );
+            if ( result.hasErrors() ) {
+                theModel.addAttribute( "topo", theTopo );
+                return "redirect:/topo/maj";
+            } else {
+                topoUpdate.setTopoName( theTopo.getTopoName() );
+                topoUpdate.setTopoCity( theTopo.getTopoCity() );
+                topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
+                topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
+                topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
+                topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
+                topoService.updateTopo( topoUpdate );
+                session.setAttribute( "userLoginId", userId );
+                session.setAttribute( "topo", topoUpdate );
+                return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
+            }
         }
     }
 
@@ -224,9 +232,14 @@ public class TopoController {
      * @return view of the topo's list
      */
     @GetMapping( "/deletetopo" )
-    public String deleteTopo( @RequestParam( "topoId" ) int theId ) {
-        topoService.deleteTopo( theId );
-        return "redirect:/topo/";
+    public String deleteTopo( @RequestParam( "topoId" ) int theId, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            topoService.deleteTopo( theId );
+            return "redirect:/topo/";
+        }
     }
 
     /*
@@ -248,29 +261,32 @@ public class TopoController {
     public String bookTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
-        User userTaker = userService.getUser( userId );
-        Topo theTopo = topoService.getTopo( topoId );
-        User userLender = theTopo.getUserId();
-        theTopo.setTopoAvailability( true );
-        topoService.updateTopo( theTopo );
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User userTaker = userService.getUser( userId );
+            Topo theTopo = topoService.getTopo( topoId );
+            User userLender = theTopo.getUserId();
+            theTopo.setTopoAvailability( true );
+            topoService.updateTopo( theTopo );
 
-        String mailFrom = userTaker.getEmail();
-        String mailTo = userLender.getEmail();
-        String mailSubject = "Demande de réservation sur le topo : " + theTopo.getTopoName();
-        String mailText = "Bonjour " + userLender.getLastName() +
-                "\n\nVotre topo " + theTopo.getTopoName() + " a fait l'objet d'une réservation par "
-                + userTaker.getNickName() + "." +
-                "\n\nMerci de lui envoyer un message à l'adresse mail suivante " + userTaker.getEmail()
-                + " afin de convenir des modalités de prêt du topo." +
-                "\n\nN'oubliez pas de remettre en 'disponible' le topo lors de son retour ou si finalement le prêt ne se fait pas."
-                +
-                "\n\nCordialement," +
-                "\n\nLes amis de l'escalade";
-        emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
+            String mailFrom = userTaker.getEmail();
+            String mailTo = userLender.getEmail();
+            String mailSubject = "Demande de réservation sur le topo : " + theTopo.getTopoName();
+            String mailText = "Bonjour " + userLender.getLastName() +
+                    "\n\nVotre topo " + theTopo.getTopoName() + " a fait l'objet d'une réservation par "
+                    + userTaker.getNickName() + "." +
+                    "\n\nMerci de lui envoyer un message à l'adresse mail suivante " + userTaker.getEmail()
+                    + " afin de convenir des modalités de prêt du topo." +
+                    "\n\nN'oubliez pas de remettre en 'disponible' le topo lors de son retour ou si finalement le prêt ne se fait pas."
+                    +
+                    "\n\nCordialement," +
+                    "\n\nLes amis de l'escalade";
+            emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
 
-        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
-
+            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+        }
     }
 
     /**
@@ -288,10 +304,13 @@ public class TopoController {
     public String availableTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Topo theTopo = topoService.getTopo( topoId );
-        theTopo.setTopoAvailability( false );
-        topoService.updateTopo( theTopo );
-        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
-
+        if ( session.getAttribute( "userLoginId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Topo theTopo = topoService.getTopo( topoId );
+            theTopo.setTopoAvailability( false );
+            topoService.updateTopo( theTopo );
+            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+        }
     }
 }
