@@ -233,7 +233,7 @@ public class TopoController {
      * ************************* Topo Booking *************************
      */
 
-    @GetMapping( "bookingtopo" )
+    @GetMapping( "/bookingtopo" )
     public String bookTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -241,9 +241,10 @@ public class TopoController {
         User userTaker = userService.getUser( userId );
         Topo theTopo = topoService.getTopo( topoId );
         User userLender = theTopo.getUserId();
-        theTopo.setTopoAvailability( false );
+        theTopo.setTopoAvailability( true );
         topoService.updateTopo( theTopo );
 
+        String mailFrom = userTaker.getEmail();
         String mailTo = userLender.getEmail();
         String mailSubject = "Demande de réservation sur le topo : " + theTopo.getTopoName();
         String mailText = "Bonjour " + userLender.getLastName() +
@@ -255,8 +256,8 @@ public class TopoController {
                 +
                 "\n\nCordialement," +
                 "\n\nLes amis de l'escalade";
-        emailService.sendSimpleMessage( mailTo, mailSubject, mailText );
+        emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
 
-        return "redirect:/topo/vuetopo/";
+        return "redirect:/topo/";
     }
 }
