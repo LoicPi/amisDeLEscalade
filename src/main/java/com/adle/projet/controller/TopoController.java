@@ -233,6 +233,17 @@ public class TopoController {
      * ************************* Topo Booking *************************
      */
 
+    /**
+     * Page to book a Topo
+     * 
+     * @param topoId
+     *            the id of the topo
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the view of the topo update
+     */
     @GetMapping( "/bookingtopo" )
     public String bookTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
@@ -262,6 +273,17 @@ public class TopoController {
 
     }
 
+    /**
+     * Page to available a Topo
+     * 
+     * @param topoId
+     *            the id of the topo
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the view of the topo update
+     */
     @GetMapping( "/availabilitytopo" )
     public String availableTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
