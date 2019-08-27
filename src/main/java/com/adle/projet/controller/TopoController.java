@@ -258,6 +258,18 @@ public class TopoController {
                 "\n\nLes amis de l'escalade";
         emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
 
-        return "redirect:/topo/";
+        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+
+    }
+
+    @GetMapping( "/availabilitytopo" )
+    public String availableTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        Topo theTopo = topoService.getTopo( topoId );
+        theTopo.setTopoAvailability( false );
+        topoService.updateTopo( theTopo );
+        return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+
     }
 }
