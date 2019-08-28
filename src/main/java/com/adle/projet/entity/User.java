@@ -67,6 +67,10 @@ public class User {
     @JoinColumn( name = "role_id" )
     private Role       userRole;
 
+    @ManyToOne( fetch = FetchType.EAGER )
+    @JoinColumn( name = "spot_id" )
+    private Spot       userSpot;
+
     @Transient
     private String     passwordControl;
 
@@ -75,6 +79,9 @@ public class User {
 
     @OneToMany( mappedBy = "userId" )
     private List<Topo> topos = new ArrayList<>();
+
+    @OneToMany( mappedBy = "userId" )
+    private List<Spot> spots = new ArrayList<>();
 
     public User() {
 
@@ -163,6 +170,22 @@ public class User {
 
     public void setTopos( List<Topo> topos ) {
         this.topos = topos;
+    }
+
+    public Spot getUserSpot() {
+        return userSpot;
+    }
+
+    public void setUserSpot( Spot userSpot ) {
+        this.userSpot = userSpot;
+    }
+
+    public List<Spot> getSpots() {
+        return spots;
+    }
+
+    public void setSpots( List<Spot> spots ) {
+        this.spots = spots;
     }
 
     @Override
