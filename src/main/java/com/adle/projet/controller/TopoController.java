@@ -179,6 +179,8 @@ public class TopoController {
             return "redirect:/compte/connexion";
         } else {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
             Integer topoId = (Integer) session.getAttribute( "topoId" );
             Topo theTopo = topoService.getTopo( topoId );
             Integer topoUserId = theTopo.idUser();
