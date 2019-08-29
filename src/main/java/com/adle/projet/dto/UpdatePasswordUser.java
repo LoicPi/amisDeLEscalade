@@ -1,12 +1,14 @@
 package com.adle.projet.dto;
 
-public class UpdateUser {
+public class UpdatePasswordUser {
 
-    private String oldPassword;
+    private Integer id;
 
-    private String newPassword;
+    private String  oldPassword;
 
-    private String confirmPassword;
+    private String  newPassword;
+
+    private String  confirmPassword;
 
     public String getOldPassword() {
         return oldPassword;
@@ -30,6 +32,14 @@ public class UpdateUser {
 
     public void setConfirmPassword( String confirmPassword ) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId( Integer id ) {
+        this.id = id;
     }
 
 }
