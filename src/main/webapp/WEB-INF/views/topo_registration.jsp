@@ -61,9 +61,11 @@
        							<form:errors path="topoReleaseDate" class="error" />
       						</div>    						
       						
-      						<div class="form-group col-lg-4 col-md-12">
-        						<button type="submit" class="btn btn-success btn-lg">Enregistrement</button>
-							</div>
+      						<hr>
+							<div class="row justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/connexion"/>" role="button">Annuler</a>
+      						</div>
       						
       					</form:form>
       				</div>	
