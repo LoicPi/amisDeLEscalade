@@ -210,7 +210,6 @@ public class UserController {
                 userUpdate.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             }
             userService.updateUser( userUpdate );
-            session.setAttribute( "userLoginId", theUser.getId() );
             return "redirect:/compte/moncompte";
         }
     }
