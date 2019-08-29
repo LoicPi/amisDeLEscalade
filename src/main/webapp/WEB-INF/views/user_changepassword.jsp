@@ -15,7 +15,7 @@
 			<header class="container">
         		<c:import url="inc/header_page.jsp" />
       		</header>
-      	</div>
+
       	<div class="col-md-8 mx-auto">
    			<div class="card border-secondary">
             	<div class="card-header text-center">
@@ -27,12 +27,12 @@
                 		<form:hidden path="id" />
                 		
                     	<div class="form-group">
-                        	<label class="col-md-3 control-label" for=oldPassword >Mot de Passe actuel :</label>
+                        	<label class="col-md-6 control-label" for=oldPassword >Ancien Mot de Passe :</label>
                             <form:input path="oldPassword" type="password" class="form-control" placeholder="Votre ancien mot de passe" />
                             <form:errors path="oldPassword" class="error" />
                         </div>
                         <div class="form-group">
-                        	<label class="col-md-3 control-label" for=newPassword >Mot de Passe actuel :</label>
+                        	<label class="col-md-6 control-label" for=newPassword >Nouveau Mot de Passe:</label>
                             <form:input path="newPassword" type="password" class="form-control" placeholder="Votre nouveau mot de passe" />
                             <form:errors path="newPassword" class="error" />
                             <span class="form-text small text-muted">
@@ -40,7 +40,7 @@
                             </span>
                         </div>
                         <div class="form-group">
-                        	<label class="col-md-3 control-label" for=confirmPassword >Mot de Passe actuel :</label>
+                        	<label class="col-md-6 control-label" for=confirmPassword >Confirmer votre Mot de Passe :</label>
                             <form:input path="confirmPassword" type="password" class="form-control" placeholder="Confirmez votre nouveau mot de passe" />
                             <form:errors path="confirmPassword" class="error" />
                             <span class="form-text small text-muted">
@@ -48,12 +48,15 @@
                             </span>
                         </div>
                             
-                        <div class="form-group">
-                        	<button type="submit" class="btn btn-success btn-lg float-right">Sauvegarder</button>
-                        </div>
+                       	<hr>
+						<div class="row justify-content-around">
+        					<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
+        					<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/connexion"/>" role="button">Annuler</a>
+      					</div>
                   	</form:form>
                	</div>
 			</div>
+		</div>
 		</div>
 	</body>
 </html>
