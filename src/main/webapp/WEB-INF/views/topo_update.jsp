@@ -21,7 +21,7 @@
 						<h1 class="text-center">Mise à jour du topo</h1>
 					</div>
 					<div class="card-body">
-						<form:form action="updatetopo" class="form" method="post" modelAttribute="topo">
+						<form:form action="updatetopo" class="form" method="post" modelAttribute="updateTopo">
 							<form:hidden path="id" />
 								<div class="form-group">
 									<label class="col-md-6 control-label" for=topoName>Nom du topo :</label>
@@ -68,10 +68,10 @@
 								<hr>
 								<div class="row justify-content-around">
 									<c:url var="cancelLink" value="/topo/vuetopo">
-        								<c:param name="topoId" value="${topo.id}" />
+        								<c:param name="topoId" value="${updateTopo.id}" />
        								</c:url>
-        							<button  class="btn btn-info btn-sm col-4" href="${editTopoLink}" role="button">Annuler</button>
         							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
+        							<button  class="btn btn-danger btn-sm col-4" href="${cancelLink}">Annuler</button>
       							</div>
       					</form:form>
 					</div>
