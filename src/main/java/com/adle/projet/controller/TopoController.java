@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.adle.projet.dto.UpdateTopo;
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.EmailService;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
+import com.adle.projet.validator.TopoUpdateValidator;
 import com.adle.projet.validator.TopoValidator;
 
 /**
@@ -34,16 +36,19 @@ import com.adle.projet.validator.TopoValidator;
 public class TopoController {
 
     @Autowired
-    private UserService   userService;
+    private UserService         userService;
 
     @Autowired
-    private TopoService   topoService;
+    private TopoService         topoService;
 
     @Autowired
-    private TopoValidator topoValidator;
+    private TopoValidator       topoValidator;
 
     @Autowired
-    private EmailService  emailService;
+    private TopoUpdateValidator topoUpdateValidator;
+
+    @Autowired
+    private EmailService        emailService;
 
     /*
      * ************************* List of Topo *************************
@@ -182,43 +187,50 @@ public class TopoController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             Integer topoId = (Integer) session.getAttribute( "topoId" );
-            Topo theTopo = topoService.getTopo( topoId );
+            UpdateTopo theTopo = new UpdateTopo();
+            Topo topoToUpdate = topoService.getTopo( topoId );
+            theTopo.setId( topoId );
+            theTopo.setTopoName( topoToUpdate.getTopoName() );
+            theTopo.setTopoCity( topoToUpdate.getTopoCity() );
+            theTopo.setTopoCountry( topoToUpdate.getTopoCountry() );
+            theTopo.setTopoCounty( topoToUpdate.getTopoCounty() );
+            theTopo.setTopoDescriptive( topoToUpdate.getTopoDescriptive() );
+            theTopo.setTopoReleaseDate( topoToUpdate.getTopoReleaseDate() );
+            theTopo.setUserId( topoToUpdate.getUserId() );
             Integer topoUserId = theTopo.idUser();
             if ( !topoUserId.equals( userId ) ) {
                 return "redirect:/";
             } else {
-                theModel.addAttribute( "topo", theTopo );
+                theModel.addAttribute( "updateTopo", theTopo );
                 return "topo_update";
             }
         }
     }
 
     @PostMapping( "/updatetopo" )
-    public String updateTopo( @Valid @ModelAttribute( "topo" ) Topo theTopo, BindingResult result, Model theModel,
+    public String updateTopo( @Valid @ModelAttribute( "updateTopo" ) UpdateTopo theTopo, BindingResult result,
+            Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
-            return "redirect:/compte/connexion";
+        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        User theUser = userService.getUser( userId );
+        theModel.addAttribute( "user", theUser );
+        topoUpdateValidator.validate( theTopo, result );
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "updateTopo", theTopo );
+            return "topo_update";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
-            topoValidator.validate( theTopo, result );
-            Integer topoId = (Integer) session.getAttribute( "topoId" );
-            Topo topoUpdate = topoService.getTopo( topoId );
-            if ( result.hasErrors() ) {
-                theModel.addAttribute( "topo", theTopo );
-                return "redirect:/topo/maj";
-            } else {
-                topoUpdate.setTopoName( theTopo.getTopoName() );
-                topoUpdate.setTopoCity( theTopo.getTopoCity() );
-                topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
-                topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
-                topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
-                topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
-                topoService.updateTopo( topoUpdate );
-                session.setAttribute( "userLoginId", userId );
-                session.setAttribute( "topo", topoUpdate );
-                return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
-            }
+            Topo topoUpdate = topoService.getTopo( theTopo.getId() );
+            topoUpdate.setTopoName( theTopo.getTopoName() );
+            topoUpdate.setTopoCity( theTopo.getTopoCity() );
+            topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
+            topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
+            topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
+            topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
+            topoService.updateTopo( topoUpdate );
+            session.setAttribute( "userLoginId", userId );
+            session.setAttribute( "topo", topoUpdate );
+            return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
         }
     }
 
