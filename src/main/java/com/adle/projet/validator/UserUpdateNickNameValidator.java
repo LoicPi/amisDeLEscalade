@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.UserService;
 
@@ -25,7 +26,7 @@ public class UserUpdateNickNameValidator implements Validator {
 
     @Override
     public void validate( Object obj, Errors errors ) {
-        User user = (User) obj;
+        UpdateUser user = (UpdateUser) obj;
 
         String userNickName = user.getNickName();
 
