@@ -43,37 +43,42 @@
 									<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoReleaseDate }" /></label>
 								</div>
       					</form>
-      					<hr>      					
+      					      					
 						
 						<c:choose>
-							<c:when test="${(user.id).equals((topo.userId).id)}">
-								<c:if test ="${ topo.availability }">
-      								<c:url var="availableTopo" value="/topo/availabilitytopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-       								<div class="row justify-content-around">
-       									<a class="btn btn-info btn-sm  col-4" href="${availableTopo}" role="button">Remettre en disponible le topo</a>
-       								</div>
-       								<hr>
-      							</c:if>
-      							<div class="row justify-content-around">	
-									<c:url var="editTopoLink" value="/topo/majtopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-									<c:url var="deleteTopoLink" value="/topo/deletetopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-        							<a class="btn btn-info btn-sm  col-4" href="${editTopoLink}" role="button">Editer</a>
-        							<a class="btn btn-danger btn-sm col-4" href="${deleteTopoLink}" role="button">Supprimer</a>
-        						</div>
-							</c:when>		
-							<c:otherwise>
-								<div class="row justify-content-around">
-									<c:url var="bookTopoLink" value="/topo/bookingtopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-        							<a class="btn btn-info btn-sm col-4" href="${bookTopoLink}" role="button">Réserver ce Topo</a>
-								</div>
+							<c:when test="${empty sessionScope.sessionUser}">
+							</c:when>
+							<c:otherwise>	
+								<hr>
+								<c:when test="${(user.id).equals((topo.userId).id)}">
+									<c:if test ="${ topo.availability }">
+      									<c:url var="availableTopo" value="/topo/availabilitytopo">
+        									<c:param name="topoId" value="${topo.id}" />
+       									</c:url>
+       									<div class="row justify-content-around">
+       										<a class="btn btn-info btn-sm  col-4" href="${availableTopo}" role="button">Remettre en disponible le topo</a>
+       									</div>
+       									<hr>
+      								</c:if>
+      								<div class="row justify-content-around">	
+										<c:url var="editTopoLink" value="/topo/majtopo">
+        									<c:param name="topoId" value="${topo.id}" />
+       									</c:url>
+										<c:url var="deleteTopoLink" value="/topo/deletetopo">
+        									<c:param name="topoId" value="${topo.id}" />
+       									</c:url>
+        								<a class="btn btn-info btn-sm  col-4" href="${editTopoLink}" role="button">Editer</a>
+        								<a class="btn btn-danger btn-sm col-4" href="${deleteTopoLink}" role="button">Supprimer</a>
+        							</div>
+								</c:when>		
+								<c:otherwise>
+									<div class="row justify-content-around">
+										<c:url var="bookTopoLink" value="/topo/bookingtopo">
+        									<c:param name="topoId" value="${topo.id}" />
+       									</c:url>
+        								<a class="btn btn-info btn-sm col-4" href="${bookTopoLink}" role="button">Réserver ce Topo</a>
+									</div>
+								</c:otherwise>
 							</c:otherwise>
 						</c:choose>						
 					</div>
