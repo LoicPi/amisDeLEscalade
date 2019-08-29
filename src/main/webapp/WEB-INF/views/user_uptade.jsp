@@ -21,9 +21,9 @@
 						<h1>Mon Compte</h1>
 					</div>
 					<div class="card-body">
-						<div class="col-md-9 personal-info">
+						<div class="personal-info">
 							<h3>Mes informations personnelles</h3>
-							<form:form action="updateUser" class="form" method="post" modelAttribute="user">
+							<form:form action="updateUser" class="form" method="post" modelAttribute="updateUser">
 							
 								<form:hidden path="id" />
 							
@@ -57,6 +57,14 @@
 										<form:errors path="email" cssClass="error" />
 									</div>
 								</div>
+								
+								<c:if test="${ !updateUser.member }">
+								<div class="form-group">
+      								<label for="userMember">Membre de l'association</label>
+       								<form:checkbox path="userMember" element="div class='col-md-8 checkbox'" value="true"/>
+       								<p class="font-italic">Cochez la case si vous êtes membre de l'association "Les amis de l'escalade"</p>
+      							</div>
+      							</c:if>
 							      				
       							<div class="form-group">
         							<button type="submit" class="btn btn-success btn-lg float-right">Modifier</button>
