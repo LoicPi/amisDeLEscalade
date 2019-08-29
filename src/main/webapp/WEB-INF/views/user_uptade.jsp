@@ -65,19 +65,14 @@
        								<p class="font-italic">Cochez la case si vous êtes membre de l'association "Les amis de l'escalade"</p>
       							</div>
       							</c:if>
-							      				
-      							<div class="form-group">
-        							<button type="submit" class="btn btn-success btn-lg float-right">Modifier</button>
+							    <hr>  				
+      							<div class="row justify-content-around">
+        							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
+        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/connexion"/>" role="button">Annuler</a>
       							</div>
 							</form:form>
       					</div>
       				</div>
-
-
-      					<!--<div class="form-group">
-       						<label for="firstname">Nom <span class="requis">*</span></label>
-       						<p>${user.firstName}</p>
-      					</div>	  -->
 				</div>
     		</div>
 		</div>
