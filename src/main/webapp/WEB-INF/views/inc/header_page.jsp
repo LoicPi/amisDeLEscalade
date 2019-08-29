@@ -10,7 +10,7 @@
     <a class="nav-link nav-item" href="<c:url value="/topo/"/>"> <span class="fa fa-book"></span> Topo </a>
     <a class="nav-link nav-item" id="lastNav" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>
     	<c:choose>
-            <c:when test="${empty sessionScope}">
+            <c:when test="${empty sessionScope.sessionUser}">
             	Compte
             </c:when>
             <c:otherwise>
