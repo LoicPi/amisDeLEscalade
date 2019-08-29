@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.adle.projet.entity.User;
+import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.service.UserService;
 
 @Component
@@ -22,12 +22,12 @@ public class UserUpdateEmailValidator implements Validator {
 
     @Override
     public boolean supports( Class<?> clazz ) {
-        return User.class.equals( clazz );
+        return UpdateUser.class.equals( clazz );
     }
 
     @Override
     public void validate( Object obj, Errors errors ) {
-        User user = (User) obj;
+        UpdateUser user = (UpdateUser) obj;
 
         String userEmail = user.getEmail();
 
