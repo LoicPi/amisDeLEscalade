@@ -188,34 +188,30 @@ public class UserController {
             Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
-            return "redirect:/compte/connexion";
+        User userUpdate = userService.getUser( theUser.getId() );
+        if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
+            userUpdateNickNameValidator.validate( theUser, result );
+        }
+        if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
+            userUpdateEmailValidator.validate( theUser, result );
+        }
+        if ( result.hasErrors() ) {
+            theModel.addAttribute( "updateUser", theUser );
+            return "user_uptade";
         } else {
-            User userUpdate = userService.getUser( theUser.getId() );
-            if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
-                userUpdateNickNameValidator.validate( theUser, result );
+            userUpdate.setFirstName( theUser.getFirstName() );
+            userUpdate.setLastName( theUser.getLastName() );
+            userUpdate.setNickName( theUser.getNickName() );
+            userUpdate.setEmail( theUser.getEmail() );
+            if ( theUser.getUserMember() == null ) {
+                theUser.setUserMember( false );
             }
-            if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
-                userUpdateEmailValidator.validate( theUser, result );
+            if ( theUser.getUserMember() ) {
+                userUpdate.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             }
-            if ( result.hasErrors() ) {
-                theModel.addAttribute( "updateUser", theUser );
-                return "user_uptade";
-            } else {
-                userUpdate.setFirstName( theUser.getFirstName() );
-                userUpdate.setLastName( theUser.getLastName() );
-                userUpdate.setNickName( theUser.getNickName() );
-                userUpdate.setEmail( theUser.getEmail() );
-                if ( theUser.getUserMember() == null ) {
-                    theUser.setUserMember( false );
-                }
-                if ( theUser.getUserMember() ) {
-                    userUpdate.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-                }
-                userService.updateUser( userUpdate );
-                session.setAttribute( "userLoginId", theUser.getId() );
-                return "redirect:/compte/moncompte";
-            }
+            userService.updateUser( userUpdate );
+            session.setAttribute( "userLoginId", theUser.getId() );
+            return "redirect:/compte/moncompte";
         }
     }
 
