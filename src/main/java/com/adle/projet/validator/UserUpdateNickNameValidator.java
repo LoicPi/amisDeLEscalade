@@ -8,7 +8,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.adle.projet.dto.UpdateUser;
-import com.adle.projet.entity.User;
 import com.adle.projet.service.UserService;
 
 @Component
@@ -21,7 +20,7 @@ public class UserUpdateNickNameValidator implements Validator {
 
     @Override
     public boolean supports( Class<?> clazz ) {
-        return User.class.equals( clazz );
+        return UpdateUser.class.equals( clazz );
     }
 
     @Override
