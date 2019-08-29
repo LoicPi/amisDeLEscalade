@@ -332,6 +332,8 @@ public class UserController {
             return "redirect:/compte/connexion";
         } else {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            User user = userService.getUser( userId );
+            theModel.addAttribute( "user", user );
             UpdatePasswordUser theUser = new UpdatePasswordUser();
             theUser.setId( userId );
             theModel.addAttribute( "updatePasswordUser", theUser );
