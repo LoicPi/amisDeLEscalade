@@ -22,7 +22,10 @@
                 	<h3>Changement du Mot de Passe</h3>
                 </div>
                 <div class="card-body">
-                	<form:form action="updatePassword" class="form" method="post">
+                	<form:form action="updatePassword" class="form" method="post" modelAttribute="updatePasswordUser">
+                	
+                		<form:hidden path="id" />
+                		
                     	<div class="form-group">
                         	<label class="col-md-3 control-label" for=oldPassword >Mot de Passe actuel :</label>
                             <form:input path="oldPassword" type="password" class="form-control" placeholder="Votre ancien mot de passe" />
