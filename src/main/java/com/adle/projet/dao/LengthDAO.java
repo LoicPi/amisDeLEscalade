@@ -12,7 +12,7 @@ public interface LengthDAO {
 
     void updateLength( Length length );
 
-    void deletePath( int theId );
+    void deleteLength( int theId );
 
     Length getLength( int theId );
 

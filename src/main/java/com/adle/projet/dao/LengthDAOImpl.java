@@ -53,7 +53,7 @@ public class LengthDAOImpl implements LengthDAO {
     }
 
     @Override
-    public void deletePath( int theId ) {
+    public void deleteLength( int theId ) {
         Session session = sessionFactory.getCurrentSession();
         Length theLength = session.byId( Length.class ).load( theId );
         session.delete( theLength );

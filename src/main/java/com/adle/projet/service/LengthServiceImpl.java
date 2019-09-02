@@ -34,8 +34,8 @@ public class LengthServiceImpl implements LengthService {
     }
 
     @Override
-    public void deletePath( int theId ) {
-        lengthDAO.deletePath( theId );
+    public void deleteLength( int theId ) {
+        lengthDAO.deleteLength( theId );
 
     }
 

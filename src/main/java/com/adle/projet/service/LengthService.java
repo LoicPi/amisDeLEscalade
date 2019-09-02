@@ -12,7 +12,7 @@ public interface LengthService {
 
     public void updateLength( Length length );
 
-    public void deletePath( int theId );
+    public void deleteLength( int theId );
 
     public Length getLength( int theId );
 
