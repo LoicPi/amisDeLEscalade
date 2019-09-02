@@ -19,7 +19,7 @@ import com.adle.projet.entity.Topo;
 @Repository
 public class TopoDAOImpl implements TopoDAO {
 
-    private static final Logger logger = LogManager.getLogger( UserDAOImpl.class );
+    private static final Logger logger = LogManager.getLogger( TopoDAOImpl.class );
 
     @Autowired
     private SessionFactory      sessionFactory;
