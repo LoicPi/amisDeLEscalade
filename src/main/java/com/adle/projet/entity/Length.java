@@ -13,6 +13,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "lengths" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByUserId", query = "from Length where user_id = :userId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByPathId", query = "from Length where path_id = :pathId" ),
+} )
 
 public class Length {
 
