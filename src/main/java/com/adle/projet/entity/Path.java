@@ -45,6 +45,10 @@ public class Path {
     @JoinColumn( name = "user_id" )
     private User         userId;
 
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "spot_id" )
+    private Spot         spotId;
+
     public Path() {
 
     }
@@ -87,6 +91,14 @@ public class Path {
 
     public void setUserId( User userId ) {
         this.userId = userId;
+    }
+
+    public Spot getSpotId() {
+        return spotId;
+    }
+
+    public void setSpotId( Spot spotId ) {
+        this.spotId = spotId;
     }
 
     @Override
