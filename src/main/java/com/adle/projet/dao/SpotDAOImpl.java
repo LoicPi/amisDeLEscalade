@@ -46,7 +46,7 @@ public class SpotDAOImpl implements SpotDAO {
     public Spot getSpot( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Spot spot = currentSession.get( Spot.class, theId );
-        logger.info( "Spot loaded successfully, Topo details = " + spot );
+        logger.info( "Spot loaded successfully, Spot details = " + spot );
         return spot;
     }
 
