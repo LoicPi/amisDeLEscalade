@@ -17,6 +17,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "spots" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :userId" ),
+} )
 
 public class Spot {
 
