@@ -16,6 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table( name = "listings" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Listing_findByLevelId", query = "from Listing where level_id = :levelId" ),
+} )
 
 public class Listing {
 
