@@ -19,7 +19,7 @@ import com.adle.projet.entity.Listing;
 @Repository
 public class ListingDAOImpl implements ListingDAO {
 
-    private static final Logger logger = LogManager.getLogger( LengthDAOImpl.class );
+    private static final Logger logger = LogManager.getLogger( ListingDAOImpl.class );
 
     @Autowired
     private SessionFactory      sessionFactory;
