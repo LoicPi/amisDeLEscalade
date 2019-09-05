@@ -14,12 +14,12 @@ public class UpdateUser {
 
     private String  email;
 
-    private Role    userRole;
+    private Role    role;
 
     private Boolean userMember;
 
     public boolean isMember() {
-        return userRole.getRoleCode().equals( "member" );
+        return role.getRoleCode().equals( "member" );
     }
 
     public Integer getId() {
@@ -62,12 +62,12 @@ public class UpdateUser {
         this.email = email;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserRole( Role userRole ) {
-        this.userRole = userRole;
+    public void setRole( Role role ) {
+        this.role = role;
     }
 
     public Boolean getUserMember() {
