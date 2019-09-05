@@ -12,20 +12,21 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table( name = "topos" )
-@org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Topo_findByUserId", query = "from Topo where user_id = :userId" ),
-} )
 /**
- * Created Topo Bean Defined by id, name, city, county, country, descriptive,
+ * Created Topo Bean defined by id, name, city, county, country, descriptive,
  * releaseDate, avaibility
  * 
- * Join with User Bean by userId
+ * Join with User Bean by user
  * 
  * @author Loïc
  *
  */
+
+@Entity
+@Table( name = "topos" )
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Topo_findByUserId", query = "from Topo where user_id = :user" ),
+} )
 
 public class Topo {
 
@@ -60,7 +61,7 @@ public class Topo {
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User    userId;
+    private User    user;
 
     public Topo() {
 
@@ -68,7 +69,7 @@ public class Topo {
 
     @Transient
     public Integer idUser() {
-        return userId.getId();
+        return user.getId();
     }
 
     @Transient
@@ -140,12 +141,12 @@ public class Topo {
         this.topoAvailability = topoAvailability;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
     }
 
     @Override
@@ -153,6 +154,6 @@ public class Topo {
         return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity + ",topoCounty =" + topoCounty
                 + ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
                 ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
-                topoAvailability + ", userId =" + userId + "}";
+                topoAvailability + ", userId =" + user + "}";
     }
 }
