@@ -12,9 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adle.projet.dto.UpdateTopo;
 import com.adle.projet.entity.Topo;
@@ -116,7 +116,7 @@ public class TopoController {
      * @return the topo view
      */
     @PostMapping( "/saveTopo" )
-    public String saveUser( @ModelAttribute( "topo" ) Topo theTopo, Model theModel, BindingResult result,
+    public String saveTopo( @ModelAttribute( "topo" ) Topo theTopo, Model theModel, BindingResult result,
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
@@ -128,9 +128,7 @@ public class TopoController {
             User theUser = userService.getUser( userId );
             theTopo.setUserId( theUser );
             topoService.saveTopo( theTopo );
-            session.setAttribute( "userLoginId", userId );
-            session.setAttribute( "topoId", theTopo.getId() );
-            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
         }
     }
 
@@ -149,8 +147,8 @@ public class TopoController {
      *            information on the session
      * @return topo view
      */
-    @GetMapping( "/vuetopo" )
-    public String formForTopoView( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+    @GetMapping( "{topoId}/vuetopo" )
+    public String formForTopoView( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) != null ) {
@@ -160,7 +158,6 @@ public class TopoController {
         }
         Topo theTopo = topoService.getTopo( topoId );
         theModel.addAttribute( "topo", theTopo );
-        session.setAttribute( "topoId", theTopo.getId() );
         return "topo_view";
     }
 
@@ -171,14 +168,17 @@ public class TopoController {
     /**
      * Page to update topo
      * 
+     * @param topoId
+     *            the id of the topo
      * @param theModel
      *            attribute to page jsp
      * @param request
      *            information on the session
-     * @return topo_update view
+     * @return topo update view
      */
-    @GetMapping( "/majtopo" )
-    public String formForTopoUpdate( Model theModel, HttpServletRequest request ) {
+    @GetMapping( "{topoId}/majtopo" )
+    public String formForTopoUpdate( @PathVariable( "topoId" ) Integer topoId, Model theModel,
+            HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
             return "redirect:/compte/connexion";
@@ -186,7 +186,6 @@ public class TopoController {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
-            Integer topoId = (Integer) session.getAttribute( "topoId" );
             UpdateTopo theTopo = new UpdateTopo();
             Topo topoToUpdate = topoService.getTopo( topoId );
             theTopo.setId( topoId );
@@ -199,7 +198,7 @@ public class TopoController {
             theTopo.setUserId( topoToUpdate.getUserId() );
             Integer topoUserId = theTopo.idUser();
             if ( !topoUserId.equals( userId ) ) {
-                return "redirect:/";
+                return "redirect:/{topoId}/vuetopo";
             } else {
                 theModel.addAttribute( "updateTopo", theTopo );
                 return "topo_update";
@@ -207,9 +206,24 @@ public class TopoController {
         }
     }
 
-    @PostMapping( "/updatetopo" )
-    public String updateTopo( @Valid @ModelAttribute( "updateTopo" ) UpdateTopo theTopo, BindingResult result,
-            Model theModel,
+    /**
+     * Page to update topo
+     * 
+     * @param topoId
+     *            the id of the topo
+     * @param theTopo
+     *            the update topo
+     * @param result
+     *            result of validation form
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the view of the topo updating
+     */
+    @PostMapping( "{topoId}/updatetopo" )
+    public String updateTopo( @PathVariable( "topoId" ) Integer topoId,
+            @Valid @ModelAttribute( "updateTopo" ) UpdateTopo theTopo, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userLoginId" );
@@ -228,9 +242,7 @@ public class TopoController {
             topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
             topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
             topoService.updateTopo( topoUpdate );
-            session.setAttribute( "userLoginId", userId );
-            session.setAttribute( "topo", topoUpdate );
-            return "redirect:/topo/vuetopo?topoId=" + topoUpdate.getId();
+            return "redirect:/topo/" + topoUpdate.getId() + "/vuetopo";
         }
     }
 
@@ -245,13 +257,13 @@ public class TopoController {
      *            the id of the topo
      * @return view of the topo's list
      */
-    @GetMapping( "/deletetopo" )
-    public String deleteTopo( @RequestParam( "topoId" ) int theId, HttpServletRequest request ) {
+    @GetMapping( "{topoId}/deletetopo" )
+    public String deleteTopo( @PathVariable( "topoId" ) Integer spotId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            topoService.deleteTopo( theId );
+            topoService.deleteTopo( spotId );
             return "redirect:/topo/";
         }
     }
@@ -269,10 +281,10 @@ public class TopoController {
      *            attribute to page jsp
      * @param request
      *            information on the session
-     * @return the view of the topo update
+     * @return the view of the topo update with the booking of the topo
      */
-    @GetMapping( "/bookingtopo" )
-    public String bookTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+    @GetMapping( "{topoId}/bookingtopo" )
+    public String bookTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
@@ -299,7 +311,7 @@ public class TopoController {
                     "\n\nLes amis de l'escalade";
             emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
 
-            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
         }
     }
 
@@ -312,10 +324,10 @@ public class TopoController {
      *            attribute to page jsp
      * @param request
      *            information on the session
-     * @return the view of the topo update
+     * @return the view of the topo update with avaibility of the topo
      */
-    @GetMapping( "/availabilitytopo" )
-    public String availableTopo( @RequestParam( "topoId" ) Integer topoId, Model theModel,
+    @GetMapping( "{topoId}/availabilitytopo" )
+    public String availableTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         if ( session.getAttribute( "userLoginId" ) == null ) {
@@ -324,7 +336,7 @@ public class TopoController {
             Topo theTopo = topoService.getTopo( topoId );
             theTopo.setTopoAvailability( false );
             topoService.updateTopo( theTopo );
-            return "redirect:/topo/vuetopo?topoId=" + theTopo.getId();
+            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
         }
     }
 }
