@@ -19,22 +19,26 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * Created User Bean defined by id, firstName, lastName, nickName, email,
+ * password
+ * 
+ * Join with Role by role
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "users" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "User_findByEmail", query = "from User where email = :email" ),
 } )
-/**
- * Created User Bean Defined by id, firstName, lastName, nickName, email,
- * password
- * 
- * @author Loïc
- *
- */
+
 public class User {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer      id;
 
@@ -65,7 +69,7 @@ public class User {
 
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "role_id" )
-    private Role         userRole;
+    private Role         role;
 
     @Transient
     private String       passwordControl;
@@ -73,19 +77,19 @@ public class User {
     @Transient
     private Boolean      userMember;
 
-    @OneToMany( mappedBy = "userId" )
+    @OneToMany( mappedBy = "user" )
     private List<Topo>   topos   = new ArrayList<>();
 
-    @OneToMany( mappedBy = "userid" )
+    @OneToMany( mappedBy = "user" )
     private List<Spot>   spots   = new ArrayList<>();
 
-    @OneToMany( mappedBy = "userid" )
+    @OneToMany( mappedBy = "user" )
     private List<Sector> sectors = new ArrayList<>();
 
-    @OneToMany( mappedBy = "userid" )
+    @OneToMany( mappedBy = "user" )
     private List<Path>   paths   = new ArrayList<>();
 
-    @OneToMany( mappedBy = "userid" )
+    @OneToMany( mappedBy = "user" )
     private List<Length> lengths = new ArrayList<>();
 
     public User() {
@@ -94,7 +98,7 @@ public class User {
 
     @Transient
     public boolean isMember() {
-        return userRole.getRoleCode().equals( "member" );
+        return role.getRoleCode().equals( "member" );
     }
 
     public Integer getId() {
@@ -145,12 +149,12 @@ public class User {
         this.password = password;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserRole( Role userRole ) {
-        this.userRole = userRole;
+    public void setRole( Role role ) {
+        this.role = role;
     }
 
     public String getPasswordControl() {
