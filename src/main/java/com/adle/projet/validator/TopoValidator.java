@@ -11,7 +11,7 @@ import com.adle.projet.entity.Topo;
 @Component
 public class TopoValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger( UserLoggValidator.class );
+    private static final Logger logger = LogManager.getLogger( TopoValidator.class );
 
     @Override
     public boolean supports( Class<?> clazz ) {
@@ -29,7 +29,7 @@ public class TopoValidator implements Validator {
 
         if ( topo.getTopoDescriptive().equals( "" ) ) {
             logger.info( "Topo_Descriptive is empty" );
-            errors.rejectValue( "topoDescritpive", "topoValidator.topoDescriptive.empty" );
+            errors.rejectValue( "topoDescriptive", "topoValidator.topoDescriptive.empty" );
         }
 
         if ( topo.getTopoCity().equals( "" ) ) {

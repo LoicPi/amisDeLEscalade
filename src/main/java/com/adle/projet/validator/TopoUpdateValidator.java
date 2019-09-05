@@ -11,7 +11,7 @@ import com.adle.projet.dto.UpdateTopo;
 @Component
 public class TopoUpdateValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger( UserLoggValidator.class );
+    private static final Logger logger = LogManager.getLogger( TopoUpdateValidator.class );
 
     @Override
     public boolean supports( Class<?> clazz ) {

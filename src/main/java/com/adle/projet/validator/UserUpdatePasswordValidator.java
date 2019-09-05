@@ -17,7 +17,7 @@ import com.adle.projet.tools.PasswordEncryptor;
 @Component
 public class UserUpdatePasswordValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger( UserValidator.class );
+    private static final Logger logger = LogManager.getLogger( UserUpdatePasswordValidator.class );
 
     @Autowired
     private UserService         userService;

@@ -15,7 +15,7 @@ import com.adle.projet.service.UserService;
 @Component
 public class UserUpdateEmailValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger( UserLoggValidator.class );
+    private static final Logger logger = LogManager.getLogger( UserUpdateEmailValidator.class );
 
     @Autowired
     private UserService         userService;
