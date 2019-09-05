@@ -56,7 +56,12 @@ public class UserValidator implements Validator {
 
         if ( user.getPasswordControl().equals( "" ) ) {
             logger.info( "PasswordControl is empty." );
-            errors.rejectValue( "password", "userValidator.passwordControl.empty" );
+            errors.rejectValue( "passwordControl", "userValidator.passwordControl.empty" );
+        }
+
+        if ( user.getPassword().contains( " " ) ) {
+            logger.info( "Password contains a space" );
+            errors.rejectValue( "password", "userValidator.password.space" );
         }
 
         if ( !( user.getPassword().equals( user.getPasswordControl() ) ) ) {

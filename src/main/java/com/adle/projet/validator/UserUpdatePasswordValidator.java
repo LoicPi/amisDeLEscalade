@@ -51,6 +51,21 @@ public class UserUpdatePasswordValidator implements Validator {
             errors.rejectValue( "confirmPassword", "userLoggValidator.password.empty" );
         }
 
+        if ( user.getOldPassword().contains( " " ) ) {
+            logger.info( "Old Password contains a space" );
+            errors.rejectValue( "oldPassword", "userValidator.password.space" );
+        }
+
+        if ( user.getNewPassword().contains( " " ) ) {
+            logger.info( "New Password contains a space" );
+            errors.rejectValue( "newPassword", "userValidator.password.space" );
+        }
+
+        if ( user.getConfirmPassword().contains( " " ) ) {
+            logger.info( "Confirm Password contains a space" );
+            errors.rejectValue( "confirmPassword", "userValidator.password.space" );
+        }
+
         if ( !user.getNewPassword().equals( "" ) && !( patternPassword.matcher( user.getNewPassword() ).matches() ) ) {
             logger.info( "Password is not correct." );
             errors.rejectValue( "newPassword", "userValidator.password.invalid" );
