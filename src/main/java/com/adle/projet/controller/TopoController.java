@@ -105,12 +105,14 @@ public class TopoController {
     }
 
     /**
-     * Page to save topos
+     * Process after submit button click on topo_registration page
      * 
      * @param theTopo
      *            topo create on registration_topo page
      * @param theModel
      *            attribute to page jsp
+     * @param result
+     *            result of validation form
      * @param request
      *            information on the session
      * @return the topo view
@@ -123,12 +125,18 @@ public class TopoController {
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            topoValidator.validate( theTopo, result );
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
-            theTopo.setUserId( theUser );
-            topoService.saveTopo( theTopo );
-            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
+            topoValidator.validate( theTopo, result );
+            if ( result.hasErrors() ) {
+                theModel.addAttribute( "user", theUser );
+                theModel.addAttribute( "topo", theTopo );
+                return "topo_registration";
+            } else {
+                theTopo.setUserId( theUser );
+                topoService.saveTopo( theTopo );
+                return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
+            }
         }
     }
 
@@ -207,12 +215,12 @@ public class TopoController {
     }
 
     /**
-     * Page to update topo
+     * Process after submit button click on topo_update page
      * 
      * @param topoId
      *            the id of the topo
      * @param theTopo
-     *            the update topo
+     *            the topo updated
      * @param result
      *            result of validation form
      * @param theModel
@@ -242,7 +250,7 @@ public class TopoController {
             topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
             topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
             topoService.updateTopo( topoUpdate );
-            return "redirect:/topo/" + topoUpdate.getId() + "/vuetopo";
+            return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }
 
@@ -311,7 +319,7 @@ public class TopoController {
                     "\n\nLes amis de l'escalade";
             emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
 
-            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
+            return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }
 
@@ -336,7 +344,7 @@ public class TopoController {
             Topo theTopo = topoService.getTopo( topoId );
             theTopo.setTopoAvailability( false );
             topoService.updateTopo( theTopo );
-            return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
+            return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }
 }
