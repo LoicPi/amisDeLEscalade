@@ -133,7 +133,7 @@ public class TopoController {
                 theModel.addAttribute( "topo", theTopo );
                 return "topo_registration";
             } else {
-                theTopo.setUserId( theUser );
+                theTopo.setUser( theUser );
                 topoService.saveTopo( theTopo );
                 return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
             }
@@ -203,7 +203,7 @@ public class TopoController {
             theTopo.setTopoCounty( topoToUpdate.getTopoCounty() );
             theTopo.setTopoDescriptive( topoToUpdate.getTopoDescriptive() );
             theTopo.setTopoReleaseDate( topoToUpdate.getTopoReleaseDate() );
-            theTopo.setUserId( topoToUpdate.getUserId() );
+            theTopo.setUser( topoToUpdate.getUser() );
             Integer topoUserId = theTopo.idUser();
             if ( !topoUserId.equals( userId ) ) {
                 return "redirect:/{topoId}/vuetopo";
@@ -301,7 +301,7 @@ public class TopoController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User userTaker = userService.getUser( userId );
             Topo theTopo = topoService.getTopo( topoId );
-            User userLender = theTopo.getUserId();
+            User userLender = theTopo.getUser();
             theTopo.setTopoAvailability( true );
             topoService.updateTopo( theTopo );
 
