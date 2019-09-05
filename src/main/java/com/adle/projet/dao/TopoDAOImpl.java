@@ -63,7 +63,7 @@ public class TopoDAOImpl implements TopoDAO {
     public List<Topo> findTopoByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Topo> query = currentSession.createNamedQuery( "Topo_findByUserId", Topo.class );
-        query.setParameter( "userId", userId );
+        query.setParameter( "user", userId );
         List<Topo> topoResult = query.getResultList();
         logger.info( "Topo List : " + query.getResultList() );
         return topoResult;
