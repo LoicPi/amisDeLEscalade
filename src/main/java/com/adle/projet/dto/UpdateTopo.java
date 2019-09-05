@@ -18,10 +18,10 @@ public class UpdateTopo {
 
     private String  topoReleaseDate;
 
-    private User    userId;
+    private User    user;
 
     public Integer idUser() {
-        return userId.getId();
+        return user.getId();
     }
 
     public Integer getId() {
@@ -80,12 +80,12 @@ public class UpdateTopo {
         this.topoReleaseDate = topoReleaseDate;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
     }
 
 }
