@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.adle.projet.dto.UpdatePasswordUser;
 import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.entity.Role;
+import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.RoleService;
+import com.adle.projet.service.SpotService;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.UserLoggValidator;
@@ -64,6 +66,9 @@ public class UserController {
     @Autowired
     private TopoService                 topoService;
 
+    @Autowired
+    private SpotService                 spotService;
+
     /*
      * ***************************** List of User *****************************
      */
@@ -80,7 +85,7 @@ public class UserController {
     @GetMapping( "/" )
     public String listUsers( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        Integer userId = (Integer) session.getAttribute( "userId" );
         User theUser = userService.getUser( userId );
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
@@ -143,7 +148,7 @@ public class UserController {
             theModel.addAttribute( "user", theUser );
             return "user_registration";
         } else {
-            theUser.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
+            theUser.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             userService.saveUser( theUser );
             session.setAttribute( "userId", theUser.getId() );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
@@ -170,7 +175,7 @@ public class UserController {
     public String showFormForUpdate( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             User userToUpdate = userService.getUser( userId );
@@ -180,7 +185,7 @@ public class UserController {
             theUser.setLastName( userToUpdate.getLastName() );
             theUser.setNickName( userToUpdate.getNickName() );
             theUser.setEmail( userToUpdate.getEmail() );
-            theUser.setUserRole( userToUpdate.getUserRole() );
+            theUser.setRole( userToUpdate.getRole() );
             theModel.addAttribute( "updateUser", theUser );
             return "user_uptade";
         }
@@ -225,7 +230,7 @@ public class UserController {
                 theUser.setUserMember( false );
             }
             if ( theUser.getUserMember() ) {
-                userUpdate.setUserRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
+                userUpdate.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             }
             userService.updateUser( userUpdate );
             return "redirect:/compte/" + userId + "/moncompte";
@@ -247,8 +252,8 @@ public class UserController {
     @GetMapping( "/connexion" )
     public String showFormForLogin( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        if ( session.getAttribute( "userId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
@@ -312,8 +317,10 @@ public class UserController {
         } else {
             User theUser = userService.getUser( userId );
             List<Topo> topos = topoService.findTopoByUserId( userId );
+            List<Spot> spots = spotService.findSpotByUserId( userId );
             theModel.addAttribute( "user", theUser );
             theModel.addAttribute( "topos", topos );
+            theModel.addAttribute( "spots", spots );
             return "user_view";
         }
     }
