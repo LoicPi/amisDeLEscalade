@@ -22,7 +22,7 @@ public class HomeController {
     @GetMapping( "/" )
     public String showFormForHome( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) != null ) {
+        if ( session.getAttribute( "userId" ) != null ) {
             Integer userId = (Integer) session.getAttribute( "userLoginId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
