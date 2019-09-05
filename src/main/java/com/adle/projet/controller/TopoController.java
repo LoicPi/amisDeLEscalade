@@ -67,8 +67,8 @@ public class TopoController {
     @GetMapping( "/" )
     public String listTopos( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        if ( session.getAttribute( "userId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -92,10 +92,10 @@ public class TopoController {
     @GetMapping( "/creationtopo" )
     public String formForTopoCreation( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             Topo theTopo = new Topo();
@@ -120,11 +120,11 @@ public class TopoController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             topoValidator.validate( theTopo, result );
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theTopo.setUserId( theUser );
             topoService.saveTopo( theTopo );
@@ -151,8 +151,8 @@ public class TopoController {
     public String formForTopoView( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        if ( session.getAttribute( "userId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -180,10 +180,10 @@ public class TopoController {
     public String formForTopoUpdate( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             UpdateTopo theTopo = new UpdateTopo();
@@ -226,7 +226,7 @@ public class TopoController {
             @Valid @ModelAttribute( "updateTopo" ) UpdateTopo theTopo, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userLoginId" );
+        Integer userId = (Integer) session.getAttribute( "userId" );
         User theUser = userService.getUser( userId );
         theModel.addAttribute( "user", theUser );
         topoUpdateValidator.validate( theTopo, result );
@@ -260,7 +260,7 @@ public class TopoController {
     @GetMapping( "{topoId}/deletetopo" )
     public String deleteTopo( @PathVariable( "topoId" ) Integer spotId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             topoService.deleteTopo( spotId );
@@ -287,10 +287,10 @@ public class TopoController {
     public String bookTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userLoginId" );
+            Integer userId = (Integer) session.getAttribute( "userId" );
             User userTaker = userService.getUser( userId );
             Topo theTopo = topoService.getTopo( topoId );
             User userLender = theTopo.getUserId();
@@ -330,7 +330,7 @@ public class TopoController {
     public String availableTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userLoginId" ) == null ) {
+        if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             Topo theTopo = topoService.getTopo( topoId );
