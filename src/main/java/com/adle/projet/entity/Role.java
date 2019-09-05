@@ -12,6 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * Created Role Bean defined by id, name and code
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "roles" )
 @org.hibernate.annotations.NamedQueries( {
@@ -33,7 +40,7 @@ public class Role {
     @Size( max = 20, min = 3 )
     private String     roleCode;
 
-    @OneToMany( mappedBy = "userRole" )
+    @OneToMany( mappedBy = "role" )
     private List<User> users = new ArrayList<>();
 
     public Role() {
