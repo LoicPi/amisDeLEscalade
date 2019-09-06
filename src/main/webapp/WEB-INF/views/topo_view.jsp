@@ -44,31 +44,34 @@
 								</div>
       					</form>
       					      					
+						<c:set var="userId" value="${sessionScope['userId']}" />
 						
-						<c:choose>
-							<c:when test="${empty sessionScope.sessionUser}">
-							</c:when>
-							<c:otherwise>	
-								<hr>
-								<c:when test="${(user.id).equals((topo.user).id)}">
-									<c:if test ="${ topo.availability }">
-       									<div class="row justify-content-around">
-       										<a class="btn btn-info btn-sm  col-4" href="<c:url var="availableTopo" value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
-       									</div>
-       									<hr>
-      								</c:if>
-      								<div class="row justify-content-around">
-        								<a class="btn btn-info btn-sm  col-4" href="<c:url var="editTopoLink" value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
-        								<a class="btn btn-danger btn-sm col-4" href="<c:url var="deleteTopoLink" value="/topo/${topo.id}/deletetopo"/>" role="button">Supprimer</a>
-        							</div>
-								</c:when>		
-								<c:otherwise>
-									<div class="row justify-content-around">
-        								<a class="btn btn-info btn-sm col-4" href="<c:url var="bookTopoLink" value="/topo/${topo.id}/bookingtopo"/>" role="button">Réserver ce Topo</a>
-									</div>
-								</c:otherwise>
-							</c:otherwise>
-						</c:choose>						
+						<c:if test="${userId eq null}">
+						</c:if>
+								
+						<c:if test="${userId eq (topo.user).id && userId ne null}">
+							<hr>
+							<c:if test ="${ topo.availability }">
+       							<div class="row justify-content-around">
+       								<a class="btn btn-info btn-sm  col-4" href="<c:url value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
+       							</div>
+       							<hr>
+      						</c:if>
+      							<div class="row justify-content-around">
+        							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
+        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Supprimer</a>
+        						</div>
+						</c:if>
+								
+						<c:if test="${userId ne (topo.user).id && userId ne null}">
+							<hr>
+							<c:if test ="${ ! topo.availability }">
+								<div class="row justify-content-around">
+        							<a class="btn btn-info btn-sm col-4" href="<c:url value="/topo/${topo.id}/bookingtopo"/>" role="button">Réserver ce Topo</a>
+								</div>
+							</c:if>
+						</c:if>
+					
 					</div>
 				</div>
 			</div>
