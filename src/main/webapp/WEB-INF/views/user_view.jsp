@@ -18,7 +18,8 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header text-center">
-						<h1>Mon Compte</h1>
+						<h3>Mon Compte</h3>
+						<a class="btn btn-danger btn-sm" href="<c:url value="/compte/${user.id}/deconnexion"/>" role="button">Deconnexion</a>
 					</div>
 					<div class="card-body">
 								<!--<div class="alert alert-info alert-dismissable">
@@ -28,11 +29,7 @@
 								</div>-->
 								<div class="row justify-content-around">
 									<h4 class="col-lg-8 col-6">Mes infos</h4>
-
-									<c:url var="updateLink" value="/compte/maj">
-        								<c:param name="userId" value="${user.id}" />
-       								</c:url>
-        							<a class="btn btn-info btn-sm" href="${updateLink}" role="button">Modifier</a>
+        							<a class="btn btn-info btn-sm" href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
       							</div>
 								<hr>
 								<form class="form-horizontal" role="form">
@@ -55,10 +52,7 @@
 									<div class="form-group row justify-content-center">
 										<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Mot de Passe :</label>
 										<label class="col-md-6 col-10 col-form-label form-control-label border">
-											<c:url var="updatePassword" value="/compte/majmdp">
-        										<c:param name="userId" value="${user.id}" />
-       										</c:url>
-        									<a class="btn btn-info btn-sm col-6" href="${updatePassword}" role="button">Modifier</a>
+        									<a class="btn btn-info btn-sm col-6" href="<c:url value="/compte/${user.id}/majmdp"/>" role="button">Modifier</a>
 										</label>
 									</div>
 									<c:if test="${ user.member }">
@@ -72,11 +66,7 @@
 								<hr>
       							<div class="row justify-content-around">
 									<h4 class="col-lg-8 col-sm-6">Mes topos</h4>
-
-									<c:url var="createTopoLink" value="/topo/creationtopo">
-        								<c:param name="userId" value="${user.id}" />
-       								</c:url>
-        							<a class="btn btn-info btn-sm" href="${createTopoLink}" role="button">Créer topo</a>
+        							<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer topo</a>
       							</div>
       							<hr>
       							<div class="list-group">
@@ -96,20 +86,43 @@
     										<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
     										<div class="d-flex w-100 justify-content-between">
     											<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
-    											<c:url var="viewTopo" value="/topo/vuetopo">
-        											<c:param name="topoId" value="${topo.id}" />
-       											</c:url>
-    											<a class="btn btn-info btn-sm" href="${viewTopo}" role="button">Détail</a>
+    											<a class="btn btn-info btn-sm" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
     										</div>
     									</div>
     								</c:forEach>
     							</div>		
       							<hr>
+      							<div class="row justify-content-around">
+									<h4 class="col-lg-8 col-sm-6">Mes sites</h4>
+        							<a class="btn btn-info btn-sm" href="<c:url value="/site/creationsite"/>" role="button">Créer site</a>
+      							</div>
+      							<hr>
+      							<div class="list-group">
+      								<c:forEach items="${spots}" var="spot">
+  										<div class="list-group-item list-group-item-action flex-column align-items-start">
+    										<div class="d-flex w-100 justify-content-between">
+    											<h5 class="mb-1"><c:out value="${spot.spotName }" /></h5>
+    											<c:choose>
+    												<c:when test ="${ spot.tag }">
+    													<small>Officiel</small>
+    												</c:when>
+    												<c:otherwise>
+    												</c:otherwise>
+    											</c:choose>
+    										</div>
+    										<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
+    										<div class="d-flex w-100 justify-content-between">
+    											<p class="mb-1"><c:out value="${spot.spotCounty }" /></p>
+    											<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
+    										</div>
+    									</div>
+    								</c:forEach>
+    							</div>
       						</div>
       					</div>
       				</div>
     			</div>
-    			<c:url var="deconnexionLink" value="/compte/deconnexion"/>
-        		<a class="btn btn-danger btn-sm align-center" href="${deconnexionLink}" role="button">Deconnexion</a>
+    			
+        		
 	</body>
 </html>
