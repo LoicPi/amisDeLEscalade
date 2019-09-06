@@ -35,14 +35,15 @@
         						<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>
         						<form:errors path="password" cssClass="error" />
       						</div>
-      					
-    						<div class="form-group">
-        						<button type="submit" class="btn btn-success btn-lg float-right">Valider</button>
+      						
+    						<div class="row justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm">Valider</button>
       						</div>
       					</form:form>
       				</div>
       			</div>
       		</div>
+      		<br/>
       		<div class="col-md-6 mx-auto"> 
       			Pas encore inscrit ? Rendez-vous vite sur la page d'<a href="<c:url value="/compte/inscription"/>">inscription</a>.
       		</div>
