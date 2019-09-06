@@ -19,38 +19,34 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Liste des topos</h3>
+        				<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer Site</a>
     				</div>
     				<div class="card-body">
-    					<table class="table table-striped table-bordered">
-      						<thead>
-      							<tr>
-       								<th>Nom</th>
-       								<th>Ville</th>
-       								<th>Departement</th>
-       								<th>Détail</th>
-      							</tr>
-      						</thead>
-							<tbody>
-      							<c:forEach items="${topos}" var="topo">		
-   
-       								<c:url var="viewTopo" value="/topo/vuetopo">
-        								<c:param name="topoId" value="${topo.id}" />
-       								</c:url>
-       						
-       								<tr>
-        								<td>${topo.topoName}</td>
-        								<td>${topo.topoCity}</td>
-        								<td>${topo.topoCounty}</td>
-        								<td>
-         									<a href="${viewTopo}">Detail</a>
-        								</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-     					</table>
-     				</div>
-     			</div>
-     		</div>
-		</div>
+    					<div class="list-group">
+      						<c:forEach items="${topos}" var="topo">
+  								<div class="list-group-item list-group-item-action flex-column align-items-start">
+    								<div class="d-flex w-100 justify-content-between">
+    									<h5 class="mb-1"><c:out value="${topo.topoName }" /></h5>
+    									<c:choose>
+    										<c:when test ="${ topo.availability }">
+    											<small>Prété</small>
+    										</c:when>
+    										<c:otherwise>
+    											<small>Disponible</small>
+    										</c:otherwise>
+    									</c:choose>
+    								</div>
+    								<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
+    									<a class="btn btn-info btn-sm" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
+    								</div>
+    							</div>
+    						</c:forEach>
+    					</div>		
+      				</div>
+      			</div>
+      		</div>
+      	</div>
 	</body>
 </html>
