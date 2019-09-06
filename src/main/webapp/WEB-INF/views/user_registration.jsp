@@ -68,14 +68,10 @@
        							<form:checkbox path="userMember" element="div class='col-md-8 checkbox'" value="true"/>
        							<p class="font-italic">Cochez la case si vous êtes membre de l'association "Les amis de l'escalade"</p>
       						</div>
-							<div class="row bouton text-center">
-								<div class="form-group col-md-4 col-sm-12">
-        							<button type="submit" class="btn btn-success btn-lg col-md-4 offset-md-4 col-sm-12">Inscription</button>	
-								</div>
-
-      							<div class="form-group col-md-4 offset-md-4 col-sm-12">
-      								<a class="btn btn-danger btn-lg col-md-4 col-sm-12" href="<c:url value="/"/>" role="button">Annuler</a>
-      							</div>
+      						<hr>
+							<div class="row justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-4">Inscription</button>	
+      							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/"/>" role="button">Annuler</a>
       						</div>
       					</form:form>	
 					</div>
