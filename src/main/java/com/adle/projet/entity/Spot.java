@@ -13,18 +13,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+/**
+ * Created Spot Bean defined by id, name, city, county, country, descriptive,
+ * access and tag
+ * 
+ * Join with User Bean by user
+ * 
+ * @author Loïc
+ *
+ */
 
 @Entity
 @Table( name = "spots" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :userId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :user" ),
 } )
 
 public class Spot {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer      id;
 
@@ -54,10 +65,15 @@ public class Spot {
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User         userId;
+    private User         user;
 
-    @OneToMany( mappedBy = "spotId" )
+    @OneToMany( mappedBy = "spot" )
     private List<Sector> sectors = new ArrayList<>();
+
+    @Transient
+    public boolean isTag() {
+        return spotTag;
+    }
 
     public Spot() {
 
@@ -127,12 +143,12 @@ public class Spot {
         this.spotTag = spotTag;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
     }
 
     public List<Sector> getSectors() {
@@ -147,6 +163,6 @@ public class Spot {
     public String toString() {
         return "Spot {id=" + id + ", spotName =" + spotName + ",spotCity =" + spotCity + ",spotCounty =" + spotCounty
                 + ",spotCountry =" + spotCountry + ", spotDescriptive =" + spotDescriptive +
-                ", spotAccess=" + spotAccess + ", userId =" + userId + "}";
+                ", spotAccess=" + spotAccess + ", user =" + user + "}";
     }
 }
