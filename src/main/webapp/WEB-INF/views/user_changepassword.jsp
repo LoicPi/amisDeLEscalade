@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Compte Edition</title>
+		<title>MAJ du mot de passe</title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -44,14 +44,14 @@
                             <form:input path="confirmPassword" type="password" class="form-control" placeholder="Confirmez votre nouveau mot de passe" />
                             <form:errors path="confirmPassword" class="error" />
                             <span class="form-text small text-muted">
-                            	Pour confirmer, taper votre nouveau mot de passe à nouveau.
+                            	Pour confirmer, taper à nouveau votre nouveau mot de passe.
                             </span>
                         </div>
                             
                        	<hr>
 						<div class="row justify-content-around">
         					<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        					<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/connexion"/>" role="button">Annuler</a>
+        					<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
       					</div>
                   	</form:form>
                	</div>
