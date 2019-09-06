@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Compte Edition</title>
+		<title>MAJ Compte Utilisateur</title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -18,11 +18,10 @@
       		<div class="container col-md-8 mx-auto">
       			<div class="card border-secondary">
 					<div class="card-header text-center">
-						<h1>Mon Compte</h1>
+						<h1>Mise à jour des mes informations personelles</h1>
 					</div>
 					<div class="card-body">
 						<div class="personal-info">
-							<h3>Mes informations personnelles</h3>
 							<form:form action="updateUser" class="form" method="post" modelAttribute="updateUser">
 							
 								<form:hidden path="id" />
@@ -68,7 +67,7 @@
 							    <hr>  				
       							<div class="row justify-content-around">
         							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/connexion"/>" role="button">Annuler</a>
+        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
       							</div>
 							</form:form>
       					</div>
