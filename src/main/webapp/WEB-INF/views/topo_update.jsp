@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title><c:out value="${ topo.topoName }" /></title>
+		<title>MAJ du topo <c:out value="${ topo.topoName }" /></title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -18,7 +18,7 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header">
-						<h1 class="text-center">Mise à jour du topo</h1>
+						<h1 class="text-center">Mise à jour du topo : <c:out value="${ topo.topoName }" /></h1>
 					</div>
 					<div class="card-body">
 						<form:form action="updatetopo" class="form" method="post" modelAttribute="updateTopo">
@@ -67,11 +67,8 @@
 								</div>
 								<hr>
 								<div class="row justify-content-around">
-									<c:url var="cancelLink" value="/topo/vuetopo">
-        								<c:param name="topoId" value="${updateTopo.id}" />
-       								</c:url>
         							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        							<button  class="btn btn-danger btn-sm col-4" href="${cancelLink}">Annuler</button>
+        							<button  class="btn btn-danger btn-sm col-4" href="<c:url var="cancelLink" value="/topo/${topo.id}/vuetopo"/>">Annuler</button>
       							</div>
       					</form:form>
 					</div>
