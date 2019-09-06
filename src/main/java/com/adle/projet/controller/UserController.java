@@ -179,6 +179,7 @@ public class UserController {
             return "redirect:/compte/connexion";
         } else {
             User userToUpdate = userService.getUser( userId );
+            theModel.addAttribute( "user", userToUpdate );
             UpdateUser theUser = new UpdateUser();
             theUser.setId( userId );
             theUser.setFirstName( userToUpdate.getFirstName() );
@@ -256,7 +257,7 @@ public class UserController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
-            return "redirect:/compte/" + theUser.getId() + "/moncompte";
+            return "redirect:/compte/" + userId + "/moncompte";
         } else {
             User theUser = new User();
             theModel.addAttribute( "user", theUser );
@@ -374,6 +375,8 @@ public class UserController {
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            User user = userService.getUser( userId );
+            theModel.addAttribute( "user", user );
             UpdatePasswordUser theUser = new UpdatePasswordUser();
             theUser.setId( userId );
             theModel.addAttribute( "updatePasswordUser", theUser );
@@ -406,6 +409,8 @@ public class UserController {
         } else {
             userUptadePasswordValidator.validate( theUser, result );
             if ( result.hasErrors() ) {
+                User user = userService.getUser( userId );
+                theModel.addAttribute( "user", user );
                 theModel.addAttribute( "updatePasswordUser", theUser );
                 return "user_changepassword";
             } else {
