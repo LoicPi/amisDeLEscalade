@@ -64,7 +64,7 @@ public class SpotDAOImpl implements SpotDAO {
     public List<Spot> findSpotByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Spot> query = currentSession.createNamedQuery( "Spot_findByUserId", Spot.class );
-        query.setParameter( "userId", userId );
+        query.setParameter( "user", userId );
         List<Spot> spotResult = query.getResultList();
         logger.info( "Spot List : " + query.getResultList() );
         return spotResult;
