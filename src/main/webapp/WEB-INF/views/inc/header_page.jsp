@@ -9,8 +9,9 @@
     <a class="nav-link nav-item" href="<c:url value="/site/"/>"> <span class="fa fa-mountain"></span> Site d'escalade </a>
     <a class="nav-link nav-item" href="<c:url value="/topo/"/>"> <span class="fa fa-book"></span> Topo </a>
     <a class="nav-link nav-item" id="lastNav" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>
+    	<c:set var="userId" value="${sessionScope['userId']}" />
     	<c:choose>
-            <c:when test="${empty sessionScope.sessionUser}">
+            <c:when test="${userId eq null}">
             	Compte
             </c:when>
             <c:otherwise>
