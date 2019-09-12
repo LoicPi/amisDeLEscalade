@@ -19,7 +19,14 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Liste des topos</h3>
-        				<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer Site</a>
+     					<c:set var="userId" value="${sessionScope['userId']}" />
+     					<c:choose>
+     						<c:when test="${userId eq null}">
+     						</c:when>
+     						<c:otherwise>
+     							<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer Topo</a>
+     						</c:otherwise>
+        				</c:choose>
     				</div>
     				<div class="card-body">
     					<div class="list-group">
