@@ -13,44 +13,68 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+/**
+ * Created Path Bean defined by id and name
+ * 
+ * Join with Sector Bean, User Bean, Spot Bean with sector, user, spot
+ * 
+ * @author Loïc
+ *
+ */
 
 @Entity
 @Table( name = "paths" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Path_findByUserId", query = "from Path where user_id = :userId" ),
-        @org.hibernate.annotations.NamedQuery( name = "Path_findBySpotId", query = "from Path where spot_id = :spotId" ),
-        @org.hibernate.annotations.NamedQuery( name = "Path_findBySectorId", query = "from Path where sector_id = :sectorId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Path_findByUserId", query = "from Path where user_id = :user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Path_findBySpotId", query = "from Path where spot_id = :spot" ),
+        @org.hibernate.annotations.NamedQuery( name = "Path_findBySectorId", query = "from Path where sector_id = :sector" ),
+        @org.hibernate.annotations.NamedQuery( name = "Path_findByTypeId", query = "from Path where type_id = :type" ),
+        @org.hibernate.annotations.NamedQuery( name = "Path_findById", query = "from Path as p inner join fetch p.user where p.id =:pathId" ),
 } )
 
 public class Path {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer      id;
 
-    @Column( name = "path_name", unique = true )
+    @Column( name = "path_name" )
     @Size( max = 100, min = 3, message = "{path.name.invalid}" )
     private String       pathName;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "sector_id" )
-    private Sector       sectorId;
+    private Sector       sector;
 
-    @OneToMany( mappedBy = "pathId" )
+    @OneToMany( mappedBy = "path" )
     private List<Length> lengths = new ArrayList<>();
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User         userId;
+    private User         user;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "spot_id" )
-    private Spot         spotId;
+    private Spot         spot;
+
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "type_id" )
+    private Type         type;
+
+    @Transient
+    private String       pathType;
 
     public Path() {
 
+    }
+
+    @Transient
+    public String typeOfPath() {
+        return type.getTypeName();
     }
 
     public Integer getId() {
@@ -69,12 +93,12 @@ public class Path {
         this.pathName = pathName;
     }
 
-    public Sector getSectorId() {
-        return sectorId;
+    public Sector getSector() {
+        return sector;
     }
 
-    public void setSectorId( Sector sectorId ) {
-        this.sectorId = sectorId;
+    public void setSector( Sector sector ) {
+        this.sector = sector;
     }
 
     public List<Length> getLengths() {
@@ -85,20 +109,36 @@ public class Path {
         this.lengths = lengths;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
     }
 
-    public Spot getSpotId() {
-        return spotId;
+    public Spot getSpot() {
+        return spot;
     }
 
-    public void setSpotId( Spot spotId ) {
-        this.spotId = spotId;
+    public void setSpot( Spot spot ) {
+        this.spot = spot;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType( Type type ) {
+        this.type = type;
+    }
+
+    public String getPathType() {
+        return pathType;
+    }
+
+    public void setPathType( String pathType ) {
+        this.pathType = pathType;
     }
 
     @Override
