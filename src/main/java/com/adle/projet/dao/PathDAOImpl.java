@@ -47,9 +47,11 @@ public class PathDAOImpl implements PathDAO {
     @Override
     public Path getPath( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Path path = currentSession.get( Path.class, theId );
-        logger.info( "Path loaded successfully, Path details = " + path );
-        return path;
+        Query<Path> query = currentSession.createNamedQuery( "Path_findById", Path.class );
+        query.setParameter( "pathId", theId );
+        Path pathResult = (Path) query.getSingleResult();
+        logger.info( "Path loaded successfully, Path details = " + pathResult );
+        return pathResult;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class PathDAOImpl implements PathDAO {
     public List<Path> findPathByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Path> query = currentSession.createNamedQuery( "Path_findByUserId", Path.class );
-        query.setParameter( "userId", userId );
+        query.setParameter( "user", userId );
         List<Path> pathResult = query.getResultList();
         logger.info( "Path List : " + query.getResultList() );
         return pathResult;
@@ -74,7 +76,7 @@ public class PathDAOImpl implements PathDAO {
     public List<Path> findPathBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Path> query = currentSession.createNamedQuery( "Path_findBySpotId", Path.class );
-        query.setParameter( "spotId", spotId );
+        query.setParameter( "spot", spotId );
         List<Path> pathResult = query.getResultList();
         logger.info( "Path List : " + query.getResultList() );
         return pathResult;
@@ -84,7 +86,17 @@ public class PathDAOImpl implements PathDAO {
     public List<Path> findPathBySectorId( int sectorId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Path> query = currentSession.createNamedQuery( "Path_findBySectorId", Path.class );
-        query.setParameter( "sectorId", sectorId );
+        query.setParameter( "sector", sectorId );
+        List<Path> pathResult = query.getResultList();
+        logger.info( "Path List : " + query.getResultList() );
+        return pathResult;
+    }
+
+    @Override
+    public List<Path> findPathByTypeId( int typeId ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Path> query = currentSession.createNamedQuery( "Path_findByTypeId", Path.class );
+        query.setParameter( "type", typeId );
         List<Path> pathResult = query.getResultList();
         logger.info( "Path List : " + query.getResultList() );
         return pathResult;

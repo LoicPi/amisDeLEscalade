@@ -20,6 +20,7 @@ public interface PathDAO {
 
     public List<Path> findPathBySectorId( int sectorId );
 
-    public void deletePath( int theId );
+    public List<Path> findPathByTypeId( int typeId );
 
+    public void deletePath( int theId );
 }

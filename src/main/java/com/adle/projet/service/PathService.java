@@ -20,6 +20,8 @@ public interface PathService {
 
     public List<Path> findPathBySectorId( int sectorId );
 
+    public List<Path> findPathByTypeId( int typeId );
+
     public void deletePath( int theId );
 
 }

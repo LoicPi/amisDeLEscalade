@@ -54,6 +54,11 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
+    public List<Path> findPathByTypeId( int typeId ) {
+        return pathDAO.findPathByTypeId( typeId );
+    }
+
+    @Override
     public void deletePath( int theId ) {
         pathDAO.deletePath( theId );
 
