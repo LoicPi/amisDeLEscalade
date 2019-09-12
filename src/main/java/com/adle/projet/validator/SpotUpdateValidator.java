@@ -15,7 +15,7 @@ public class SpotUpdateValidator implements Validator {
 
     @Override
     public boolean supports( Class<?> clazz ) {
-        return SpotUpdateValidator.class.equals( clazz );
+        return UpdateSpot.class.equals( clazz );
     }
 
     @Override
