@@ -15,17 +15,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * Created Sector Bean defined by id, name, descriptive and type
+ * 
+ * Join with Spot Bean and User Bean by spot and user
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "sectors" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findByUserId", query = "from Sector where user_id = :userId" ),
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findBySpotId", query = "from Sector where spot_id = :spotId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findByUserId", query = "from Sector where user_id = :user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findBySpotId", query = "from Sector where spot_id = :spot" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findById", query = "from Sector as r inner join fetch r.user where r.id =:sectorId" ),
 } )
 
 public class Sector {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer    id;
 
@@ -37,20 +47,20 @@ public class Sector {
     @Size( max = 600, min = 10, message = "{sector.descriptive.invalid}" )
     private String     sectorDescriptive;
 
-    @Column( name = "sector_type" )
-    @Size( max = 8, min = 3, message = "{sector.type.invalid" )
-    private String     sectorType;
+    @Column( name = "sector_access" )
+    @Size( max = 100, min = 3, message = "{sector.acces.invalid" )
+    private String     sectorAccess;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "spot_id" )
-    private Spot       spotId;
+    private Spot       spot;
 
-    @OneToMany( mappedBy = "sectorId" )
+    @OneToMany( mappedBy = "sector" )
     private List<Path> paths = new ArrayList<>();
 
-    @ManyToOne( fetch = FetchType.LAZY )
+    @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "user_id" )
-    private User       userId;
+    private User       user;
 
     public Sector() {
 
@@ -80,20 +90,12 @@ public class Sector {
         this.sectorDescriptive = sectorDescriptive;
     }
 
-    public String getSectorType() {
-        return sectorType;
+    public String getSectorAccess() {
+        return sectorAccess;
     }
 
-    public void setSectorType( String sectorType ) {
-        this.sectorType = sectorType;
-    }
-
-    public Spot getSpotId() {
-        return spotId;
-    }
-
-    public void setSpotId( Spot spotId ) {
-        this.spotId = spotId;
+    public void setSectorAccess( String sectorAccess ) {
+        this.sectorAccess = sectorAccess;
     }
 
     public List<Path> getPaths() {
@@ -104,18 +106,26 @@ public class Sector {
         this.paths = paths;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
+    }
+
+    public Spot getSpot() {
+        return spot;
+    }
+
+    public void setSpot( Spot spot ) {
+        this.spot = spot;
     }
 
     @Override
     public String toString() {
         return "Sector {id=" + id + ", sectorName = " + sectorName + ", sectorDescriptive = " + sectorDescriptive
-                + ", sectorType = " + sectorType + "}";
+                + ", sectorAccess = " + sectorAccess + "}";
     }
 
 }
