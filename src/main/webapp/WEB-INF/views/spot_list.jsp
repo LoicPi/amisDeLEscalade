@@ -19,7 +19,14 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Liste des sites d'escalade</h3>
-        				<a class="btn btn-info btn-sm" href="<c:url value="/site/creationsite"/>" role="button">Créer Site</a>
+     					<c:set var="userId" value="${sessionScope['userId']}" />
+     					<c:choose>
+     						<c:when test="${userId eq null}">
+     						</c:when>
+     						<c:otherwise>
+        						<a class="btn btn-info btn-sm" href="<c:url value="/site/creationsite"/>" role="button">Créer Site</a>
+    						</c:otherwise>
+    					</c:choose>
     				</div>
     				<div class="card-body">
     					<div class="list-group">
