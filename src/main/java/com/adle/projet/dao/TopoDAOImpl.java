@@ -46,9 +46,11 @@ public class TopoDAOImpl implements TopoDAO {
     @Override
     public Topo getTopo( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Topo topo = currentSession.get( Topo.class, theId );
-        logger.info( "Topo loaded successfully, Topo details = " + topo );
-        return topo;
+        Query<Topo> query = currentSession.createNamedQuery( "Topo_findById", Topo.class );
+        query.setParameter( "topoId", theId );
+        Topo topoResult = (Topo) query.getSingleResult();
+        logger.info( "Topo loaded successfully, Topo details = " + topoResult );
+        return topoResult;
     }
 
     @Override

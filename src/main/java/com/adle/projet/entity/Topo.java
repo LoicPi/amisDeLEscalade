@@ -26,6 +26,7 @@ import javax.validation.constraints.Size;
 @Table( name = "topos" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Topo_findByUserId", query = "from Topo where user_id = :user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Topo_findById", query = "from Topo as t inner join fetch t.user where t.id =:topoId" ),
 } )
 
 public class Topo {
@@ -154,6 +155,6 @@ public class Topo {
         return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity + ",topoCounty =" + topoCounty
                 + ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
                 ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
-                topoAvailability + ", userId =" + user + "}";
+                topoAvailability + "}";
     }
 }
