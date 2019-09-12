@@ -1,6 +1,7 @@
 package com.adle.projet.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,18 +23,6 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public void saveListing( Listing listing ) {
-        listingDAO.saveListing( listing );
-
-    }
-
-    @Override
-    public void deleteListing( int theId ) {
-        listingDAO.deleteListing( theId );
-
-    }
-
-    @Override
     public Listing getListing( int theId ) {
         return listingDAO.getListing( theId );
     }
@@ -41,6 +30,16 @@ public class ListingServiceImpl implements ListingService {
     @Override
     public List<Listing> findListingByLevelId( int levelId ) {
         return listingDAO.findListingByLevelId( levelId );
+    }
+
+    @Override
+    public Map<String, String> getListingNameOfListings( List<Listing> listings ) {
+        return listingDAO.getListingNameOfListings( listings );
+    }
+
+    @Override
+    public Listing findListingByNameOfListing( String nameListing ) {
+        return listingDAO.findListingByNameOfListing( nameListing );
     }
 
 }

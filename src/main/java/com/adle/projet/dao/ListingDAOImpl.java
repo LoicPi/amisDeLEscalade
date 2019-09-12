@@ -1,6 +1,8 @@
 package com.adle.projet.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,22 +39,6 @@ public class ListingDAOImpl implements ListingDAO {
     }
 
     @Override
-    public void saveListing( Listing listing ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.saveOrUpdate( listing );
-        logger.info( "Listing saved successfully, Listing details = " + listing );
-
-    }
-
-    @Override
-    public void deleteListing( int theId ) {
-        Session session = sessionFactory.getCurrentSession();
-        Listing theListing = session.byId( Listing.class ).load( theId );
-        session.delete( theListing );
-
-    }
-
-    @Override
     public Listing getListing( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Listing listing = currentSession.get( Listing.class, theId );
@@ -64,9 +50,29 @@ public class ListingDAOImpl implements ListingDAO {
     public List<Listing> findListingByLevelId( int levelId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Listing> query = currentSession.createNamedQuery( "Listing_findByLevelId", Listing.class );
-        query.setParameter( "levelId", levelId );
+        query.setParameter( "level", levelId );
         List<Listing> listingResult = query.getResultList();
         logger.info( "Listing List : " + query.getResultList() );
+        return listingResult;
+    }
+
+    @Override
+    public Map<String, String> getListingNameOfListings( List<Listing> listings ) {
+        Map<String, String> listingName = new HashMap<String, String>();
+        for ( int i = 0; i < listings.size(); i++ ) {
+            listingName.put( listings.get( i ).getListingName(), listings.get( i ).getListingName() );
+        }
+        logger.info( "MapOfListing : " + listingName );
+        return listingName;
+    }
+
+    @Override
+    public Listing findListingByNameOfListing( String nameListing ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Listing> query = currentSession.createNamedQuery( "Listing_findByName", Listing.class );
+        query.setParameter( "listingName", nameListing );
+        Listing listingResult = query.getSingleResult();
+        logger.info( "Listing : " + listingResult );
         return listingResult;
     }
 }
