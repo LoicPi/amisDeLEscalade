@@ -11,20 +11,29 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Created Level Bean defined by id and name
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "levels" )
-
+@org.hibernate.annotations.NamedQueries( {
+        @org.hibernate.annotations.NamedQuery( name = "Level_findByName", query = "from Level where level_name = :levelName" ),
+} )
 public class Level {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer       id;
 
     @Column( name = "level_name" )
     private String        levelName;
 
-    @OneToMany( mappedBy = "levelId" )
+    @OneToMany( mappedBy = "level" )
     private List<Listing> listings = new ArrayList<>();
 
     public Level() {

@@ -14,28 +14,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Created Listing Bean defined by id and name
+ * 
+ * Join with Level Bean with level
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "listings" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Listing_findByLevelId", query = "from Listing where level_id = :levelId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Listing_findByLevelId", query = "from Listing where level_id = :level" ),
+        @org.hibernate.annotations.NamedQuery( name = "Listing_findByName", query = "from Listing where listing_name = :listingName" ),
 } )
 
 public class Listing {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer      id;
 
     @Column( name = "listing_name" )
     private String       listingName;
 
-    @OneToMany( mappedBy = "listingId" )
+    @OneToMany( mappedBy = "listing" )
     private List<Length> lengths = new ArrayList<>();
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "level_id" )
-    private Level        levelId;
+    private Level        level;
 
     public Listing() {
 
@@ -65,12 +75,12 @@ public class Listing {
         this.lengths = lengths;
     }
 
-    public Level getLevelId() {
-        return levelId;
+    public Level getLevel() {
+        return level;
     }
 
-    public void setLevelId( Level levelId ) {
-        this.levelId = levelId;
+    public void setLevel( Level level ) {
+        this.level = level;
     }
 
     public String toString() {
