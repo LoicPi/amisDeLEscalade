@@ -19,7 +19,7 @@ public class UpdatePath {
 
     private Type    type;
 
-    private String  typeName;
+    private String  pathType;
 
     public Integer pathIdUser() {
         return user.getId();
@@ -85,11 +85,11 @@ public class UpdatePath {
         this.type = type;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getPathType() {
+        return pathType;
     }
 
-    public void setTypeName( String typeName ) {
-        this.typeName = typeName;
+    public void setPathType( String pathType ) {
+        this.pathType = pathType;
     }
 }
