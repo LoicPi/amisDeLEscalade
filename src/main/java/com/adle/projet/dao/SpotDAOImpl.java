@@ -47,9 +47,11 @@ public class SpotDAOImpl implements SpotDAO {
     @Override
     public Spot getSpot( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Spot spot = currentSession.get( Spot.class, theId );
-        logger.info( "Spot loaded successfully, Spot details = " + spot );
-        return spot;
+        Query<Spot> query = currentSession.createNamedQuery( "Spot_findById", Spot.class );
+        query.setParameter( "spotId", theId );
+        Spot spotResult = (Spot) query.getSingleResult();
+        logger.info( "Spot loaded successfully, Spot details = " + spotResult );
+        return spotResult;
     }
 
     @Override

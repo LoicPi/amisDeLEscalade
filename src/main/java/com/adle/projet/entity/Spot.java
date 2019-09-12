@@ -30,6 +30,7 @@ import javax.validation.constraints.Size;
 @Table( name = "spots" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Spot_findById", query = "from Spot as s inner join fetch s.user where s.id =:spotId" ),
 } )
 
 public class Spot {
@@ -163,6 +164,6 @@ public class Spot {
     public String toString() {
         return "Spot {id=" + id + ", spotName =" + spotName + ",spotCity =" + spotCity + ",spotCounty =" + spotCounty
                 + ",spotCountry =" + spotCountry + ", spotDescriptive =" + spotDescriptive +
-                ", spotAccess=" + spotAccess + ", user =" + user + "}";
+                ", spotAccess=" + spotAccess + "}";
     }
 }
