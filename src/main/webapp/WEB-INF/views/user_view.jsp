@@ -28,8 +28,8 @@
 									Votre qualité de membre prend 48h.
 								</div>-->
 								<div class="row justify-content-around">
-									<h4 class="col-lg-8 col-6">Mes infos</h4>
-        							<a class="btn btn-info btn-sm" href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
+									<h4 class="col-md-9 col-6">Mes infos</h4>
+        							<a class="btn btn-info btn-sm " href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
       							</div>
 								<hr>
 								<form class="form-horizontal" role="form">
