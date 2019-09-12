@@ -9,19 +9,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.persistence.Transient;
+
+/**
+ * Created Length Bean defined by id, heigth, relay and spit
+ * 
+ * Join with Path Bean, Listing Bean, User Bean, Level Bean with path, listing,
+ * user, level
+ * 
+ * @author Loïc
+ *
+ */
 
 @Entity
 @Table( name = "lengths" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Length_findByUserId", query = "from Length where user_id = :userId" ),
-        @org.hibernate.annotations.NamedQuery( name = "Length_findByPathId", query = "from Length where path_id = :pathId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByUserId", query = "from Length where user_id = :user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByPathId", query = "from Length where path_id = :path" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByListingId", query = "from Length where listing_id = :listing" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findByLevelId", query = "from Length where level_id = :level" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findById", query = "from Length as l inner join fetch l.user where l.id =:lengthId" ),
 } )
 
 public class Length {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
     private Integer id;
 
@@ -29,23 +42,32 @@ public class Length {
     private Integer lengthHeight;
 
     @Column( name = "length_relay" )
-    @Size( max = 100, min = 3, message = "{length.relay.invalid}" )
-    private String  lengthRelay;
+    private Integer lengthRelay;
 
     @Column( name = "length_spit" )
     private Boolean lengthSpit;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "path_id" )
-    private Path    pathId;
+    private Path    path;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "listing_id" )
-    private Listing listingId;
+    private Listing listing;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User    userId;
+    private User    user;
+
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "level_id" )
+    private Level   level;
+
+    @Transient
+    private String  lengthLevel;
+
+    @Transient
+    private String  lengthListing;
 
     public Length() {
 
@@ -67,11 +89,11 @@ public class Length {
         this.lengthHeight = lengthHeight;
     }
 
-    public String getLengthRelay() {
+    public Integer getLengthRelay() {
         return lengthRelay;
     }
 
-    public void setLengthRelay( String lengthRelay ) {
+    public void setLengthRelay( Integer lengthRelay ) {
         this.lengthRelay = lengthRelay;
     }
 
@@ -83,28 +105,52 @@ public class Length {
         this.lengthSpit = lengthSpit;
     }
 
-    public Path getPathId() {
-        return pathId;
+    public Path getPath() {
+        return path;
     }
 
-    public void setPathId( Path pathId ) {
-        this.pathId = pathId;
+    public void setPath( Path path ) {
+        this.path = path;
     }
 
-    public Listing getListingId() {
-        return listingId;
+    public Listing getListing() {
+        return listing;
     }
 
-    public void setListingId( Listing listingId ) {
-        this.listingId = listingId;
+    public void setListing( Listing listing ) {
+        this.listing = listing;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId( User userId ) {
-        this.userId = userId;
+    public void setUser( User user ) {
+        this.user = user;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel( Level level ) {
+        this.level = level;
+    }
+
+    public String getLengthLevel() {
+        return lengthLevel;
+    }
+
+    public void setLengthLevel( String lengthLevel ) {
+        this.lengthLevel = lengthLevel;
+    }
+
+    public String getLengthListing() {
+        return lengthListing;
+    }
+
+    public void setLengthListing( String lengthListing ) {
+        this.lengthListing = lengthListing;
     }
 
     @Override
