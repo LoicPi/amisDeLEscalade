@@ -47,9 +47,11 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public Sector getSectors( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Sector sector = currentSession.get( Sector.class, theId );
-        logger.info( "Sector loaded successfully, Sector details = " + sector );
-        return sector;
+        Query<Sector> query = currentSession.createNamedQuery( "Sector_findById", Sector.class );
+        query.setParameter( "sectorId", theId );
+        Sector sectorResult = (Sector) query.getSingleResult();
+        logger.info( "Sector loaded successfully, Sector details = " + sectorResult );
+        return sectorResult;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class SectorDAOImpl implements SectorDAO {
     public List<Sector> findSectorByUser( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Sector> query = currentSession.createNamedQuery( "Sector_findByUserId", Sector.class );
-        query.setParameter( "userId", userId );
+        query.setParameter( "user", userId );
         List<Sector> sectorResult = query.getResultList();
         logger.info( "Sector List : " + query.getResultList() );
         return sectorResult;
@@ -82,7 +84,7 @@ public class SectorDAOImpl implements SectorDAO {
     public List<Sector> findSectorBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Sector> query = currentSession.createNamedQuery( "Sector_findBySpotId", Sector.class );
-        query.setParameter( "spotId", spotId );
+        query.setParameter( "spot", spotId );
         List<Sector> sectorResult = query.getResultList();
         logger.info( "Sector List : " + query.getResultList() );
         return sectorResult;
