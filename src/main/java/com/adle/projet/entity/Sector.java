@@ -58,7 +58,7 @@ public class Sector {
     @OneToMany( mappedBy = "sector" )
     private List<Path> paths = new ArrayList<>();
 
-    @ManyToOne( fetch = FetchType.EAGER )
+    @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
     private User       user;
 
