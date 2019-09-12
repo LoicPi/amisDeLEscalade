@@ -1,5 +1,6 @@
 package com.adle.projet.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.Length;
+import com.adle.projet.entity.Path;
 
 @Repository
 public class LengthDAOImpl implements LengthDAO {
@@ -63,16 +65,18 @@ public class LengthDAOImpl implements LengthDAO {
     @Override
     public Length getLength( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Length length = currentSession.get( Length.class, theId );
-        logger.info( "Length loaded successfully, Length details = " + length );
-        return length;
+        Query<Length> query = currentSession.createNamedQuery( "Length_findById", Length.class );
+        query.setParameter( "lengthId", theId );
+        Length lengthResult = (Length) query.getSingleResult();
+        logger.info( "Length loaded successfully, Length details = " + lengthResult );
+        return lengthResult;
     }
 
     @Override
     public List<Length> findLengthByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Length> query = currentSession.createNamedQuery( "Length_findByUserId", Length.class );
-        query.setParameter( "userId", userId );
+        query.setParameter( "user", userId );
         List<Length> lengthResult = query.getResultList();
         logger.info( "Length List : " + query.getResultList() );
         return lengthResult;
@@ -82,10 +86,46 @@ public class LengthDAOImpl implements LengthDAO {
     public List<Length> findLengthByPathId( int pathId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Length> query = currentSession.createNamedQuery( "Length_findByPathId", Length.class );
-        query.setParameter( "pathId", pathId );
+        query.setParameter( "path", pathId );
         List<Length> lengthResult = query.getResultList();
         logger.info( "Length List : " + query.getResultList() );
         return lengthResult;
+    }
+
+    @Override
+    public List<Length> findLengthByListingId( int listingId ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createNamedQuery( "Length_findByListingId", Length.class );
+        query.setParameter( "listing", listingId );
+        List<Length> lengthResult = query.getResultList();
+        logger.info( "Length List : " + query.getResultList() );
+        return lengthResult;
+    }
+
+    @Override
+    public List<Length> findLengthByLevelId( int levelId ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createNamedQuery( "Length_findByLevelId", Length.class );
+        query.setParameter( "level", levelId );
+        List<Length> lengthResult = query.getResultList();
+        logger.info( "Length List : " + query.getResultList() );
+        return lengthResult;
+    }
+
+    @Override
+    public void deleteLengths( List<Length> lengths ) {
+        for ( int i = 0; i < lengths.size(); i++ ) {
+            deleteLength( lengths.get( i ).getId() );
+        }
+    }
+
+    @Override
+    public List<Length> findLengthsByPaths( List<Path> paths ) {
+        List<Length> lengths = new ArrayList();
+        for ( int i = 0; i < paths.size(); i++ ) {
+            lengths.addAll( findLengthByPathId( paths.get( i ).getId() ) );
+        }
+        return lengths;
     }
 
 }

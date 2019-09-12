@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.adle.projet.dao.LengthDAO;
 import com.adle.projet.entity.Length;
+import com.adle.projet.entity.Path;
 
 @Service
 @Transactional
@@ -52,6 +53,27 @@ public class LengthServiceImpl implements LengthService {
     @Override
     public List<Length> findLengthByPathId( int pathId ) {
         return lengthDAO.findLengthByPathId( pathId );
+    }
+
+    @Override
+    public List<Length> findLengthByListingId( int listingId ) {
+        return lengthDAO.findLengthByListingId( listingId );
+    }
+
+    @Override
+    public List<Length> findLengthByLevelId( int levelId ) {
+        return lengthDAO.findLengthByLevelId( levelId );
+    }
+
+    @Override
+    public void deleteLengths( List<Length> lengths ) {
+        lengthDAO.deleteLengths( lengths );
+
+    }
+
+    @Override
+    public List<Length> findLengthsByPaths( List<Path> paths ) {
+        return lengthDAO.findLengthsByPaths( paths );
     }
 
 }
