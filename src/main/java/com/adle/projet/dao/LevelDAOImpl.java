@@ -1,6 +1,8 @@
 package com.adle.projet.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,25 +39,31 @@ public class LevelDAOImpl implements LevelDAO {
     }
 
     @Override
-    public void saveLevel( Level level ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.saveOrUpdate( level );
-        logger.info( "Level saved successfully, Level details = " + level );
-    }
-
-    @Override
-    public void deleteLevel( int theId ) {
-        Session session = sessionFactory.getCurrentSession();
-        Level theLevel = session.byId( Level.class ).load( theId );
-        session.delete( theLevel );
-    }
-
-    @Override
     public Level getLevel( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Level level = currentSession.get( Level.class, theId );
         logger.info( "Level loaded successfully, Level details = " + level );
         return level;
+    }
+
+    @Override
+    public Map<String, String> getLevelNameOfLevels( List<Level> levels ) {
+        Map<String, String> levelName = new HashMap<String, String>();
+        for ( int i = 0; i < levels.size(); i++ ) {
+            levelName.put( levels.get( i ).getLevelName(), levels.get( i ).getLevelName() );
+        }
+        logger.info( "MapOfLevel : " + levelName );
+        return levelName;
+    }
+
+    @Override
+    public Level findLevelByNameOfLevel( String nameLevel ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Level> query = currentSession.createNamedQuery( "Level_findByName", Level.class );
+        query.setParameter( "levelName", nameLevel );
+        Level levelResult = query.getSingleResult();
+        logger.info( "Level : " + levelResult );
+        return levelResult;
     }
 
 }

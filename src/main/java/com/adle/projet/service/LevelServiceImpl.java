@@ -1,6 +1,7 @@
 package com.adle.projet.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,19 +23,18 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public void saveLevel( Level level ) {
-        levelDAO.saveLevel( level );
-    }
-
-    @Override
-    public void deleteLevel( int theId ) {
-        levelDAO.deleteLevel( theId );
-
-    }
-
-    @Override
     public Level getLevel( int theId ) {
         return levelDAO.getLevel( theId );
+    }
+
+    @Override
+    public Map<String, String> getLevelNameOfLevels( List<Level> levels ) {
+        return levelDAO.getLevelNameOfLevels( levels );
+    }
+
+    @Override
+    public Level findLevelByNameOfLevel( String nameLevel ) {
+        return levelDAO.findLevelByNameOfLevel( nameLevel );
     }
 
 }
