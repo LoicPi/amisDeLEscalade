@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.UpdateSpot;
+import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
+import com.adle.projet.service.SectorService;
 import com.adle.projet.service.SpotService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.SpotUpdateValidator;
@@ -33,6 +35,9 @@ public class SpotController {
 
     @Autowired
     private SpotService         spotService;
+
+    @Autowired
+    private SectorService       sectorService;
 
     @Autowired
     private SpotValidator       spotValidator;
@@ -57,6 +62,11 @@ public class SpotController {
     @GetMapping( "/" )
     public String listSpots( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+        }
         List<Spot> theSpots = spotService.getSpots();
         theModel.addAttribute( "spots", theSpots );
         return "spot_list";
@@ -149,8 +159,10 @@ public class SpotController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
+        List<Sector> sectors = sectorService.findSectorBySpotId( spotId );
         Spot theSpot = spotService.getSpot( spotId );
         theModel.addAttribute( "spot", theSpot );
+        theModel.addAttribute( "sectors", sectors );
         return "spot_view";
     }
 
@@ -160,7 +172,7 @@ public class SpotController {
     /**
      * Page to uptade spot
      * 
-     * @param theId
+     * @param spotId
      *            id of the spot
      * @param theModel
      *            attribute to page jsp
@@ -192,7 +204,7 @@ public class SpotController {
             theSpot.setUser( spotToUpdate.getUser() );
             Integer spotUserId = theSpot.spotIdUser();
             if ( !( spotUserId.equals( userId ) ) ) {
-                return "redirect:/";
+                return "redirect:/site/" + spotId + "/vuesite";
             } else {
                 theModel.addAttribute( "updateSpot", theSpot );
                 return "spot_uptade";
@@ -249,7 +261,7 @@ public class SpotController {
     /**
      * Page to delete a spot
      * 
-     * @param theId
+     * @param spotId
      *            the id of the spot
      * @return view of the spot's list
      */
