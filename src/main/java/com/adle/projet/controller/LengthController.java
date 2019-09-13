@@ -36,7 +36,7 @@ import com.adle.projet.validator.LengthUpdateValidator;
 import com.adle.projet.validator.LengthValidator;
 
 @Controller
-@RequestMapping( "/site/{spotId}/secteur/{sectorId}/voie/{voieId}/longueur" )
+@RequestMapping( "/site/{spotId}/secteur/{sectorId}/voie/{pathId}/longueur" )
 public class LengthController {
 
     @Autowired
