@@ -38,7 +38,7 @@ public class Length {
     @Column( name = "id" )
     private Integer id;
 
-    @Column( name = "length_height" )
+    @Column( name = "length_height", nullable = false )
     private Integer lengthHeight;
 
     @Column( name = "length_relay" )

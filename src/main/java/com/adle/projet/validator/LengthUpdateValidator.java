@@ -43,6 +43,10 @@ public class LengthUpdateValidator implements Validator {
             errors.rejectValue( "updateLengthHeigth", "lengthValidator.lengthHeigth.negative" );
         }
 
+        if ( updateLength.getUpdateLengthHeight() == 0 ) {
+            logger.info( "UpdateLength_Heigth can't be null" );
+            errors.rejectValue( "updateLengthHeigth", "lengthValidator.lengthHeigth.null" );
+        }
     }
 
 }
