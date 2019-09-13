@@ -14,6 +14,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 
 @Repository
@@ -76,8 +77,10 @@ public class SpotDAOImpl implements SpotDAO {
     public void deleteSpot( int theId ) {
         Session session = sessionFactory.getCurrentSession();
         Spot theSpot = session.byId( Spot.class ).load( theId );
+        for ( Sector s : theSpot.getSectors() ) {
+            session.remove( s );
+        }
         session.delete( theSpot );
-
     }
 
 }
