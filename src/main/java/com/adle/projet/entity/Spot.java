@@ -41,16 +41,18 @@ public class Spot {
     private Integer      id;
 
     @Column( name = "spot_name", unique = true )
-    @Size( max = 100, min = 3, message = "{site.name.invalid}" )
+    @Size( max = 100, min = 3, message = "{spot.name.invalid}" )
     private String       spotName;
 
     @Column( name = "spot_county" )
     private Integer      spotCounty;
 
     @Column( name = "spot_city" )
+    @Size( max = 100, min = 3, message = "{spot.city.invalid}" )
     private String       spotCity;
 
     @Column( name = "spot_country" )
+    @Size( max = 100, min = 3, message = "{spot.country.invalid}" )
     private String       spotCountry;
 
     @Column( name = "spot_descriptive" )
