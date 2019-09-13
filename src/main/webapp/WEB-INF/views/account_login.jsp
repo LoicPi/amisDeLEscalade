@@ -22,7 +22,7 @@
      					<h3>Connexion</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="logUser" class="form" method="post" modelAttribute="user"> 
+     					<form:form action="loguser" class="form" method="post" modelAttribute="user"> 
       					
       						<div class="form-group">
        							<label for="email">Email <span class="requis">*</span></label>
