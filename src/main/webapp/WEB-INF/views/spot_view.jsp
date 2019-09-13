@@ -19,9 +19,20 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
 						<h1><c:out value="${ spot.spotName }" /></h1>
-						<c:if test="${ spot.tag }">
-							<a class="col-md-4"><em>Site officiel les amis de l'escalade</em></a>
-						</c:if>
+						<c:choose>
+							<c:when test="${ spot.tag }">
+								<a class="col-md-4"><em>Site officiel les amis de l'escalade</em></a>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${user.member && userId ne null}">
+										<div class="row justify-content-around">
+       										<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/tagofficialspot"/>" role="button">Cliquez pour rendre Officiel ce site</a>
+       									</div>
+       								</c:when>
+       							</c:choose>
+							</c:otherwise>
+						</c:choose>
 						<c:set var="userId" value="${sessionScope['userId']}" />
       										
 						<c:choose>

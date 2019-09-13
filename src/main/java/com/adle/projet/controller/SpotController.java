@@ -276,4 +276,19 @@ public class SpotController {
         }
     }
 
+    @GetMapping( "{spotId}/tagofficialspot" )
+    public String tagOfficialSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Spot theSpot = spotService.getSpot( spotId );
+            theSpot.setSpotTag( true );
+            spotService.updateSpot( theSpot );
+            ;
+            return "redirect:/site/" + spotId + "/vuesite";
+        }
+    }
+
 }
