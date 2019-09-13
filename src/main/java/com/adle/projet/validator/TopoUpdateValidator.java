@@ -27,14 +27,29 @@ public class TopoUpdateValidator implements Validator {
             errors.rejectValue( "topoName", "topoValidator.topoName.empty" );
         }
 
+        if ( topo.getTopoName().length() > 100 || topo.getTopoName().length() < 3 ) {
+            logger.info( "Length of Topo_Name is not correct." );
+            errors.rejectValue( "topoName", "topo.name.invalid" );
+        }
+
         if ( topo.getTopoDescriptive().equals( "" ) ) {
             logger.info( "Topo_Descriptive is empty" );
-            errors.rejectValue( "topoDescritpive", "topoValidator.topoDescriptive.empty" );
+            errors.rejectValue( "topoDescriptive", "topoValidator.topoDescriptive.empty" );
+        }
+
+        if ( topo.getTopoDescriptive().length() > 600 || topo.getTopoDescriptive().length() < 10 ) {
+            logger.info( "Length of Topo_Descriptive is not correct." );
+            errors.rejectValue( "topoDescriptive", "topo.descriptive.invalid" );
         }
 
         if ( topo.getTopoCity().equals( "" ) ) {
             logger.info( "Topo_City is empty" );
             errors.rejectValue( "topoCity", "topoValidator.topoCity.empty" );
+        }
+
+        if ( topo.getTopoCity().length() > 100 || topo.getTopoCity().length() < 3 ) {
+            logger.info( "Length of Topo_City is not correct." );
+            errors.rejectValue( "topoCity", "topo.city.invalid" );
         }
 
         if ( topo.getTopoCounty() == null ) {
@@ -47,11 +62,25 @@ public class TopoUpdateValidator implements Validator {
             errors.rejectValue( "topoCountry", "topoValidator.topoCountry.empty" );
         }
 
+        if ( topo.getTopoCountry().length() > 100 || topo.getTopoCountry().length() < 3 ) {
+            logger.info( "Length of Topo_Country is not correct." );
+            errors.rejectValue( "topoCountry", "topo.country.invalid" );
+        }
+
         if ( topo.getTopoReleaseDate().equals( "" ) ) {
             logger.info( "Topo_ReleaseDate is empty" );
             errors.rejectValue( "topoReleaseDate", "topoValidator.topoReleaseDate.empty" );
         }
 
+        if ( topo.getTopoReleaseDate().equals( "" ) ) {
+            logger.info( "Topo_ReleaseDate is empty" );
+            errors.rejectValue( "topoReleaseDate", "topoValidator.topoReleaseDate.empty" );
+        }
+
+        if ( topo.getTopoReleaseDate().length() != 10 ) {
+            logger.info( "Length of Topo_ReleaseDate is not correct." );
+            errors.rejectValue( "topoReleaseDate", "topo.releaseDate.invalid" );
+        }
     }
 
 }

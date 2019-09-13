@@ -41,12 +41,14 @@ public class Topo {
     private String  topoName;
 
     @Column( name = "topo_city" )
+    @Size( max = 100, min = 3, message = "{topo.city.invalid}" )
     private String  topoCity;
 
     @Column( name = "topo_county" )
     private Integer topoCounty;
 
     @Column( name = "topo_country" )
+    @Size( max = 100, min = 3, message = "{topo.country.invalid}" )
     private String  topoCountry;
 
     @Column( name = "topo_descriptive" )
@@ -54,7 +56,7 @@ public class Topo {
     private String  topoDescriptive;
 
     @Column( name = "topo_releaseDate" )
-    @Size( max = 10, min = 10, message = "{topo.descriptive.invalid}" )
+    @Size( max = 10, min = 10, message = "{topo.releaseDate.invalid}" )
     private String  topoReleaseDate;
 
     @Column( name = "topo_availability" )
