@@ -1,6 +1,5 @@
 package com.adle.projet.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.Length;
-import com.adle.projet.entity.Path;
 
 @Repository
 public class LengthDAOImpl implements LengthDAO {
@@ -110,22 +108,6 @@ public class LengthDAOImpl implements LengthDAO {
         List<Length> lengthResult = query.getResultList();
         logger.info( "Length List : " + query.getResultList() );
         return lengthResult;
-    }
-
-    @Override
-    public void deleteLengths( List<Length> lengths ) {
-        for ( int i = 0; i < lengths.size(); i++ ) {
-            deleteLength( lengths.get( i ).getId() );
-        }
-    }
-
-    @Override
-    public List<Length> findLengthsByPaths( List<Path> paths ) {
-        List<Length> lengths = new ArrayList();
-        for ( int i = 0; i < paths.size(); i++ ) {
-            lengths.addAll( findLengthByPathId( paths.get( i ).getId() ) );
-        }
-        return lengths;
     }
 
 }
