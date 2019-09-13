@@ -14,6 +14,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.adle.projet.entity.Path;
 import com.adle.projet.entity.Sector;
 
 @Repository
@@ -76,6 +77,9 @@ public class SectorDAOImpl implements SectorDAO {
     public void deleteSector( int theId ) {
         Session session = sessionFactory.getCurrentSession();
         Sector theSector = session.byId( Sector.class ).load( theId );
+        for ( Path p : theSector.getPaths() ) {
+            session.remove( p );
+        }
         session.delete( theSector );
 
     }
