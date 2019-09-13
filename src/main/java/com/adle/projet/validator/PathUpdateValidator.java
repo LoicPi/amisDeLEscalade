@@ -28,6 +28,11 @@ public class PathUpdateValidator implements Validator {
             errors.rejectValue( "updatePathName", "pathValidator.pathName.empty" );
         }
 
+        if ( updatePath.getPathName().length() > 100 || updatePath.getPathName().length() < 3 ) {
+            logger.info( "Length of UpdatePath_Name is not correct." );
+            errors.rejectValue( "updatePathName", "path.name.invalid" );
+        }
+
     }
 
 }

@@ -42,7 +42,7 @@ public class Path {
     @Column( name = "id" )
     private Integer      id;
 
-    @Column( name = "path_name" )
+    @Column( name = "path_name", unique = true )
     @Size( max = 100, min = 3, message = "{path.name.invalid}" )
     private String       pathName;
 
