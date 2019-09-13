@@ -40,7 +40,7 @@
 								<div class="form-group">
 									<label class="col-md-6 control-label" for=topoCounty>Département :</label>
 									<div class="col-md-10">
-										<form:input path="topoCounty" class="form-control" type="text" placeholder="${topo.topoCounty}" />
+										<form:input path="topoCounty" class="form-control" type="number" placeholder="${topo.topoCounty}" />
 										<form:errors path="topoCounty" cssClass="error" />
 									</div>
 								</div>
