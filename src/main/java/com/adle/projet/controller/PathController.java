@@ -117,7 +117,7 @@ public class PathController {
      *            information on the session
      * @return the path view
      */
-    @PostMapping( "/savePath" )
+    @PostMapping( "/savepath" )
     public String savePath( @PathVariable( "spotId" ) Integer spotId,
             @PathVariable( "sectorId" ) Integer sectorId, @ModelAttribute( "path" ) Path thePath,
             Model theModel, BindingResult result, HttpServletRequest request ) {
@@ -211,7 +211,7 @@ public class PathController {
      * @return path update page
      */
     @GetMapping( "/{pathId}/majvoie" )
-    public String showFormForUpdateSector( @PathVariable( "spotId" ) Integer spotId,
+    public String showFormForUpdatePath( @PathVariable( "spotId" ) Integer spotId,
             @PathVariable( "sectorId" ) Integer sectorId, @PathVariable( "pathId" ) Integer pathId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -237,7 +237,7 @@ public class PathController {
             thePath.setSpot( pathToUpdate.getSpot() );
             thePath.setUser( pathToUpdate.getUser() );
             thePath.setType( pathToUpdate.getType() );
-            thePath.setTypeName( pathToUpdate.getType().getTypeName() );
+            thePath.setPathType( pathToUpdate.typeOfPath() );
             if ( !( ( pathToUpdate.getUser() ).getId().equals( userId ) ) ) {
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId +
                         "/voie/" + pathId + "/vuevoie";
@@ -275,19 +275,24 @@ public class PathController {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userId" );
         User theUser = userService.getUser( userId );
-        theModel.addAttribute( "user", theUser );
         Spot theSpot = spotService.getSpot( spotId );
-        theModel.addAttribute( "spot", theSpot );
         Sector theSector = sectorService.getSector( sectorId );
-        theModel.addAttribute( "sector", theSector );
         pathUpdateValidator.validate( thePath, result );
         if ( result.hasErrors() ) {
             Path path = pathService.getPath( pathId );
+            List<Type> types = typeService.getTypes();
+            Map<String, String> nameType = typeService.getTypeNameOfTypes( types );
+            theModel.addAttribute( "user", theUser );
+            theModel.addAttribute( "spot", theSpot );
+            theModel.addAttribute( "sector", theSector );
+            theModel.addAttribute( "type", nameType );
             theModel.addAttribute( "path", path );
             theModel.addAttribute( "updatePath", thePath );
             return "path_update";
         } else {
+            Type theType = typeService.findTypeByNameOfType( thePath.getPathType() );
             Path pathUpdate = pathService.getPath( pathId );
+            pathUpdate.setType( theType );
             pathUpdate.setPathName( thePath.getPathName() );
             pathService.updatePath( pathUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/vuevoie";
