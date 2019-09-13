@@ -27,9 +27,8 @@ import com.adle.projet.service.SpotService;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.UserLoggValidator;
-import com.adle.projet.validator.UserUpdateEmailValidator;
-import com.adle.projet.validator.UserUpdateNickNameValidator;
 import com.adle.projet.validator.UserUpdatePasswordValidator;
+import com.adle.projet.validator.UserUpdateValidator;
 import com.adle.projet.validator.UserValidator;
 
 /**
@@ -49,10 +48,7 @@ public class UserController {
     private UserLoggValidator           userLoggValidator;
 
     @Autowired
-    private UserUpdateEmailValidator    userUpdateEmailValidator;
-
-    @Autowired
-    private UserUpdateNickNameValidator userUpdateNickNameValidator;
+    private UserUpdateValidator         userUpdateValidator;
 
     @Autowired
     private UserUpdatePasswordValidator userUptadePasswordValidator;
@@ -213,12 +209,7 @@ public class UserController {
             @Valid @ModelAttribute( "updateUser" ) UpdateUser theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         User userUpdate = userService.getUser( userId );
-        if ( !theUser.getNickName().equals( userUpdate.getNickName() ) ) {
-            userUpdateNickNameValidator.validate( theUser, result );
-        }
-        if ( !theUser.getEmail().equals( userUpdate.getEmail() ) ) {
-            userUpdateEmailValidator.validate( theUser, result );
-        }
+        userUpdateValidator.validate( theUser, result );
         if ( result.hasErrors() ) {
             theModel.addAttribute( "updateUser", theUser );
             return "user_uptade";

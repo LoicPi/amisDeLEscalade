@@ -13,9 +13,9 @@ import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.service.UserService;
 
 @Component
-public class UserUpdateEmailValidator implements Validator {
+public class UserUpdateValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger( UserUpdateEmailValidator.class );
+    private static final Logger logger = LogManager.getLogger( UserUpdateValidator.class );
 
     @Autowired
     private UserService         userService;
@@ -28,6 +28,12 @@ public class UserUpdateEmailValidator implements Validator {
     @Override
     public void validate( Object obj, Errors errors ) {
         UpdateUser user = (UpdateUser) obj;
+
+        String userFirstName = user.getFirstName();
+
+        String userLastName = user.getLastName();
+
+        String userNickName = user.getNickName();
 
         String userEmail = user.getEmail();
 
@@ -47,6 +53,31 @@ public class UserUpdateEmailValidator implements Validator {
         if ( userService.findUserWithEmail( user.getEmail() ).isPresent() ) {
             logger.info( "Email already exists in the database." );
             errors.rejectValue( "email", "userValidator.email.know" );
+        }
+
+        if ( userNickName.equals( "" ) ) {
+            logger.info( "NickName is empty." );
+            errors.rejectValue( "nickName", "userUpdateValidator.nickName.empty" );
+        }
+
+        if ( userService.findUserWithNickName( userNickName ).isPresent() ) {
+            logger.info( "NickName already exists in the database." );
+            errors.rejectValue( "nickName", "userValidator.nickName.know" );
+        }
+
+        if ( userNickName.length() > 20 || userNickName.length() < 3 ) {
+            logger.info( "Length of NickName is not correct." );
+            errors.rejectValue( "nickName", "user.nickName.invalid" );
+        }
+
+        if ( userFirstName.length() > 20 || userFirstName.length() < 3 ) {
+            logger.info( "Length of FirstName is not correct." );
+            errors.rejectValue( "firstName", "user.firstName.invalid" );
+        }
+
+        if ( userLastName.length() > 20 || userLastName.length() < 3 ) {
+            logger.info( "Length of LastName is not correct." );
+            errors.rejectValue( "lastName", "user.lastName.invalid" );
         }
 
     }
