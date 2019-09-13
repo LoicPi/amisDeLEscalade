@@ -133,7 +133,7 @@ public class UserController {
      *            information on the session
      * @return the user's account page
      */
-    @PostMapping( "/saveUser" )
+    @PostMapping( "/saveuser" )
     public String saveUser( @Valid @ModelAttribute( "user" ) User theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -204,7 +204,7 @@ public class UserController {
      * @return the user's account page
      */
 
-    @PostMapping( "{userId}/updateUser" )
+    @PostMapping( "{userId}/updateuser" )
     public String updateUser( @PathVariable( "userId" ) Integer userId,
             @Valid @ModelAttribute( "updateUser" ) UpdateUser theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
@@ -269,7 +269,7 @@ public class UserController {
      *            information on the session
      * @return user account page
      */
-    @PostMapping( "/logUser" )
+    @PostMapping( "/loguser" )
     public String logUser( @ModelAttribute( "user" ) User theUser, Model theModel, BindingResult result,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
@@ -390,7 +390,7 @@ public class UserController {
      *            information on the session
      * @return the user's account page
      */
-    @PostMapping( "{userId}/updatePassword" )
+    @PostMapping( "{userId}/updatepassword" )
     public String updatePassword( @PathVariable( "userId" ) Integer userId,
             @Valid @ModelAttribute( "updatePasswordUser" ) UpdatePasswordUser theUser,
             BindingResult result, Model theModel, HttpServletRequest request ) {

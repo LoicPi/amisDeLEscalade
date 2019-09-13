@@ -21,7 +21,7 @@
      					<h3>Création d'une voie</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="savePath" class="form" method="post" modelAttribute="path">
+     					<form:form action="savepath" class="form" method="post" modelAttribute="path">
 
       						<form:hidden path="id" /> 
       						

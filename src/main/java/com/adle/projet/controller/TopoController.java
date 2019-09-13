@@ -117,7 +117,7 @@ public class TopoController {
      *            information on the session
      * @return the topo view
      */
-    @PostMapping( "/saveTopo" )
+    @PostMapping( "/savetopo" )
     public String saveTopo( @ModelAttribute( "topo" ) Topo theTopo, Model theModel, BindingResult result,
             HttpServletRequest request ) {
 

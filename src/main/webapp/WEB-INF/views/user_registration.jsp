@@ -21,7 +21,7 @@
      					<h3>Inscription</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="saveUser" class="form" method="post" modelAttribute="user">
+     					<form:form action="saveuser" class="form" method="post" modelAttribute="user">
 
       						<form:hidden path="id" /> 
       					

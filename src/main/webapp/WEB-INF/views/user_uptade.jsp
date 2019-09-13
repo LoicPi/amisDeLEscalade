@@ -22,7 +22,7 @@
 					</div>
 					<div class="card-body">
 						<div class="personal-info">
-							<form:form action="updateUser" class="form" method="post" modelAttribute="updateUser">
+							<form:form action="updateuser" class="form" method="post" modelAttribute="updateUser">
 							
 								<form:hidden path="id" />
 							

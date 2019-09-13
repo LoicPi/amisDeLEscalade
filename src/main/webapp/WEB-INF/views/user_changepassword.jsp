@@ -22,7 +22,7 @@
                 	<h3>Changement du Mot de Passe</h3>
                 </div>
                 <div class="card-body">
-                	<form:form action="updatePassword" class="form" method="post" modelAttribute="updatePasswordUser">
+                	<form:form action="updatepassword" class="form" method="post" modelAttribute="updatePasswordUser">
                 	
                 		<form:hidden path="id" />
                 		

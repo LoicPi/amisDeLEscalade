@@ -21,7 +21,7 @@
      					<h3>Création du topo</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="saveTopo" class="form" method="post" modelAttribute="topo">
+     					<form:form action="savetopo" class="form" method="post" modelAttribute="topo">
 
       						<form:hidden path="id" /> 
       						

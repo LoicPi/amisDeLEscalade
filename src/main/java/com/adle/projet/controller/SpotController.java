@@ -112,7 +112,7 @@ public class SpotController {
      *            information on the session
      * @return the spot view
      */
-    @PostMapping( "/saveSpot" )
+    @PostMapping( "/savespot" )
     public String saveSpot( @ModelAttribute( "spot" ) Spot theSpot, Model theModel, BindingResult result,
             HttpServletRequest request ) {
 

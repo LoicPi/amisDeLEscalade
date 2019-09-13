@@ -21,7 +21,7 @@
      					<h3>Création d'un site</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="saveSpot" class="form" method="post" modelAttribute="spot">
+     					<form:form action="savespot" class="form" method="post" modelAttribute="spot">
 
       						<form:hidden path="id" /> 
       						

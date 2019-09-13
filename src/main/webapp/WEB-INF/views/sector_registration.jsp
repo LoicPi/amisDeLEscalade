@@ -21,7 +21,7 @@
      					<h3>Création d'un secteur</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="saveSector" class="form" method="post" modelAttribute="sector">
+     					<form:form action="savesector" class="form" method="post" modelAttribute="sector">
 
       						<form:hidden path="id" /> 
       						
