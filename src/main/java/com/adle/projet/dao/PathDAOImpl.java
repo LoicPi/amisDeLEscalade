@@ -8,12 +8,14 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.adle.projet.entity.Length;
 import com.adle.projet.entity.Path;
 
 @Repository
@@ -50,6 +52,7 @@ public class PathDAOImpl implements PathDAO {
         Query<Path> query = currentSession.createNamedQuery( "Path_findById", Path.class );
         query.setParameter( "pathId", theId );
         Path pathResult = (Path) query.getSingleResult();
+        Hibernate.initialize( pathResult.getType() );
         logger.info( "Path loaded successfully, Path details = " + pathResult );
         return pathResult;
     }
@@ -106,8 +109,10 @@ public class PathDAOImpl implements PathDAO {
     public void deletePath( int theId ) {
         Session session = sessionFactory.getCurrentSession();
         Path thePath = session.byId( Path.class ).load( theId );
+        for ( Length l : thePath.getLengths() ) {
+            session.remove( l );
+        }
         session.delete( thePath );
 
     }
-
 }
