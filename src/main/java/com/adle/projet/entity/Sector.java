@@ -48,7 +48,7 @@ public class Sector {
     private String     sectorDescriptive;
 
     @Column( name = "sector_access" )
-    @Size( max = 100, min = 3, message = "{sector.acces.invalid" )
+    @Size( max = 300, min = 10, message = "{sector.acces.invalid" )
     private String     sectorAccess;
 
     @ManyToOne( fetch = FetchType.LAZY )
