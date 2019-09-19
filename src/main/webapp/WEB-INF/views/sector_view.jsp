@@ -18,7 +18,7 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header text-center">
-						<h1><c:out value="${ sector.sectorName }" /></h1>
+						<h3><c:out value="${ sector.sectorName }" /></h3>
 						
 						<c:set var="userId" value="${sessionScope['userId']}" />
       										

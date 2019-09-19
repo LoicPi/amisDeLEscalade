@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,11 +17,14 @@ import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.Path;
 import com.adle.projet.entity.Sector;
+import com.adle.projet.tools.FormattingString;
 
 @Repository
 public class SectorDAOImpl implements SectorDAO {
 
-    private static final Logger logger = LogManager.getLogger( SectorDAOImpl.class );
+    private static final Logger logger           = LogManager.getLogger( SectorDAOImpl.class );
+
+    FormattingString            formattingString = new FormattingString();
 
     @Autowired
     private SessionFactory      sessionFactory;
@@ -40,6 +44,7 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public void saveSector( Sector sector ) {
         Session currentSession = sessionFactory.getCurrentSession();
+        sector.setSectorName( formattingString.Formatting( sector.getSectorName() ) );
         currentSession.saveOrUpdate( sector );
         logger.info( "Sector saved successfully, Sector details = " + sector );
 
@@ -51,6 +56,7 @@ public class SectorDAOImpl implements SectorDAO {
         Query<Sector> query = currentSession.createNamedQuery( "Sector_findById", Sector.class );
         query.setParameter( "sectorId", theId );
         Sector sectorResult = (Sector) query.getSingleResult();
+        Hibernate.initialize( sectorResult.getPaths() );
         logger.info( "Sector loaded successfully, Sector details = " + sectorResult );
         return sectorResult;
     }
@@ -58,6 +64,7 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public void updateSector( Sector sector ) {
         Session currentsession = sessionFactory.getCurrentSession();
+        sector.setSectorName( formattingString.Formatting( sector.getSectorName() ) );
         currentsession.update( sector );
         logger.info( "Sector updated successfully, Sector details = " + sector );
 

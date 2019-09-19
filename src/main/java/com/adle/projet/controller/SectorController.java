@@ -1,7 +1,5 @@
 package com.adle.projet.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,11 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.UpdateSector;
-import com.adle.projet.entity.Path;
 import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
-import com.adle.projet.service.PathService;
 import com.adle.projet.service.SectorService;
 import com.adle.projet.service.SpotService;
 import com.adle.projet.service.UserService;
@@ -46,9 +42,6 @@ public class SectorController {
 
     @Autowired
     private SectorUpdateValidator sectorUpdateValidator;
-
-    @Autowired
-    private PathService           pathService;
 
     /*
      * ************************ Registration of Sector ************************
@@ -152,20 +145,19 @@ public class SectorController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
-        List<Path> paths = pathService.getPaths();
-        theModel.addAttribute( "paths", paths );
         Spot theSpot = spotService.getSpot( spotId );
         theModel.addAttribute( "spot", theSpot );
         Sector theSector = sectorService.getSector( sectorId );
+        theModel.addAttribute( "paths", theSector.getPaths() );
         theModel.addAttribute( "sector", theSector );
         return "sector_view";
     }
 
     /*
-     * ***************************** Sector Uptade *****************************
+     * ***************************** Sector Update *****************************
      */
     /**
-     * Page to uptade sector
+     * Page to sector
      * 
      * @param spotId
      *            the id of the spot
@@ -195,9 +187,9 @@ public class SectorController {
             Sector sectorToUpdate = sectorService.getSector( sectorId );
             theModel.addAttribute( "sector", sectorToUpdate );
             theSector.setId( sectorId );
-            theSector.setSectorName( sectorToUpdate.getSectorName() );
-            theSector.setSectorDescriptive( sectorToUpdate.getSectorDescriptive() );
-            theSector.setSectorAccess( sectorToUpdate.getSectorAccess() );
+            theSector.setUpdateSectorName( sectorToUpdate.getSectorName() );
+            theSector.setUpdateSectorDescriptive( sectorToUpdate.getSectorDescriptive() );
+            theSector.setUpdateSectorAccess( sectorToUpdate.getSectorAccess() );
             theSector.setSpot( sectorToUpdate.getSpot() );
             theSector.setUser( sectorToUpdate.getUser() );
             if ( !( ( sectorToUpdate.getUser() ).getId().equals( userId ) ) ) {
@@ -205,7 +197,7 @@ public class SectorController {
                         "/vuesecteur";
             } else {
                 theModel.addAttribute( "updateSector", theSector );
-                return "sector_uptade";
+                return "sector_update";
             }
         }
     }
@@ -247,8 +239,8 @@ public class SectorController {
             return "sector_update";
         } else {
             Sector sectorUpdate = sectorService.getSector( sectorId );
-            sectorUpdate.setSectorName( theSector.getSectorName() );
-            sectorUpdate.setSectorDescriptive( theSector.getSectorDescriptive() );
+            sectorUpdate.setSectorName( theSector.getUpdateSectorName() );
+            sectorUpdate.setSectorDescriptive( theSector.getUpdateSectorDescriptive() );
             sectorService.updateSector( sectorUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId +
                     "/vuesecteur";

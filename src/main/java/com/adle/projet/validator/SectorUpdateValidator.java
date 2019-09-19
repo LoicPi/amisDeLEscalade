@@ -22,34 +22,36 @@ public class SectorUpdateValidator implements Validator {
     public void validate( Object obj, Errors errors ) {
         UpdateSector updateSector = (UpdateSector) obj;
 
-        if ( updateSector.getSectorName().equals( "" ) ) {
+        if ( updateSector.getUpdateSectorName().equals( "" ) ) {
             logger.info( "UpdateSector_Name is empty" );
-            errors.rejectValue( "sectorName", "sectorValidator.sectorName.empty" );
+            errors.rejectValue( "updateSectorName", "sectorValidator.sectorName.empty" );
         }
 
-        if ( updateSector.getSectorName().length() > 100 || updateSector.getSectorName().length() < 3 ) {
+        if ( updateSector.getUpdateSectorName().length() > 100 || updateSector.getUpdateSectorName().length() < 3 ) {
             logger.info( "Length of UpdateSector_Name is not correct." );
-            errors.rejectValue( "sectorName", "sector.name.invalid" );
+            errors.rejectValue( "updateSectorName", "sector.name.invalid" );
         }
 
-        if ( updateSector.getSectorDescriptive().equals( "" ) ) {
+        if ( updateSector.getUpdateSectorDescriptive().equals( "" ) ) {
             logger.info( "UpdateSector_Descriptive is empty" );
-            errors.rejectValue( "sectorDescriptive", "sectorValidator.sectorDescriptive.empty" );
+            errors.rejectValue( "updateSectorDescriptive", "sectorValidator.sectorDescriptive.empty" );
         }
 
-        if ( updateSector.getSectorDescriptive().length() > 600 || updateSector.getSectorDescriptive().length() < 10 ) {
+        if ( updateSector.getUpdateSectorDescriptive().length() > 600
+                || updateSector.getUpdateSectorDescriptive().length() < 10 ) {
             logger.info( "Length of UpdateSector_Descriptive is not correct." );
-            errors.rejectValue( "sectorDescriptive", "sector.descriptive.invalid" );
+            errors.rejectValue( "updateSectorDescriptive", "sector.descriptive.invalid" );
         }
 
-        if ( updateSector.getSectorAccess().equals( "" ) ) {
+        if ( updateSector.getUpdateSectorAccess().equals( "" ) ) {
             logger.info( "UpdateSector_Access is empty" );
-            errors.rejectValue( "sectorAccess", "sectorValidator.sectorAccess.empty" );
+            errors.rejectValue( "updateSectorAccess", "sectorValidator.sectorAccess.empty" );
         }
 
-        if ( updateSector.getSectorAccess().length() > 300 || updateSector.getSectorAccess().length() < 10 ) {
+        if ( updateSector.getUpdateSectorAccess().length() > 300
+                || updateSector.getUpdateSectorAccess().length() < 10 ) {
             logger.info( "Length of UpdateSector_Access is not correct." );
-            errors.rejectValue( "sectorAccess", "sector.access.invalid" );
+            errors.rejectValue( "updateSectorAccess", "sector.access.invalid" );
         }
     }
 }

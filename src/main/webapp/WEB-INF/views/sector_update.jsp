@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>MAJ du secteur <c:out value="${ updateSector.sectorName }" /></title>
+		<title>MAJ du secteur <c:out value="${ sector.sectorName }" /></title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -18,33 +18,33 @@
 			<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header">
-     					<h1 class="text-center">Mise à jour du secteur : <c:out value="${ updateSector.sectorName }" /></h1>
+     					<h3 class="text-center">Mise à jour du secteur : <c:out value="${ sector.sectorName }" /></h3>
     				</div>
     				<div class="card-body">
      					<form:form action="updatesector" class="form" method="post" modelAttribute="updateSector">
 							<form:hidden path="id" />
       						
       						<div class="form-group">
-       							<label class="col-md-6 control-label" for=sectorName>Nom du secteur :</label>
+       							<label class="col-md-6 control-label" for=updateSectorName>Nom du secteur :</label>
        							<div class="col-md-10">
-										<form:input path="sectorName" class="form-control" type="text" placeholder="${updateSector.sectorName}" />
-										<form:errors path="sectorName" cssClass="error" />
+										<form:input path="updateSectorName" class="form-control" type="text" placeholder="${updateSector.updateSectorName}" />
+										<form:errors path="updateSectorName" cssClass="error" />
 								</div>
       						</div>
       						
       						<div class="form-group">
-       							<label class="col-md-6 control-label" for=sectorDescriptive>Description du secteur :</label>
+       							<label class="col-md-6 control-label" for=updateSectorDescriptive>Description du secteur :</label>
        							<div class="col-md-10">
-										<form:textarea path="sectorDescriptive" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSector.sectorDescriptive}" />
-										<form:errors path="sectorDescriptive" cssClass="error" />
+										<form:textarea path="updateSectorDescriptive" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSector.updateSectorDescriptive}" />
+										<form:errors path="updateSectorDescriptive" cssClass="error" />
 								</div>
       						</div>
       						
       						<div class="form-group">
-       							<label class="col-md-6 control-label" for=sectorAccess>Accès au secteur :</label>
+       							<label class="col-md-6 control-label" for=updateSectorAccess>Accès au secteur :</label>
        							<div class="col-md-10">
-										<form:textarea path="sectorAccess" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSector.sectorAccess}" />
-										<form:errors path="sectorAccess" cssClass="error" />
+										<form:textarea path="updateSectorAccess" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSector.updateSectorAccess}" />
+										<form:errors path="updateSectorAccess" cssClass="error" />
 								</div>
       						</div>
       						<hr>
