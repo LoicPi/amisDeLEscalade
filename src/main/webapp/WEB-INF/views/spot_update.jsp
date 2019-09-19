@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>MAJ du site <c:out value="${ updateSpot.spotName }" /></title>
+		<title>MAJ du site <c:out value="${ spot.spotName }" /></title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -18,57 +18,60 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header">
-						<h1 class="text-center">Mise à jour du site : <c:out value="${ updateSpot.spotName }" /></h1>
+						<h3 class="text-center">Mise à jour du site : <c:out value="${ spot.spotName }" /></h3>
 					</div>
 					<div class="card-body">
 						<form:form action="updatespot" class="form" method="post" modelAttribute="updateSpot">
 							<form:hidden path="id" />
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotName>Nom du site :</label>
+									<label class="col-md-6 control-label" for=updateSpotName>Nom du site :</label>
 									<div class="col-md-10">
-										<form:input path="spotName" class="form-control" type="text" placeholder="${updateSpot.spotName}" />
-										<form:errors path="spotName" cssClass="error" />
+										<form:input path="updateSpotName" class="form-control" type="text" placeholder="${updateSpot.updateSpotName}" />
+										<form:errors path="updateSpotName" cssClass="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotCity>Ville :</label>
+									<label class="col-md-6 control-label" for=updateSpotCity>Ville :</label>
 									<div class="col-md-10">
-										<form:input path="spotCity" class="form-control" type="text" placeholder="${updateSpot.spotCity}" />
-										<form:errors path="spotCity" cssClass="error" />
+										<form:input path="updateSpotCity" class="form-control" type="text" placeholder="${updateSpot.updateSpotCity}" />
+										<form:errors path="updateSpotCity" cssClass="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotCounty>Département :</label>
 									<div class="col-md-10">
-										<form:input path="spotCounty" class="form-control" type="text" placeholder="${updateSpot.spotCounty}" />
-										<form:errors path="spotCounty" cssClass="error" />
+       									<label for="spotCounty">Département : <span class="requis">*</span></label>
+       									<form:select path = "spotCounty">
+                     						<form:option value = "" label = "Choix du département"/>
+                     						<form:options items = "${county}" />
+                  						</form:select>
+                  						<form:errors path="spotCounty" cssClass="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotCountry>Pays :</label>
+									<label class="col-md-6 control-label" for=updateSpotCountry>Pays :</label>
 									<div class="col-md-10">
-										<form:input path="spotCountry" class="form-control" type="text" placeholder="${updateSpot.spotCountry}" />
-										<form:errors path="spotCountry" cssClass="error" />
+										<form:input path="updateSpotCountry" class="form-control" type="text" placeholder="${updateSpot.updateSpotCountry}" />
+										<form:errors path="updateSpotCountry" cssClass="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotDescriptive>Description :</label>
+									<label class="col-md-6 control-label" for=updateSpotDescriptive>Description :</label>
 									<div class="col-md-10">
-										<form:textarea path="spotDescriptive" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSpot.spotDescriptive}" />
-       									<form:errors path="spotDescriptive" class="error" />
+										<form:textarea path="updateSpotDescriptive" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSpot.updateSpotDescriptive}" />
+       									<form:errors path="updateSpotDescriptive" class="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-6 control-label" for=spotAccess>Accès :</label>
+									<label class="col-md-6 control-label" for=updateSpotAccess>Accès :</label>
 									<div class="col-md-10">
-										<form:textarea path="spotAccess" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSpot.spotAccess}" />
-       									<form:errors path="spotAccess" class="error" />
+										<form:textarea path="updateSpotAccess" class="form-control" rows="5" cols="30" type="text" placeholder="${updateSpot.updateSpotAccess}" />
+       									<form:errors path="updateSpotAccess" class="error" />
 									</div>
 								</div>
 								<hr>
 								<div class="row justify-content-around">
         							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        							<button  class="btn btn-danger btn-sm col-4" href="<c:url value="/spot/${updateSpot.id}/vuetopo"/>">Annuler</button>
+        							<a  class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/vuesite"/>">Annuler</a>
       							</div>
       					</form:form>
 					</div>

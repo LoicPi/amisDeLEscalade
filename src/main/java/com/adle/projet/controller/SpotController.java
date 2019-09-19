@@ -1,6 +1,7 @@
 package com.adle.projet.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.UpdateSpot;
-import com.adle.projet.entity.Sector;
+import com.adle.projet.entity.County;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
-import com.adle.projet.service.SectorService;
+import com.adle.projet.service.CountyService;
 import com.adle.projet.service.SpotService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.SpotUpdateValidator;
@@ -37,13 +38,13 @@ public class SpotController {
     private SpotService         spotService;
 
     @Autowired
-    private SectorService       sectorService;
-
-    @Autowired
     private SpotValidator       spotValidator;
 
     @Autowired
     private SpotUpdateValidator spotUpdateValidator;
+
+    @Autowired
+    private CountyService       countyService;
 
     /*
      * ************************* List of Spot *************************
@@ -93,6 +94,9 @@ public class SpotController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
             Spot theSpot = new Spot();
             theModel.addAttribute( "spot", theSpot );
             return "spot_registration";
@@ -120,14 +124,23 @@ public class SpotController {
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            spotValidator.validate( theSpot, result );
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
+            spotValidator.validate( theSpot, result );
             if ( result.hasErrors() ) {
+                List<County> countys = countyService.getCountys();
+                Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
                 theModel.addAttribute( "user", theUser );
+                theModel.addAttribute( "county", nameCounty );
                 theModel.addAttribute( "spot", theSpot );
                 return "spot_registration";
             } else {
+                if ( theSpot.getSpotCounty() == 0 ) {
+                    theSpot.setCounty( null );
+                } else {
+                    County theCounty = countyService.getCounty( theSpot.getSpotCounty() );
+                    theSpot.setCounty( theCounty );
+                }
                 theSpot.setUser( theUser );
                 spotService.saveSpot( theSpot );
                 return "redirect:/site/" + theSpot.getId() + "/vuesite";
@@ -159,18 +172,18 @@ public class SpotController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
-        List<Sector> sectors = sectorService.findSectorBySpotId( spotId );
         Spot theSpot = spotService.getSpot( spotId );
         theModel.addAttribute( "spot", theSpot );
-        theModel.addAttribute( "sectors", sectors );
+        theModel.addAttribute( "sectors", theSpot.getSectors() );
+        theModel.addAttribute( "comments", theSpot.getComments() );
         return "spot_view";
     }
 
     /*
-     * ***************************** Spot Uptade *****************************
+     * ***************************** Spot Update *****************************
      */
     /**
-     * Page to uptade spot
+     * Page to update spot
      * 
      * @param spotId
      *            id of the spot
@@ -191,23 +204,27 @@ public class SpotController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
             UpdateSpot theSpot = new UpdateSpot();
             Spot spotToUpdate = spotService.getSpot( spotId );
             theModel.addAttribute( "spot", spotToUpdate );
             theSpot.setId( spotId );
-            theSpot.setSpotName( spotToUpdate.getSpotName() );
-            theSpot.setSpotCity( spotToUpdate.getSpotCity() );
-            theSpot.setSpotCounty( spotToUpdate.getSpotCounty() );
-            theSpot.setSpotCountry( spotToUpdate.getSpotCountry() );
-            theSpot.setSpotDescriptive( spotToUpdate.getSpotDescriptive() );
-            theSpot.setSpotAccess( spotToUpdate.getSpotAccess() );
+            theSpot.setUpdateSpotName( spotToUpdate.getSpotName() );
+            theSpot.setUpdateSpotCity( spotToUpdate.getSpotCity() );
+            theSpot.setUpdateSpotCountry( spotToUpdate.getSpotCountry() );
+            theSpot.setUpdateSpotDescriptive( spotToUpdate.getSpotDescriptive() );
+            theSpot.setUpdateSpotAccess( spotToUpdate.getSpotAccess() );
             theSpot.setUser( spotToUpdate.getUser() );
+            theSpot.setCounty( spotToUpdate.getCounty() );
+            theSpot.setSpotCounty( spotToUpdate.countyOfSpot() );
             Integer spotUserId = theSpot.spotIdUser();
             if ( !( spotUserId.equals( userId ) ) ) {
                 return "redirect:/site/" + spotId + "/vuesite";
             } else {
                 theModel.addAttribute( "updateSpot", theSpot );
-                return "spot_uptade";
+                return "spot_update";
             }
         }
     }
@@ -234,21 +251,26 @@ public class SpotController {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute( "userId" );
         User theUser = userService.getUser( userId );
-        theModel.addAttribute( "user", theUser );
         spotUpdateValidator.validate( theSpot, result );
         if ( result.hasErrors() ) {
             Spot spot = spotService.getSpot( spotId );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
+            theModel.addAttribute( "user", theUser );
             theModel.addAttribute( "spot", spot );
             theModel.addAttribute( "updateSpot", theSpot );
             return "spot_update";
         } else {
+            County theCounty = countyService.getCounty( theSpot.getSpotCounty() );
             Spot spotUpdate = spotService.getSpot( spotId );
-            spotUpdate.setSpotName( theSpot.getSpotName() );
-            spotUpdate.setSpotCity( theSpot.getSpotCity() );
+            spotUpdate.setSpotName( theSpot.getUpdateSpotName() );
+            spotUpdate.setSpotCity( theSpot.getUpdateSpotCity() );
             spotUpdate.setSpotCounty( theSpot.getSpotCounty() );
-            spotUpdate.setSpotCountry( theSpot.getSpotCountry() );
-            spotUpdate.setSpotDescriptive( theSpot.getSpotDescriptive() );
-            spotUpdate.setSpotAccess( theSpot.getSpotAccess() );
+            spotUpdate.setSpotCountry( theSpot.getUpdateSpotCountry() );
+            spotUpdate.setSpotDescriptive( theSpot.getUpdateSpotDescriptive() );
+            spotUpdate.setSpotAccess( theSpot.getUpdateSpotAccess() );
+            spotUpdate.setCounty( theCounty );
             spotService.updateSpot( spotUpdate );
             return "redirect:/site/" + spotId + "/vuesite";
         }
@@ -263,6 +285,8 @@ public class SpotController {
      * 
      * @param spotId
      *            the id of the spot
+     * @param request
+     *            information on the session
      * @return view of the spot's list
      */
     @GetMapping( "{spotId}/deletespot" )
@@ -276,6 +300,22 @@ public class SpotController {
         }
     }
 
+    /*
+     * ************************* Spot Tag *************************
+     */
+
+    /**
+     * Command to tag a spot
+     * 
+     * @param spotId
+     *            the id of the spot
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the view of the spot updating
+     */
+
     @GetMapping( "{spotId}/tagofficialspot" )
     public String tagOfficialSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
@@ -285,6 +325,32 @@ public class SpotController {
         } else {
             Spot theSpot = spotService.getSpot( spotId );
             theSpot.setSpotTag( true );
+            spotService.updateSpot( theSpot );
+            ;
+            return "redirect:/site/" + spotId + "/vuesite";
+        }
+    }
+
+    /**
+     * Command to tag a spot
+     * 
+     * @param spotId
+     *            the id of the spot
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the view of the spot updating
+     */
+    @GetMapping( "{spotId}/removeofficialspot" )
+    public String removeTagOfficialSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            Spot theSpot = spotService.getSpot( spotId );
+            theSpot.setSpotTag( false );
             spotService.updateSpot( theSpot );
             ;
             return "redirect:/site/" + spotId + "/vuesite";

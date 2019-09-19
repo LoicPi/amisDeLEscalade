@@ -44,7 +44,7 @@
     								</div>
     								<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
     								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${spot.spotCounty }" /></p>
+    									<%--<p class="mb-1"><c:out value="${spot.county.countyName }" /></p> --%>
     									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
     								</div>
     							</div>

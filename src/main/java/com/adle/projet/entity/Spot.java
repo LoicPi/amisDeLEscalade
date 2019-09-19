@@ -38,40 +38,47 @@ public class Spot {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer      id;
+    private Integer       id;
 
     @Column( name = "spot_name", unique = true )
     @Size( max = 100, min = 3, message = "{spot.name.invalid}" )
-    private String       spotName;
-
-    @Column( name = "spot_county" )
-    private Integer      spotCounty;
+    private String        spotName;
 
     @Column( name = "spot_city" )
     @Size( max = 100, min = 3, message = "{spot.city.invalid}" )
-    private String       spotCity;
+    private String        spotCity;
 
     @Column( name = "spot_country" )
     @Size( max = 100, min = 3, message = "{spot.country.invalid}" )
-    private String       spotCountry;
+    private String        spotCountry;
 
     @Column( name = "spot_descriptive" )
     @Size( max = 600, min = 10, message = "{spot.descriptive.invalid}" )
-    private String       spotDescriptive;
+    private String        spotDescriptive;
 
     @Column( name = "spot_access" )
     @Size( max = 300, min = 10, message = "{spot.access.invalid}" )
-    private String       spotAccess;
+    private String        spotAccess;
 
     @Column( name = "spot_tag" )
-    private Boolean      spotTag = false;
+    private Boolean       spotTag  = false;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User         user;
+    private User          user;
 
     @OneToMany( mappedBy = "spot" )
-    private List<Sector> sectors = new ArrayList<>();
+    private List<Sector>  sectors  = new ArrayList<>();
+
+    @OneToMany( mappedBy = "spot" )
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "county_id" )
+    private County        county;
+
+    @Transient
+    private Integer       spotCounty;
 
     @Transient
     public boolean isTag() {
@@ -80,6 +87,11 @@ public class Spot {
 
     public Spot() {
 
+    }
+
+    @Transient
+    public Integer countyOfSpot() {
+        return county.getId();
     }
 
     public Integer getId() {
@@ -96,14 +108,6 @@ public class Spot {
 
     public void setSpotName( String spotName ) {
         this.spotName = spotName;
-    }
-
-    public Integer getSpotCounty() {
-        return spotCounty;
-    }
-
-    public void setSpotCounty( Integer spotCounty ) {
-        this.spotCounty = spotCounty;
     }
 
     public String getSpotCity() {
@@ -162,10 +166,34 @@ public class Spot {
         this.sectors = sectors;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments( List<Comment> comments ) {
+        this.comments = comments;
+    }
+
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty( County county ) {
+        this.county = county;
+    }
+
+    public Integer getSpotCounty() {
+        return spotCounty;
+    }
+
+    public void setSpotCounty( Integer spotCounty ) {
+        this.spotCounty = spotCounty;
+    }
+
     @Override
     public String toString() {
-        return "Spot {id=" + id + ", spotName =" + spotName + ",spotCity =" + spotCity + ",spotCounty =" + spotCounty
-                + ",spotCountry =" + spotCountry + ", spotDescriptive =" + spotDescriptive +
+        return "Spot {id=" + id + ", spotName =" + spotName + ",spotCity =" + spotCity +
+                ",spotCountry =" + spotCountry + ", spotDescriptive =" + spotDescriptive +
                 ", spotAccess=" + spotAccess + "}";
     }
 }

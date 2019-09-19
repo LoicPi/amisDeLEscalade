@@ -23,59 +23,66 @@ public class SpotUpdateValidator implements Validator {
 
         UpdateSpot spot = (UpdateSpot) obj;
 
-        if ( spot.getSpotName().equals( "" ) ) {
+        if ( spot.getUpdateSpotName().equals( "" ) ) {
             logger.info( "UpdateSpot_Name is empty" );
-            errors.rejectValue( "spotName", "spotValidator.spotName.empty" );
+            errors.rejectValue( "updateSpotName", "spotValidator.spotName.empty" );
         }
 
-        if ( spot.getSpotName().length() > 100 || spot.getSpotName().length() < 3 ) {
+        if ( spot.getUpdateSpotName().length() > 100 || spot.getUpdateSpotName().length() < 3 ) {
             logger.info( "Length of UpdateSpot_Name is not correct." );
-            errors.rejectValue( "spotName", "spot.name.invalid" );
+            errors.rejectValue( "updateSpotName", "spot.name.invalid" );
         }
 
-        if ( spot.getSpotCity().equals( "" ) ) {
+        if ( spot.getUpdateSpotCity().equals( "" ) ) {
             logger.info( "UpdateSpot_City is empty" );
-            errors.rejectValue( "spotCity", "spotValidator.spotCity.empty" );
+            errors.rejectValue( "updateSpotCity", "spotValidator.spotCity.empty" );
         }
 
-        if ( spot.getSpotCity().length() > 100 || spot.getSpotCity().length() < 3 ) {
+        if ( spot.getUpdateSpotCity().length() > 100 || spot.getUpdateSpotCity().length() < 3 ) {
             logger.info( "Length of UpdateSpot_City is not correct." );
-            errors.rejectValue( "spotCity", "spot.city.invalid" );
+            errors.rejectValue( "updateSpotCity", "spot.city.invalid" );
         }
 
-        if ( spot.getSpotCounty() == null ) {
-            logger.info( "UpdateSpot_County is empty" );
+        if ( spot.getUpdateSpotCountry().equals( "" ) ) {
+            logger.info( "UpdateSpot_Country is empty" );
+            errors.rejectValue( "updateSpotCountry", "spotValidator.spotCountry.empty" );
+        }
+
+        if ( spot.getUpdateSpotCountry().length() > 100 || spot.getUpdateSpotCountry().length() < 3 ) {
+            logger.info( "Length of UpdateSpot_Country is not correct." );
+            errors.rejectValue( "updateSpotCountry", "spot.country.invalid" );
+        }
+
+        if ( spot.getUpdateSpotDescriptive().equals( "" ) ) {
+            logger.info( "UpdateSpot_Descriptive is empty" );
+            errors.rejectValue( "updateSpotDescriptive", "spotValidator.spotDescriptive.empty" );
+        }
+
+        if ( spot.getUpdateSpotDescriptive().length() > 600 || spot.getUpdateSpotDescriptive().length() < 10 ) {
+            logger.info( "Length of UpdateSpot_Descriptive is not correct." );
+            errors.rejectValue( "updateSpotDescriptive", "spot.descriptive.invalid" );
+        }
+
+        if ( spot.getUpdateSpotAccess().equals( "" ) ) {
+            logger.info( "UpdateSpot_Access is empty" );
+            errors.rejectValue( "updateSpotAccess", "spotValidator.spotAccess.empty" );
+        }
+
+        if ( spot.getUpdateSpotAccess().length() > 300 || spot.getUpdateSpotAccess().length() < 10 ) {
+            logger.info( "Length of UpdateSpot_Access is not correct." );
+            errors.rejectValue( "updateSpotAccess", "spot.access.invalid" );
+        }
+
+        String lowerSpotCountry = spot.getUpdateSpotCountry().toLowerCase();
+
+        if ( spot.getSpotCounty() == null && lowerSpotCountry.equals( "france" ) ) {
+            logger.info( "Spot_County is empty" );
             errors.rejectValue( "spotCounty", "spotValidator.spotCounty.empty" );
         }
 
-        if ( spot.getSpotCountry().equals( "" ) ) {
-            logger.info( "UpdateSpot_Country is empty" );
-            errors.rejectValue( "spotCountry", "spotValidator.spotCountry.empty" );
-        }
-
-        if ( spot.getSpotCountry().length() > 100 || spot.getSpotCountry().length() < 3 ) {
-            logger.info( "Length of UpdateSpot_Country is not correct." );
-            errors.rejectValue( "spotCountry", "spot.country.invalid" );
-        }
-
-        if ( spot.getSpotDescriptive().equals( "" ) ) {
-            logger.info( "UpdateSpot_Descriptive is empty" );
-            errors.rejectValue( "spotDescriptive", "spotValidator.spotDescriptive.empty" );
-        }
-
-        if ( spot.getSpotDescriptive().length() > 600 || spot.getSpotDescriptive().length() < 10 ) {
-            logger.info( "Length of UpdateSpot_Descriptive is not correct." );
-            errors.rejectValue( "spotDescriptive", "spot.descriptive.invalid" );
-        }
-
-        if ( spot.getSpotAccess().equals( "" ) ) {
-            logger.info( "UpdateSpot_Access is empty" );
-            errors.rejectValue( "spotAccess", "spotValidator.spotAccess.empty" );
-        }
-
-        if ( spot.getSpotAccess().length() > 300 || spot.getSpotAccess().length() < 10 ) {
-            logger.info( "Length of UpdateSpot_Access is not correct." );
-            errors.rejectValue( "spotAccess", "spot.access.invalid" );
+        if ( spot.getSpotCounty() != null && !( lowerSpotCountry.equals( "france" ) ) ) {
+            logger.info( "UpdateSpot_Country is not correct" );
+            errors.rejectValue( "updateSpotCountry", "spotValidator.spotCountry.notcorrect" );
         }
     }
 

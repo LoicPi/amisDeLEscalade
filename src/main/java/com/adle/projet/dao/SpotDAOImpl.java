@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,11 +17,14 @@ import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
+import com.adle.projet.tools.FormattingString;
 
 @Repository
 public class SpotDAOImpl implements SpotDAO {
 
-    private static final Logger logger = LogManager.getLogger( SpotDAOImpl.class );
+    private static final Logger logger           = LogManager.getLogger( SpotDAOImpl.class );
+
+    FormattingString            formattingString = new FormattingString();
 
     @Autowired
     private SessionFactory      sessionFactory;
@@ -40,6 +44,9 @@ public class SpotDAOImpl implements SpotDAO {
     @Override
     public void saveSpot( Spot spot ) {
         Session currentSession = sessionFactory.getCurrentSession();
+        spot.setSpotName( formattingString.Formatting( spot.getSpotName() ) );
+        spot.setSpotCity( formattingString.Formatting( spot.getSpotCity() ) );
+        spot.setSpotCountry( formattingString.Formatting( spot.getSpotCountry() ) );
         currentSession.saveOrUpdate( spot );
         logger.info( "Spot saved successfully, Spot details = " + spot );
 
@@ -51,6 +58,9 @@ public class SpotDAOImpl implements SpotDAO {
         Query<Spot> query = currentSession.createNamedQuery( "Spot_findById", Spot.class );
         query.setParameter( "spotId", theId );
         Spot spotResult = (Spot) query.getSingleResult();
+        Hibernate.initialize( spotResult.getCounty() );
+        Hibernate.initialize( spotResult.getComments() );
+        Hibernate.initialize( spotResult.getSectors() );
         logger.info( "Spot loaded successfully, Spot details = " + spotResult );
         return spotResult;
     }
@@ -58,6 +68,9 @@ public class SpotDAOImpl implements SpotDAO {
     @Override
     public void updateSpot( Spot spot ) {
         Session currentsession = sessionFactory.getCurrentSession();
+        spot.setSpotName( formattingString.Formatting( spot.getSpotName() ) );
+        spot.setSpotCity( formattingString.Formatting( spot.getSpotCity() ) );
+        spot.setSpotCountry( formattingString.Formatting( spot.getSpotCountry() ) );
         currentsession.update( spot );
         logger.info( "Spot updated successfully, Spot details = " + spot );
 

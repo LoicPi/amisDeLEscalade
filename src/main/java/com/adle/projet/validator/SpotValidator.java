@@ -33,11 +33,6 @@ public class SpotValidator implements Validator {
             errors.rejectValue( "spotCity", "spotValidator.spotCity.empty" );
         }
 
-        if ( spot.getSpotCounty() == null ) {
-            logger.info( "Spot_County is empty" );
-            errors.rejectValue( "spotCounty", "spotValidator.spotCounty.empty" );
-        }
-
         if ( spot.getSpotCountry() == null ) {
             logger.info( "Spot_Country is empty" );
             errors.rejectValue( "spotCountry", "spotValidator.spotCountry.empty" );
@@ -51,6 +46,18 @@ public class SpotValidator implements Validator {
         if ( spot.getSpotAccess().equals( "" ) ) {
             logger.info( "Spot_Access is empty" );
             errors.rejectValue( "spotAccess", "spotValidator.spotAccess.empty" );
+        }
+
+        String lowerSpotCountry = spot.getSpotCountry().toLowerCase();
+
+        if ( spot.getSpotCounty() == null && lowerSpotCountry.equals( "france" ) ) {
+            logger.info( "Spot_County is empty" );
+            errors.rejectValue( "spotCounty", "spotValidator.spotCounty.empty" );
+        }
+
+        if ( spot.getSpotCounty() != null && !( lowerSpotCountry.equals( "france" ) ) ) {
+            logger.info( "Spot_Country is not correct" );
+            errors.rejectValue( "spotCountry", "spotValidator.spotCountry.notcorrect" );
         }
     }
 
