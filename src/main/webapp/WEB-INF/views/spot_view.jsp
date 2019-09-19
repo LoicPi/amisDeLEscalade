@@ -126,10 +126,10 @@
       						<c:forEach items="${comments}" var="comment">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
-    									<h5 class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></h5>
-    									<h5 class="mb-1"><c:out value="${comment.date}" /></h5>
+    									<h7 class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></h7>
+    									<h7 class="mb-1"><c:out value="${comment.date}" /></h7>
     								</div>
-    								<p class="mb-1"><c:out value="${comment.contents}" /></p>
+    								<p class="mb-1  border rounded border-dark"><c:out value="${comment.contents}" /></p>
     								<c:choose>
      									<c:when test="${userId eq null || !(user.member)}">
      									</c:when>
