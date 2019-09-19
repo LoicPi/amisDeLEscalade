@@ -2,6 +2,7 @@ package com.adle.projet.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table( name = "users" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "User_findByEmail", query = "from User where email = :email" ),
+        @org.hibernate.annotations.NamedQuery( name = "User_findById", query = "from User as u left join fetch u.topos as tps left join fetch u.spots as sts left join fetch tps.county left join fetch sts.county where u.id =:userId" ),
 } )
 
 public class User {
@@ -40,57 +42,60 @@ public class User {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer      id;
+    private Integer       id;
 
     @Column( name = "first_name" )
     @Size( max = 20, min = 3, message = "{user.firstName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un nom" )
-    private String       firstName;
+    private String        firstName;
 
     @Column( name = "last_name" )
     @Size( max = 20, min = 3, message = "{user.lastName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un prénom" )
-    private String       lastName;
+    private String        lastName;
 
     @Column( name = "nick_name", unique = true )
     @Size( max = 20, min = 3, message = "{user.nickName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un pseudo" )
-    private String       nickName;
+    private String        nickName;
 
     @Column( name = "email", unique = true )
     @Email( message = "{user.email.invalid}" )
     @NotEmpty( message = "Merci de rentrer un email" )
-    private String       email;
+    private String        email;
 
     @Column( name = "password" )
     @Size( min = 8, message = "{user.password.invalid}" )
     @NotEmpty( message = "Merci de rentrer un mot de passe" )
-    private String       password;
+    private String        password;
 
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "role_id" )
-    private Role         role;
+    private Role          role;
 
     @Transient
-    private String       passwordControl;
+    private String        passwordControl;
 
     @Transient
-    private Boolean      userMember;
+    private Boolean       userMember;
 
     @OneToMany( mappedBy = "user" )
-    private List<Topo>   topos   = new ArrayList<>();
+    private Set<Topo>     topos;
 
     @OneToMany( mappedBy = "user" )
-    private List<Spot>   spots   = new ArrayList<>();
+    private Set<Spot>     spots;
 
     @OneToMany( mappedBy = "user" )
-    private List<Sector> sectors = new ArrayList<>();
+    private List<Sector>  sectors  = new ArrayList<>();
 
     @OneToMany( mappedBy = "user" )
-    private List<Path>   paths   = new ArrayList<>();
+    private List<Path>    paths    = new ArrayList<>();
 
     @OneToMany( mappedBy = "user" )
-    private List<Length> lengths = new ArrayList<>();
+    private List<Length>  lengths  = new ArrayList<>();
+
+    @OneToMany( mappedBy = "user" )
+    private List<Comment> comments = new ArrayList<>();
 
     public User() {
 
@@ -173,19 +178,19 @@ public class User {
         this.userMember = userMember;
     }
 
-    public List<Topo> getTopos() {
+    public Set<Topo> getTopos() {
         return topos;
     }
 
-    public void setTopos( List<Topo> topos ) {
+    public void setTopos( Set<Topo> topos ) {
         this.topos = topos;
     }
 
-    public List<Spot> getSpots() {
+    public Set<Spot> getSpots() {
         return spots;
     }
 
-    public void setSpots( List<Spot> spots ) {
+    public void setSpots( Set<Spot> spots ) {
         this.spots = spots;
     }
 
@@ -211,6 +216,14 @@ public class User {
 
     public void setLengths( List<Length> lengths ) {
         this.lengths = lengths;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments( List<Comment> comments ) {
+        this.comments = comments;
     }
 
     @Override

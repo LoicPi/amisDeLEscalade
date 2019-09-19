@@ -18,7 +18,7 @@
       		<div class="container col-md-8 mx-auto">
       			<div class="card border-secondary">
 					<div class="card-header text-center">
-						<h1>Mise à jour des mes informations personelles</h1>
+						<h3>Mise à jour des mes informations personelles</h3>
 					</div>
 					<div class="card-body">
 						<div class="personal-info">
@@ -27,33 +27,33 @@
 								<form:hidden path="id" />
 							
 								<div class="form-group">
-									<label class="col-md-3 control-label" for=firstname>Nom :</label>
+									<label class="col-md-3 control-label" for=updateFirstname>Nom :</label>
 									<div class="col-md-8">
-										<form:input path="firstName" class="form-control" type="text" placeholder="${user.firstName}" />
-										<form:errors path="firstName" cssClass="error" />
+										<form:input path="updateFirstName" class="form-control" type="text" placeholder="${updateUser.updateFirstName}" />
+										<form:errors path="updateFirstName" cssClass="error" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label" for=lastname>Prénom :</label>
+									<label class="col-md-3 control-label" for=updateLastname>Prénom :</label>
 									<div class="col-md-8">
-										<form:input path="lastName" class="form-control" type="text" placeholder="${user.lastName}" />
-										<form:errors path="lastName" cssClass="error" />
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="col-md-3 control-label" for=nickname>Pseudo :</label>
-									<div class="col-md-8">
-										<form:input path="nickName" class="form-control" type="text" placeholder="${user.nickName}" />
-										<form:errors path="nickName" cssClass="error" />
+										<form:input path="updateLastName" class="form-control" type="text" placeholder="${updateUser.updateLastName}" />
+										<form:errors path="updateLastName" cssClass="error" />
 									</div>
 								</div>
 								
 								<div class="form-group">
-									<label class="col-lg-3 control-label" for=email>Email :</label>
+									<label class="col-md-3 control-label" for=updateNickname>Pseudo :</label>
+									<div class="col-md-8">
+										<form:input path="updateNickName" class="form-control" type="text" placeholder="${updateUser.updateNickName}" />
+										<form:errors path="updateNickName" cssClass="error" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-lg-3 control-label" for=updateEmail>Email :</label>
 									<div class="col-lg-8">
-										<form:input path="email" class="form-control" type="email" placeholder="${user.email}" />
-										<form:errors path="email" cssClass="error" />
+										<form:input path="updateEmail" class="form-control" type="email" placeholder="${updateUser.updateEmail}" />
+										<form:errors path="updateEmail" cssClass="error" />
 									</div>
 								</div>
 								

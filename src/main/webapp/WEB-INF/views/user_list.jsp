@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Utilisateur</title>
+		<title>Liste des utilisateurs</title>
 		<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/all.css" />" rel="stylesheet">
  		<link href="<c:url value="/resources/css/stylesheet.css" />" rel="stylesheet">

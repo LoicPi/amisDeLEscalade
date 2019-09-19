@@ -19,12 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.adle.projet.dto.UpdatePasswordUser;
 import com.adle.projet.dto.UpdateUser;
 import com.adle.projet.entity.Role;
-import com.adle.projet.entity.Spot;
-import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.RoleService;
-import com.adle.projet.service.SpotService;
-import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.UserLoggValidator;
 import com.adle.projet.validator.UserUpdatePasswordValidator;
@@ -51,19 +47,13 @@ public class UserController {
     private UserUpdateValidator         userUpdateValidator;
 
     @Autowired
-    private UserUpdatePasswordValidator userUptadePasswordValidator;
+    private UserUpdatePasswordValidator userUpdatePasswordValidator;
 
     @Autowired
     private UserService                 userService;
 
     @Autowired
     private RoleService                 roleService;
-
-    @Autowired
-    private TopoService                 topoService;
-
-    @Autowired
-    private SpotService                 spotService;
 
     /*
      * ***************************** List of User *****************************
@@ -178,13 +168,13 @@ public class UserController {
             theModel.addAttribute( "user", userToUpdate );
             UpdateUser theUser = new UpdateUser();
             theUser.setId( userId );
-            theUser.setFirstName( userToUpdate.getFirstName() );
-            theUser.setLastName( userToUpdate.getLastName() );
-            theUser.setNickName( userToUpdate.getNickName() );
-            theUser.setEmail( userToUpdate.getEmail() );
+            theUser.setUpdateFirstName( userToUpdate.getFirstName() );
+            theUser.setUpdateLastName( userToUpdate.getLastName() );
+            theUser.setUpdateNickName( userToUpdate.getNickName() );
+            theUser.setUpdateEmail( userToUpdate.getEmail() );
             theUser.setRole( userToUpdate.getRole() );
             theModel.addAttribute( "updateUser", theUser );
-            return "user_uptade";
+            return "user_update";
         }
     }
 
@@ -211,13 +201,16 @@ public class UserController {
         User userUpdate = userService.getUser( userId );
         userUpdateValidator.validate( theUser, result );
         if ( result.hasErrors() ) {
+            User userToUpdate = userService.getUser( userId );
+            theUser.setRole( userToUpdate.getRole() );
+            theModel.addAttribute( "user", userToUpdate );
             theModel.addAttribute( "updateUser", theUser );
-            return "user_uptade";
+            return "user_update";
         } else {
-            userUpdate.setFirstName( theUser.getFirstName() );
-            userUpdate.setLastName( theUser.getLastName() );
-            userUpdate.setNickName( theUser.getNickName() );
-            userUpdate.setEmail( theUser.getEmail() );
+            userUpdate.setFirstName( theUser.getUpdateFirstName() );
+            userUpdate.setLastName( theUser.getUpdateLastName() );
+            userUpdate.setNickName( theUser.getUpdateNickName() );
+            userUpdate.setEmail( theUser.getUpdateEmail() );
             if ( theUser.getUserMember() == null ) {
                 theUser.setUserMember( false );
             }
@@ -308,11 +301,9 @@ public class UserController {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
-            List<Topo> topos = topoService.findTopoByUserId( userId );
-            List<Spot> spots = spotService.findSpotByUserId( userId );
+            theModel.addAttribute( "topos", theUser.getTopos() );
+            theModel.addAttribute( "spots", theUser.getSpots() );
             theModel.addAttribute( "user", theUser );
-            theModel.addAttribute( "topos", topos );
-            theModel.addAttribute( "spots", spots );
             return "user_view";
         }
     }
@@ -398,7 +389,7 @@ public class UserController {
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            userUptadePasswordValidator.validate( theUser, result );
+            userUpdatePasswordValidator.validate( theUser, result );
             if ( result.hasErrors() ) {
                 User user = userService.getUser( userId );
                 theModel.addAttribute( "user", user );
