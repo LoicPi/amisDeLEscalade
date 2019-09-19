@@ -15,7 +15,7 @@ public class UpdateTopo {
 
     private String  updateTopoDescriptive;
 
-    private String  updateeTopoReleaseDate;
+    private String  updateTopoReleaseDate;
 
     private User    user;
 
@@ -68,11 +68,11 @@ public class UpdateTopo {
     }
 
     public String getUpdateTopoReleaseDate() {
-        return updateeTopoReleaseDate;
+        return updateTopoReleaseDate;
     }
 
     public void setUpdateTopoReleaseDate( String updateTopoReleaseDate ) {
-        this.updateeTopoReleaseDate = updateTopoReleaseDate;
+        this.updateTopoReleaseDate = updateTopoReleaseDate;
     }
 
     public User getUser() {
