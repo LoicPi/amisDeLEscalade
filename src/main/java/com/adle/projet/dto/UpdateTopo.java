@@ -1,24 +1,27 @@
 package com.adle.projet.dto;
 
+import com.adle.projet.entity.County;
 import com.adle.projet.entity.User;
 
 public class UpdateTopo {
 
     private Integer id;
 
-    private String  topoName;
+    private String  updateTopoName;
 
-    private String  topoCity;
+    private String  updateTopoCity;
 
-    private Integer topoCounty;
+    private String  updateTopoCountry;
 
-    private String  topoCountry;
+    private String  updateTopoDescriptive;
 
-    private String  topoDescriptive;
-
-    private String  topoReleaseDate;
+    private String  updateeTopoReleaseDate;
 
     private User    user;
+
+    private County  county;
+
+    private Integer topoCounty;
 
     public Integer idUser() {
         return user.getId();
@@ -32,52 +35,44 @@ public class UpdateTopo {
         this.id = id;
     }
 
-    public String getTopoName() {
-        return topoName;
+    public String getUpdateTopoName() {
+        return updateTopoName;
     }
 
-    public void setTopoName( String topoName ) {
-        this.topoName = topoName;
+    public void setUpdateTopoName( String updateTopoName ) {
+        this.updateTopoName = updateTopoName;
     }
 
-    public String getTopoCity() {
-        return topoCity;
+    public String getUpdateTopoCity() {
+        return updateTopoCity;
     }
 
-    public void setTopoCity( String topoCity ) {
-        this.topoCity = topoCity;
+    public void setUpdateTopoCity( String updateTopoCity ) {
+        this.updateTopoCity = updateTopoCity;
     }
 
-    public Integer getTopoCounty() {
-        return topoCounty;
+    public String getUpdateTopoCountry() {
+        return updateTopoCountry;
     }
 
-    public void setTopoCounty( Integer topoCounty ) {
-        this.topoCounty = topoCounty;
+    public void setUpdateTopoCountry( String updateTopoCountry ) {
+        this.updateTopoCountry = updateTopoCountry;
     }
 
-    public String getTopoCountry() {
-        return topoCountry;
+    public String getUpdateTopoDescriptive() {
+        return updateTopoDescriptive;
     }
 
-    public void setTopoCountry( String topoCountry ) {
-        this.topoCountry = topoCountry;
+    public void setUpdateTopoDescriptive( String updateTopoDescriptive ) {
+        this.updateTopoDescriptive = updateTopoDescriptive;
     }
 
-    public String getTopoDescriptive() {
-        return topoDescriptive;
+    public String getUpdateTopoReleaseDate() {
+        return updateeTopoReleaseDate;
     }
 
-    public void setTopoDescriptive( String topoDescriptive ) {
-        this.topoDescriptive = topoDescriptive;
-    }
-
-    public String getTopoReleaseDate() {
-        return topoReleaseDate;
-    }
-
-    public void setTopoReleaseDate( String topoReleaseDate ) {
-        this.topoReleaseDate = topoReleaseDate;
+    public void setUpdateTopoReleaseDate( String updateTopoReleaseDate ) {
+        this.updateeTopoReleaseDate = updateTopoReleaseDate;
     }
 
     public User getUser() {
@@ -86,6 +81,22 @@ public class UpdateTopo {
 
     public void setUser( User user ) {
         this.user = user;
+    }
+
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty( County county ) {
+        this.county = county;
+    }
+
+    public Integer getTopoCounty() {
+        return topoCounty;
+    }
+
+    public void setTopoCounty( Integer topoCounty ) {
+        this.topoCounty = topoCounty;
     }
 
 }

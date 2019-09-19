@@ -9,7 +9,7 @@ public class UpdatePath {
 
     private Integer id;
 
-    private String  pathName;
+    private String  updatePathName;
 
     private User    user;
 
@@ -19,7 +19,7 @@ public class UpdatePath {
 
     private Type    type;
 
-    private String  pathType;
+    private Integer pathType;
 
     public Integer pathIdUser() {
         return user.getId();
@@ -45,12 +45,12 @@ public class UpdatePath {
         this.id = id;
     }
 
-    public String getPathName() {
-        return pathName;
+    public String getUpdatePathName() {
+        return updatePathName;
     }
 
-    public void setPathName( String pathName ) {
-        this.pathName = pathName;
+    public void setUpdatePathName( String updatePathName ) {
+        this.updatePathName = updatePathName;
     }
 
     public User getUser() {
@@ -85,11 +85,12 @@ public class UpdatePath {
         this.type = type;
     }
 
-    public String getPathType() {
+    public Integer getPathType() {
         return pathType;
     }
 
-    public void setPathType( String pathType ) {
+    public void setPathType( Integer pathType ) {
         this.pathType = pathType;
     }
+
 }

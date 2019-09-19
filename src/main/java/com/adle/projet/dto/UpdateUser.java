@@ -6,19 +6,19 @@ public class UpdateUser {
 
     private Integer id;
 
-    private String  firstName;
+    private String  updateFirstName;
 
-    private String  lastName;
+    private String  updateLastName;
 
-    private String  nickName;
+    private String  updateNickName;
 
-    private String  email;
+    private String  updateEmail;
 
     private Role    role;
 
     private Boolean userMember;
 
-    public boolean isMember() {
+    public boolean getMember() {
         return role.getRoleCode().equals( "member" );
     }
 
@@ -30,36 +30,36 @@ public class UpdateUser {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUpdateFirstName() {
+        return updateFirstName;
     }
 
-    public void setFirstName( String firstName ) {
-        this.firstName = firstName;
+    public void setUpdateFirstName( String updateFirstName ) {
+        this.updateFirstName = updateFirstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getUpdateLastName() {
+        return updateLastName;
     }
 
-    public void setLastName( String lastName ) {
-        this.lastName = lastName;
+    public void setUpdateLastName( String updateLastName ) {
+        this.updateLastName = updateLastName;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getUpdateNickName() {
+        return updateNickName;
     }
 
-    public void setNickName( String nickName ) {
-        this.nickName = nickName;
+    public void setUpdateNickName( String updateNickName ) {
+        this.updateNickName = updateNickName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUpdateEmail() {
+        return updateEmail;
     }
 
-    public void setEmail( String email ) {
-        this.email = email;
+    public void setUpdateEmail( String updateEmail ) {
+        this.updateEmail = updateEmail;
     }
 
     public Role getRole() {

@@ -1,26 +1,29 @@
 package com.adle.projet.dto;
 
+import com.adle.projet.entity.County;
 import com.adle.projet.entity.User;
 
 public class UpdateSpot {
 
     private Integer id;
 
-    private String  spotName;
+    private String  updateSpotName;
 
-    private String  spotCity;
+    private String  updateSpotCity;
 
-    private Integer spotCounty;
+    private String  updateSpotCountry;
 
-    private String  spotCountry;
+    private String  updateSpotDescriptive;
 
-    private String  spotDescriptive;
+    private String  updateSpotAccess;
 
-    private String  spotAccess;
-
-    private Boolean spotTag;
+    private Boolean updateSpotTag;
 
     private User    user;
+
+    private County  county;
+
+    private Integer spotCounty;
 
     public Integer spotIdUser() {
         return user.getId();
@@ -34,60 +37,52 @@ public class UpdateSpot {
         this.id = id;
     }
 
-    public String getSpotName() {
-        return spotName;
+    public String getUpdateSpotName() {
+        return updateSpotName;
     }
 
-    public void setSpotName( String spotName ) {
-        this.spotName = spotName;
+    public void setUpdateSpotName( String updateSpotName ) {
+        this.updateSpotName = updateSpotName;
     }
 
-    public String getSpotCity() {
-        return spotCity;
+    public String getUpdateSpotCity() {
+        return updateSpotCity;
     }
 
-    public void setSpotCity( String spotCity ) {
-        this.spotCity = spotCity;
+    public void setUpdateSpotCity( String updateSpotCity ) {
+        this.updateSpotCity = updateSpotCity;
     }
 
-    public Integer getSpotCounty() {
-        return spotCounty;
+    public String getUpdateSpotCountry() {
+        return updateSpotCountry;
     }
 
-    public void setSpotCounty( Integer spotCounty ) {
-        this.spotCounty = spotCounty;
+    public void setUpdateSpotCountry( String updateSpotCountry ) {
+        this.updateSpotCountry = updateSpotCountry;
     }
 
-    public String getSpotCountry() {
-        return spotCountry;
+    public String getUpdateSpotDescriptive() {
+        return updateSpotDescriptive;
     }
 
-    public void setSpotCountry( String spotCountry ) {
-        this.spotCountry = spotCountry;
+    public void setUpdateSpotDescriptive( String updateSpotDescriptive ) {
+        this.updateSpotDescriptive = updateSpotDescriptive;
     }
 
-    public String getSpotDescriptive() {
-        return spotDescriptive;
+    public String getUpdateSpotAccess() {
+        return updateSpotAccess;
     }
 
-    public void setSpotDescriptive( String spotDescriptive ) {
-        this.spotDescriptive = spotDescriptive;
+    public void setUpdateSpotAccess( String updateSpotAccess ) {
+        this.updateSpotAccess = updateSpotAccess;
     }
 
-    public String getSpotAccess() {
-        return spotAccess;
+    public Boolean getUpdateSpotTag() {
+        return updateSpotTag;
     }
 
-    public void setSpotAccess( String spotAccess ) {
-        this.spotAccess = spotAccess;
-    }
-
-    public Boolean getSpotTag() {
-        return spotTag;
-    }
-
-    public void setSpotTag( Boolean spotTag ) {
-        this.spotTag = spotTag;
+    public void setUpdateSpotTag( Boolean updateSpotTag ) {
+        this.updateSpotTag = updateSpotTag;
     }
 
     public User getUser() {
@@ -96,6 +91,22 @@ public class UpdateSpot {
 
     public void setUser( User user ) {
         this.user = user;
+    }
+
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty( County county ) {
+        this.county = county;
+    }
+
+    public Integer getSpotCounty() {
+        return spotCounty;
+    }
+
+    public void setSpotCounty( Integer spotCounty ) {
+        this.spotCounty = spotCounty;
     }
 
 }

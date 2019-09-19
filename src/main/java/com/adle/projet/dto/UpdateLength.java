@@ -10,9 +10,9 @@ public class UpdateLength {
 
     private Boolean updateLengthSpit;
 
-    private String  updateLengthLevel;
+    private Integer updateLengthLevel;
 
-    private String  updateLengthListing;
+    private Integer updateLengthListing;
 
     public Integer getId() {
         return id;
@@ -46,19 +46,19 @@ public class UpdateLength {
         this.updateLengthSpit = updateLengthSpit;
     }
 
-    public String getUpdateLengthLevel() {
+    public Integer getUpdateLengthLevel() {
         return updateLengthLevel;
     }
 
-    public void setUpdateLengthLevel( String updateLengthLevel ) {
+    public void setUpdateLengthLevel( Integer updateLengthLevel ) {
         this.updateLengthLevel = updateLengthLevel;
     }
 
-    public String getUpdateLengthListing() {
+    public Integer getUpdateLengthListing() {
         return updateLengthListing;
     }
 
-    public void setUpdateLengthListing( String updateLengthListing ) {
+    public void setUpdateLengthListing( Integer updateLengthListing ) {
         this.updateLengthListing = updateLengthListing;
     }
 

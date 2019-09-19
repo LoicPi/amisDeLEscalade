@@ -7,11 +7,11 @@ public class UpdateSector {
 
     private Integer id;
 
-    private String  sectorName;
+    private String  updateSectorName;
 
-    private String  sectorDescriptive;
+    private String  updateSectorDescriptive;
 
-    private String  sectorAccess;
+    private String  updateSectorAccess;
 
     private User    user;
 
@@ -33,28 +33,28 @@ public class UpdateSector {
         this.id = id;
     }
 
-    public String getSectorName() {
-        return sectorName;
+    public String getUpdateSectorName() {
+        return updateSectorName;
     }
 
-    public void setSectorName( String sectorName ) {
-        this.sectorName = sectorName;
+    public void setUpdateSectorName( String updateSectorName ) {
+        this.updateSectorName = updateSectorName;
     }
 
-    public String getSectorDescriptive() {
-        return sectorDescriptive;
+    public String getUpdateSectorDescriptive() {
+        return updateSectorDescriptive;
     }
 
-    public void setSectorDescriptive( String sectorDescriptive ) {
-        this.sectorDescriptive = sectorDescriptive;
+    public void setUpdateSectorDescriptive( String updateSectorDescriptive ) {
+        this.updateSectorDescriptive = updateSectorDescriptive;
     }
 
-    public String getSectorAccess() {
-        return sectorAccess;
+    public String getUpdateSectorAccess() {
+        return updateSectorAccess;
     }
 
-    public void setSectorAccess( String sectorAccess ) {
-        this.sectorAccess = sectorAccess;
+    public void setUpdateSectorAccess( String updateSectorAccess ) {
+        this.updateSectorAccess = updateSectorAccess;
     }
 
     public User getUser() {
