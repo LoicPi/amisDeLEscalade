@@ -66,7 +66,7 @@ public class UserUpdatePasswordValidator implements Validator {
             errors.rejectValue( "confirmPassword", "userValidator.password.space" );
         }
 
-        if ( !user.getNewPassword().equals( "" ) && !( patternPassword.matcher( user.getNewPassword() ).matches() ) ) {
+        if ( !( patternPassword.matcher( user.getNewPassword() ).matches() ) ) {
             logger.info( "Password is not correct." );
             errors.rejectValue( "newPassword", "userValidator.password.invalid" );
         }
