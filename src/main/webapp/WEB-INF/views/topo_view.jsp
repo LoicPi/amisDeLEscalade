@@ -18,7 +18,7 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header">
-						<h1 class="text-center"><c:out value="${ topo.topoName }" /></h1>
+						<h3 class="text-center"><c:out value="${ topo.topoName }" /></h3>
       					<c:if test ="${ topo.availability }">
       					    <hr>
        						<div class="row justify-content-around">
@@ -44,10 +44,16 @@
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Ville : </label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoCity }" /></label>
 							</div>
-							<div class="form-group row justify-content-center">
-								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Département :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoCounty }" /></label>
-							</div>
+							<c:choose>
+								<c:when test="${topo.county.id eq 102 }">
+								</c:when>
+								<c:otherwise>
+									<div class="form-group row justify-content-center">
+										<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Département :</label>
+										<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.county.countyName }" /></label>
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Pays :</label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoCountry }" /></label>

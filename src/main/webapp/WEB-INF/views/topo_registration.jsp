@@ -26,37 +26,41 @@
       						<form:hidden path="id" /> 
       						
       						<div class="form-group">
-       							<label for="topoName">Nom du topo <span class="requis">*</span></label>
+       							<label for="topoName">Nom du topo : <span class="requis">*</span></label>
        							<form:input path="topoName" class="form-control" type="text" placeholder="Nom du topo" />
        							<form:errors path="topoName" class="error" />
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoCity">Ville <span class="requis">*</span></label>
+       							<label for="topoCity">Ville : <span class="requis">*</span></label>
        							<form:input path="topoCity" class="form-control" type="text" placeholder="Ville du topo" />
        							<form:errors path="topoCity" class="error" />
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoCounty">Département <span class="requis">*</span></label>
-       							<form:input path="topoCounty" class="form-control" type="number" />
-       							<form:errors path="topoCounty" class="error" />
+       							<label for="topoCounty">Département : <span class="requis">*</span></label>
+       							<br/>
+       							<form:select path = "topoCounty">
+                     				<form:option value="" label = "Choix du département"/>
+                     				<form:options items = "${county}" />
+                  				</form:select>
+                  				<form:errors path="topoCounty" cssClass="error" />
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoCountry">Pays <span class="requis">*</span></label>
+       							<label for="topoCountry">Pays : <span class="requis">*</span></label>
        							<form:input path="topoCountry" class="form-control" type="text" placeholder="Pays du topo" />
        							<form:errors path="topoCountry" class="error" />
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoDescriptive">Description <span class="requis">*</span></label>
+       							<label for="topoDescriptive">Description : <span class="requis">*</span></label>
        							<form:textarea path="topoDescriptive" class="form-control" rows="5" cols="30" type="text" placeholder="Description du topo" />
        							<form:errors path="topoDescriptive" class="error" />
       						</div>
       						
       						<div class="form-group">
-       							<label for="topoReleaseDate">Date de parution <span class="requis">*</span></label>
+       							<label for="topoReleaseDate">Date de parution : <span class="requis">*</span></label>
        							<form:input path="topoReleaseDate" class="form-control" type="date" />
        							<form:errors path="topoReleaseDate" class="error" />
       						</div>    						

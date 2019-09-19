@@ -45,7 +45,7 @@
     								</div>
     								<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
     								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${topo.topoCounty }" /></p>
+    									<%--  <p class="mb-1"><c:out value="${topo.county.countyName }" /></p> --%>
     									<a class="btn btn-info btn-sm" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
     								</div>
     							</div>

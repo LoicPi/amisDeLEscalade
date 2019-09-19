@@ -1,6 +1,7 @@
 package com.adle.projet.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.UpdateTopo;
+import com.adle.projet.entity.County;
 import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
+import com.adle.projet.service.CountyService;
 import com.adle.projet.service.EmailService;
 import com.adle.projet.service.TopoService;
 import com.adle.projet.service.UserService;
@@ -49,6 +52,9 @@ public class TopoController {
 
     @Autowired
     private EmailService        emailService;
+
+    @Autowired
+    private CountyService       countyService;
 
     /*
      * ************************* List of Topo *************************
@@ -98,6 +104,9 @@ public class TopoController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
             Topo theTopo = new Topo();
             theModel.addAttribute( "topo", theTopo );
             return "topo_registration";
@@ -129,10 +138,20 @@ public class TopoController {
             User theUser = userService.getUser( userId );
             topoValidator.validate( theTopo, result );
             if ( result.hasErrors() ) {
+                List<County> countys = countyService.getCountys();
+                Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
                 theModel.addAttribute( "user", theUser );
+                theModel.addAttribute( "county", nameCounty );
                 theModel.addAttribute( "topo", theTopo );
                 return "topo_registration";
             } else {
+                if ( theTopo.getTopoCounty() == null ) {
+                    County theCounty = countyService.getCounty( 102 );
+                    theTopo.setCounty( theCounty );
+                } else {
+                    County theCounty = countyService.getCounty( theTopo.getTopoCounty() );
+                    theTopo.setCounty( theCounty );
+                }
                 theTopo.setUser( theUser );
                 topoService.saveTopo( theTopo );
                 return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
@@ -194,16 +213,20 @@ public class TopoController {
             Integer userId = (Integer) session.getAttribute( "userId" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
             UpdateTopo theTopo = new UpdateTopo();
             Topo topoToUpdate = topoService.getTopo( topoId );
             theTopo.setId( topoId );
-            theTopo.setTopoName( topoToUpdate.getTopoName() );
-            theTopo.setTopoCity( topoToUpdate.getTopoCity() );
-            theTopo.setTopoCountry( topoToUpdate.getTopoCountry() );
-            theTopo.setTopoCounty( topoToUpdate.getTopoCounty() );
-            theTopo.setTopoDescriptive( topoToUpdate.getTopoDescriptive() );
-            theTopo.setTopoReleaseDate( topoToUpdate.getTopoReleaseDate() );
+            theTopo.setUpdateTopoName( topoToUpdate.getTopoName() );
+            theTopo.setUpdateTopoCity( topoToUpdate.getTopoCity() );
+            theTopo.setUpdateTopoCountry( topoToUpdate.getTopoCountry() );
+            theTopo.setUpdateTopoDescriptive( topoToUpdate.getTopoDescriptive() );
+            theTopo.setUpdateTopoReleaseDate( topoToUpdate.getTopoReleaseDate() );
             theTopo.setUser( topoToUpdate.getUser() );
+            theTopo.setCounty( topoToUpdate.getCounty() );
+            theTopo.setTopoCounty( topoToUpdate.countyOfTopo() );
             Integer topoUserId = theTopo.idUser();
             if ( !topoUserId.equals( userId ) ) {
                 return "redirect:/{topoId}/vuetopo";
@@ -239,16 +262,24 @@ public class TopoController {
         theModel.addAttribute( "user", theUser );
         topoUpdateValidator.validate( theTopo, result );
         if ( result.hasErrors() ) {
+            Topo topo = topoService.getTopo( topoId );
+            List<County> countys = countyService.getCountys();
+            Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+            theModel.addAttribute( "county", nameCounty );
+            theModel.addAttribute( "user", theUser );
+            theModel.addAttribute( "topo", topo );
             theModel.addAttribute( "updateTopo", theTopo );
             return "topo_update";
         } else {
+            County theCounty = countyService.getCounty( theTopo.getTopoCounty() );
             Topo topoUpdate = topoService.getTopo( theTopo.getId() );
-            topoUpdate.setTopoName( theTopo.getTopoName() );
-            topoUpdate.setTopoCity( theTopo.getTopoCity() );
+            topoUpdate.setTopoName( theTopo.getUpdateTopoName() );
+            topoUpdate.setTopoCity( theTopo.getUpdateTopoCity() );
             topoUpdate.setTopoCounty( theTopo.getTopoCounty() );
-            topoUpdate.setTopoCountry( theTopo.getTopoCountry() );
-            topoUpdate.setTopoDescriptive( theTopo.getTopoDescriptive() );
-            topoUpdate.setTopoReleaseDate( theTopo.getTopoReleaseDate() );
+            topoUpdate.setTopoCountry( theTopo.getUpdateTopoCountry() );
+            topoUpdate.setTopoDescriptive( theTopo.getUpdateTopoDescriptive() );
+            topoUpdate.setTopoReleaseDate( theTopo.getUpdateTopoReleaseDate() );
+            topoUpdate.setCounty( theCounty );
             topoService.updateTopo( topoUpdate );
             return "redirect:/topo/" + topoId + "/vuetopo";
         }

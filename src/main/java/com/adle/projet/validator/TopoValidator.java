@@ -37,11 +37,6 @@ public class TopoValidator implements Validator {
             errors.rejectValue( "topoCity", "topoValidator.topoCity.empty" );
         }
 
-        if ( topo.getTopoCounty() == null ) {
-            logger.info( "Topo_County is empty" );
-            errors.rejectValue( "topoCounty", "topoValidator.topoCounty.empty" );
-        }
-
         if ( topo.getTopoCountry().equals( "" ) ) {
             logger.info( "Topo_Country is empty" );
             errors.rejectValue( "topoCountry", "topoValidator.topoCountry.empty" );
@@ -50,6 +45,18 @@ public class TopoValidator implements Validator {
         if ( topo.getTopoReleaseDate().equals( "" ) ) {
             logger.info( "Topo_ReleaseDate is empty" );
             errors.rejectValue( "topoReleaseDate", "topoValidator.topoReleaseDate.empty" );
+        }
+
+        String lowerTopoCountry = topo.getTopoCountry().toLowerCase();
+
+        if ( topo.getTopoCounty() == null && lowerTopoCountry.equals( "france" ) ) {
+            logger.info( "Topo_County is empty" );
+            errors.rejectValue( "topoCounty", "topoValidator.topoCounty.empty" );
+        }
+
+        if ( topo.getTopoCounty() != null && !( lowerTopoCountry.equals( "france" ) ) ) {
+            logger.info( "Topo_Country is not correct" );
+            errors.rejectValue( "topoCountry", "topoValidator.topoCountry.notcorrect" );
         }
     }
 

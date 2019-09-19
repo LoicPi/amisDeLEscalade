@@ -44,15 +44,12 @@ public class Topo {
     @Size( max = 100, min = 3, message = "{topo.city.invalid}" )
     private String  topoCity;
 
-    @Column( name = "topo_county" )
-    private Integer topoCounty;
-
     @Column( name = "topo_country" )
     @Size( max = 100, min = 3, message = "{topo.country.invalid}" )
     private String  topoCountry;
 
     @Column( name = "topo_descriptive" )
-    @Size( max = 600, min = 10, message = "{topo.descriptive.invalid}" )
+    @Size( max = 600, min = 10, message = "La description doit contenir entre {2} et {1} charactères." )
     private String  topoDescriptive;
 
     @Column( name = "topo_releaseDate" )
@@ -66,8 +63,24 @@ public class Topo {
     @JoinColumn( name = "user_id" )
     private User    user;
 
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "county_id" )
+    private County  county;
+
+    @Transient
+    private Integer topoCounty;
+
     public Topo() {
 
+    }
+
+    @Transient
+    public Integer countyOfTopo() {
+        return county.getId();
+    }
+
+    public String getCountyNameOfTopo() {
+        return county.getCountyName();
     }
 
     @Transient
@@ -102,14 +115,6 @@ public class Topo {
 
     public void setTopoCity( String topoCity ) {
         this.topoCity = topoCity;
-    }
-
-    public Integer getTopoCounty() {
-        return topoCounty;
-    }
-
-    public void setTopoCounty( Integer topoCounty ) {
-        this.topoCounty = topoCounty;
     }
 
     public String getTopoCountry() {
@@ -152,10 +157,26 @@ public class Topo {
         this.user = user;
     }
 
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty( County county ) {
+        this.county = county;
+    }
+
+    public Integer getTopoCounty() {
+        return topoCounty;
+    }
+
+    public void setTopoCounty( Integer topoCounty ) {
+        this.topoCounty = topoCounty;
+    }
+
     @Override
     public String toString() {
-        return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity + ",topoCounty =" + topoCounty
-                + ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
+        return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity +
+                ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
                 ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
                 topoAvailability + "}";
     }

@@ -22,64 +22,66 @@ public class TopoUpdateValidator implements Validator {
     public void validate( Object obj, Errors errors ) {
         UpdateTopo topo = (UpdateTopo) obj;
 
-        if ( topo.getTopoName().equals( "" ) ) {
-            logger.info( "Topo_Name is empty" );
-            errors.rejectValue( "topoName", "topoValidator.topoName.empty" );
+        if ( topo.getUpdateTopoName().equals( "" ) ) {
+            logger.info( "UpdateTopo_Name is empty" );
+            errors.rejectValue( "updateTopoName", "topoValidator.topoName.empty" );
         }
 
-        if ( topo.getTopoName().length() > 100 || topo.getTopoName().length() < 3 ) {
-            logger.info( "Length of Topo_Name is not correct." );
-            errors.rejectValue( "topoName", "topo.name.invalid" );
+        if ( topo.getUpdateTopoName().length() > 100 || topo.getUpdateTopoName().length() < 3 ) {
+            logger.info( "Length of UpdateTopo_Name is not correct." );
+            errors.rejectValue( "updateTopoName", "topo.name.invalid" );
         }
 
-        if ( topo.getTopoDescriptive().equals( "" ) ) {
-            logger.info( "Topo_Descriptive is empty" );
-            errors.rejectValue( "topoDescriptive", "topoValidator.topoDescriptive.empty" );
+        if ( topo.getUpdateTopoDescriptive().equals( "" ) ) {
+            logger.info( "UpdateTopo_Descriptive is empty" );
+            errors.rejectValue( "updateTopoDescriptive", "topoValidator.topoDescriptive.empty" );
         }
 
-        if ( topo.getTopoDescriptive().length() > 600 || topo.getTopoDescriptive().length() < 10 ) {
-            logger.info( "Length of Topo_Descriptive is not correct." );
-            errors.rejectValue( "topoDescriptive", "topo.descriptive.invalid" );
+        if ( topo.getUpdateTopoDescriptive().length() > 600 || topo.getUpdateTopoDescriptive().length() < 10 ) {
+            logger.info( "Length of UpdateTopo_Descriptive is not correct." );
+            errors.rejectValue( "updateTopoDescriptive", "topo.descriptive.invalid" );
         }
 
-        if ( topo.getTopoCity().equals( "" ) ) {
-            logger.info( "Topo_City is empty" );
-            errors.rejectValue( "topoCity", "topoValidator.topoCity.empty" );
+        if ( topo.getUpdateTopoCity().equals( "" ) ) {
+            logger.info( "UpdateTopo_City is empty" );
+            errors.rejectValue( "updateTopoCity", "topoValidator.topoCity.empty" );
         }
 
-        if ( topo.getTopoCity().length() > 100 || topo.getTopoCity().length() < 3 ) {
-            logger.info( "Length of Topo_City is not correct." );
-            errors.rejectValue( "topoCity", "topo.city.invalid" );
+        if ( topo.getUpdateTopoCity().length() > 100 || topo.getUpdateTopoCity().length() < 3 ) {
+            logger.info( "Length of UpdateTopo_City is not correct." );
+            errors.rejectValue( "updateTopoCity", "topo.city.invalid" );
         }
 
-        if ( topo.getTopoCounty() == null ) {
-            logger.info( "Topo_County is empty" );
+        if ( topo.getUpdateTopoCountry().equals( "" ) ) {
+            logger.info( "UpdateTopo_Country is empty" );
+            errors.rejectValue( "updateTopoCountry", "topoValidator.topoCountry.empty" );
+        }
+
+        if ( topo.getUpdateTopoCountry().length() > 100 || topo.getUpdateTopoCountry().length() < 3 ) {
+            logger.info( "Length of UpdateTopo_Country is not correct." );
+            errors.rejectValue( "updateTopoCountry", "topo.country.invalid" );
+        }
+
+        if ( topo.getUpdateTopoReleaseDate().equals( "" ) ) {
+            logger.info( "UpdateTopo_ReleaseDate is empty" );
+            errors.rejectValue( "updateTopoReleaseDate", "topoValidator.topoReleaseDate.empty" );
+        }
+
+        if ( topo.getUpdateTopoReleaseDate().length() != 10 ) {
+            logger.info( "Length of UpdateTopo_ReleaseDate is not correct." );
+            errors.rejectValue( "updateTopoReleaseDate", "topo.releaseDate.invalid" );
+        }
+
+        String lowerTopoCountry = topo.getUpdateTopoCountry().toLowerCase();
+
+        if ( topo.getTopoCounty() == null && lowerTopoCountry.equals( "france" ) ) {
+            logger.info( "UpdateTopo_County is empty" );
             errors.rejectValue( "topoCounty", "topoValidator.topoCounty.empty" );
         }
 
-        if ( topo.getTopoCountry().equals( "" ) ) {
-            logger.info( "Topo_Country is empty" );
-            errors.rejectValue( "topoCountry", "topoValidator.topoCountry.empty" );
-        }
-
-        if ( topo.getTopoCountry().length() > 100 || topo.getTopoCountry().length() < 3 ) {
-            logger.info( "Length of Topo_Country is not correct." );
-            errors.rejectValue( "topoCountry", "topo.country.invalid" );
-        }
-
-        if ( topo.getTopoReleaseDate().equals( "" ) ) {
-            logger.info( "Topo_ReleaseDate is empty" );
-            errors.rejectValue( "topoReleaseDate", "topoValidator.topoReleaseDate.empty" );
-        }
-
-        if ( topo.getTopoReleaseDate().equals( "" ) ) {
-            logger.info( "Topo_ReleaseDate is empty" );
-            errors.rejectValue( "topoReleaseDate", "topoValidator.topoReleaseDate.empty" );
-        }
-
-        if ( topo.getTopoReleaseDate().length() != 10 ) {
-            logger.info( "Length of Topo_ReleaseDate is not correct." );
-            errors.rejectValue( "topoReleaseDate", "topo.releaseDate.invalid" );
+        if ( topo.getTopoCounty() != null && !( lowerTopoCountry.equals( "france" ) ) ) {
+            logger.info( "UpdateTopo_Country is not correct" );
+            errors.rejectValue( "updateTopoCountry", "topoValidator.topoCountry.notcorrect" );
         }
     }
 
