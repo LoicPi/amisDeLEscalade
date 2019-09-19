@@ -28,13 +28,8 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public Map<String, String> getTypeNameOfTypes( List<Type> types ) {
+    public Map<Integer, String> getTypeNameOfTypes( List<Type> types ) {
         return typeDAO.getTypeNameOfTypes( types );
-    }
-
-    @Override
-    public Type findTypeByNameOfType( String nameType ) {
-        return typeDAO.findTypeByNameOfType( nameType );
     }
 
 }

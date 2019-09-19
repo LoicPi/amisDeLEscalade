@@ -11,8 +11,6 @@ public interface TypeDAO {
 
     public Type getType( int theId );
 
-    public Map<String, String> getTypeNameOfTypes( List<Type> types );
-
-    public Type findTypeByNameOfType( String nameType );
+    public Map<Integer, String> getTypeNameOfTypes( List<Type> types );
 
 }

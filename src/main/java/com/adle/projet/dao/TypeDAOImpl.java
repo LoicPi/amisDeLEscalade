@@ -48,22 +48,12 @@ public class TypeDAOImpl implements TypeDAO {
     }
 
     @Override
-    public Map<String, String> getTypeNameOfTypes( List<Type> types ) {
-        Map<String, String> typeName = new HashMap<String, String>();
-        for ( int i = 0; i < types.size(); i++ ) {
-            typeName.put( types.get( i ).getTypeName(), types.get( i ).getTypeName() );
+    public Map<Integer, String> getTypeNameOfTypes( List<Type> types ) {
+        Map<Integer, String> typeName = new HashMap<Integer, String>();
+        for ( int i = 1; i <= types.size(); i++ ) {
+            typeName.put( i, types.get( i - 1 ).getTypeName() );
         }
         logger.info( "MapOfType : " + typeName );
         return typeName;
-    }
-
-    @Override
-    public Type findTypeByNameOfType( String nameType ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        Query<Type> query = currentSession.createNamedQuery( "Type_findByName", Type.class );
-        query.setParameter( "typeName", nameType );
-        Type typeResult = query.getSingleResult();
-        logger.info( "Type : " + typeResult );
-        return typeResult;
     }
 }
