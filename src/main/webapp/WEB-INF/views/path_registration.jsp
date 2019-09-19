@@ -34,14 +34,15 @@
       						<div class="form-group">
        							<label for="pathType">Type de la voie <span class="requis">*</span></label>
        							<form:select path = "pathType">
-                     				<form:option value="NONE" label = "Choix du type de voie"/>
+                     				<form:option value="" label = "Choix du type de voie"/>
                      				<form:options items = "${type}" />
                   				</form:select>
+                  				<form:errors path="pathType" cssClass="error" />
       						</div>
       						<hr>
       						<div class="row justify-content-around">
         						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/sector/${sector.id }/vuesecteur"/>" role="button">Annuler</a>
+        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/secteur/${sector.id }/vuesecteur"/>" role="button">Annuler</a>
       						</div>      						
       					</form:form>
       				</div>	

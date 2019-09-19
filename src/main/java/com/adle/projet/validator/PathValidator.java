@@ -28,6 +28,11 @@ public class PathValidator implements Validator {
             errors.rejectValue( "pathName", "pathValidator.pathName.empty" );
         }
 
+        if ( path.getPathType() == null ) {
+            logger.info( "Path_Type is empty" );
+            errors.rejectValue( "pathType", "pathValidator.pathType.empty" );
+        }
+
     }
 
 }

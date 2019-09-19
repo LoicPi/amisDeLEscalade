@@ -92,7 +92,7 @@ public class PathController {
             Sector theSector = sectorService.getSector( sectorId );
             theModel.addAttribute( "sector", theSector );
             List<Type> types = typeService.getTypes();
-            Map<String, String> nameType = typeService.getTypeNameOfTypes( types );
+            Map<Integer, String> nameType = typeService.getTypeNameOfTypes( types );
             theModel.addAttribute( "type", nameType );
             Path thePath = new Path();
             theModel.addAttribute( "path", thePath );
@@ -133,7 +133,7 @@ public class PathController {
             Sector theSector = sectorService.getSector( sectorId );
             if ( result.hasErrors() ) {
                 List<Type> types = typeService.getTypes();
-                Map<String, String> nameType = typeService.getTypeNameOfTypes( types );
+                Map<Integer, String> nameType = typeService.getTypeNameOfTypes( types );
                 theModel.addAttribute( "type", nameType );
                 theModel.addAttribute( "user", theUser );
                 theModel.addAttribute( "spot", theSpot );
@@ -141,7 +141,7 @@ public class PathController {
                 theModel.addAttribute( "path", thePath );
                 return "path_registration";
             } else {
-                Type theType = typeService.findTypeByNameOfType( thePath.getPathType() );
+                Type theType = typeService.getType( thePath.getPathType() );
                 thePath.setType( theType );
                 thePath.setUser( theUser );
                 thePath.setSpot( theSpot );
@@ -186,8 +186,8 @@ public class PathController {
         Sector theSector = sectorService.getSector( sectorId );
         theModel.addAttribute( "sector", theSector );
         Path thePath = pathService.getPath( pathId );
+        theModel.addAttribute( "lengths", thePath.getLengths() );
         theModel.addAttribute( "path", thePath );
-        logger.info( "User of path :" + thePath.getUser() );
         return "path_view";
     }
 
@@ -226,18 +226,18 @@ public class PathController {
             Sector theSector = sectorService.getSector( sectorId );
             theModel.addAttribute( "sector", theSector );
             List<Type> types = typeService.getTypes();
-            Map<String, String> nameType = typeService.getTypeNameOfTypes( types );
+            Map<Integer, String> nameType = typeService.getTypeNameOfTypes( types );
             theModel.addAttribute( "type", nameType );
             UpdatePath thePath = new UpdatePath();
             Path pathToUpdate = pathService.getPath( pathId );
             theModel.addAttribute( "path", pathToUpdate );
             thePath.setId( pathToUpdate.getId() );
-            thePath.setPathName( pathToUpdate.getPathName() );
+            thePath.setUpdatePathName( pathToUpdate.getPathName() );
             thePath.setSector( pathToUpdate.getSector() );
             thePath.setSpot( pathToUpdate.getSpot() );
             thePath.setUser( pathToUpdate.getUser() );
             thePath.setType( pathToUpdate.getType() );
-            thePath.setPathType( pathToUpdate.typeOfPath() );
+            thePath.setPathType( pathToUpdate.typeIdOfPath() );
             if ( !( ( pathToUpdate.getUser() ).getId().equals( userId ) ) ) {
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId +
                         "/voie/" + pathId + "/vuevoie";
@@ -281,7 +281,7 @@ public class PathController {
         if ( result.hasErrors() ) {
             Path path = pathService.getPath( pathId );
             List<Type> types = typeService.getTypes();
-            Map<String, String> nameType = typeService.getTypeNameOfTypes( types );
+            Map<Integer, String> nameType = typeService.getTypeNameOfTypes( types );
             theModel.addAttribute( "user", theUser );
             theModel.addAttribute( "spot", theSpot );
             theModel.addAttribute( "sector", theSector );
@@ -290,10 +290,10 @@ public class PathController {
             theModel.addAttribute( "updatePath", thePath );
             return "path_update";
         } else {
-            Type theType = typeService.findTypeByNameOfType( thePath.getPathType() );
+            Type theType = typeService.getType( thePath.getPathType() );
             Path pathUpdate = pathService.getPath( pathId );
             pathUpdate.setType( theType );
-            pathUpdate.setPathName( thePath.getPathName() );
+            pathUpdate.setPathName( thePath.getUpdatePathName() );
             pathService.updatePath( pathUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/vuevoie";
         }

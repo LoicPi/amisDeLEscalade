@@ -17,11 +17,14 @@ import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.Length;
 import com.adle.projet.entity.Path;
+import com.adle.projet.tools.FormattingString;
 
 @Repository
 public class PathDAOImpl implements PathDAO {
 
-    private static final Logger logger = LogManager.getLogger( PathDAOImpl.class );
+    private static final Logger logger           = LogManager.getLogger( PathDAOImpl.class );
+
+    FormattingString            formattingString = new FormattingString();
 
     @Autowired
     private SessionFactory      sessionFactory;
@@ -41,6 +44,7 @@ public class PathDAOImpl implements PathDAO {
     @Override
     public void savePath( Path path ) {
         Session currentSession = sessionFactory.getCurrentSession();
+        path.setPathName( formattingString.Formatting( path.getPathName() ) );
         currentSession.saveOrUpdate( path );
         logger.info( "Path saved successfully, Path details = " + path );
 
@@ -53,6 +57,7 @@ public class PathDAOImpl implements PathDAO {
         query.setParameter( "pathId", theId );
         Path pathResult = (Path) query.getSingleResult();
         Hibernate.initialize( pathResult.getType() );
+        Hibernate.initialize( pathResult.getLengths() );
         logger.info( "Path loaded successfully, Path details = " + pathResult );
         return pathResult;
     }
@@ -60,6 +65,7 @@ public class PathDAOImpl implements PathDAO {
     @Override
     public void updatePath( Path path ) {
         Session currentsession = sessionFactory.getCurrentSession();
+        path.setPathName( formattingString.Formatting( path.getPathName() ) );
         currentsession.update( path );
         logger.info( "Path updated successfully, Path details = " + path );
 

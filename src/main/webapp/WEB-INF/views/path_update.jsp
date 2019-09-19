@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>MAJ de la voie <c:out value="${ updatePath.pathName }" /></title>
+		<title>MAJ de la voie <c:out value="${ path.pathName }" /></title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -18,27 +18,28 @@
 			<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header">
-     					<h1 class="text-center">Mise à jour de la voie</h1>
+     					<h3 class="text-center">Mise à jour de la voie : <c:out value="${ path.pathName }" /></h3>
     				</div>
     				<div class="card-body">
      					<form:form action="updatepath" class="form" method="post" modelAttribute="updatePath">
 							<form:hidden path="id" />
       						
       						<div class="form-group">
-       							<label class="col-md-6 control-label" for=pathName>Nom de la voie :</label>
+       							<label class="col-md-6 control-label" for=updatePathName>Nom de la voie :</label>
        							<div class="col-md-10">
-										<form:input path="pathName" class="form-control" type="text" placeholder="${updatePath.pathName}" />
-										<form:errors path="pathName" cssClass="error" />
+										<form:input path="updatePathName" class="form-control" type="text" placeholder="${updatePath.updatePathName}" />
+										<form:errors path="updatePathName" cssClass="error" />
 								</div>
       						</div>
       						
       						<div class="form-group">
       							<div class="col-md-10">
-       								<label for="typeName">Type de la voie <span class="requis">*</span></label>
-       								<form:select path = "typeName">
-                     					<form:option value = "NONE" label = "Choix du type de voie"/>
+       								<label for="pathType">Type de la voie <span class="requis">*</span></label>
+       								<form:select path = "pathType">
+                     					<form:option value = "" label = "Choix du type de voie"/>
                      					<form:options items = "${type}" />
                   					</form:select>
+                  					<form:errors path="pathType" cssClass="error" />
                   				</div>
       						</div>
       						

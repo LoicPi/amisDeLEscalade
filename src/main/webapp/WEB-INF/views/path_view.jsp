@@ -18,7 +18,7 @@
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header text-center">
-						<h1><c:out value="${ path.pathName }" /></h1>
+						<h3><c:out value="${ path.pathName }" /></h3>
 						
 						<c:set var="userId" value="${sessionScope['userId']}" />
       										
@@ -58,7 +58,17 @@
       						<c:forEach items="${lengths}" var="length">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
-    									<h5 class="mb-1">Hauteur de la longueur : <c:out value="${length.lengthHeigth }" /></h5>
+    									<h5 class="mb-1">Hauteur de la longueur : <c:out value="${length.heigth}" /> mètres</h5>
+    									<c:choose>
+    										<c:when test ="${ length.lengthSpit }">
+    											<small>Longueur Equipée</small>
+    										</c:when>
+    										<c:otherwise>
+    											<small>Longueur Non Equipée</small>
+    										</c:otherwise>
+    									</c:choose>
+    								</div>
+    								<div class="d-flex w-100 justify-content-between">
     									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/vuelongueur"/>" role="button">Détail</a>
     								</div>
     							</div>

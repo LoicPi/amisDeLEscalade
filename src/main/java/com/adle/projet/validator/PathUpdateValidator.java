@@ -23,16 +23,20 @@ public class PathUpdateValidator implements Validator {
 
         UpdatePath updatePath = (UpdatePath) obj;
 
-        if ( updatePath.getPathName().equals( "" ) ) {
+        if ( updatePath.getUpdatePathName().equals( "" ) ) {
             logger.info( "UpdatePath_Name is empty" );
             errors.rejectValue( "updatePathName", "pathValidator.pathName.empty" );
         }
 
-        if ( updatePath.getPathName().length() > 100 || updatePath.getPathName().length() < 3 ) {
+        if ( updatePath.getUpdatePathName().length() > 100 || updatePath.getUpdatePathName().length() < 3 ) {
             logger.info( "Length of UpdatePath_Name is not correct." );
             errors.rejectValue( "updatePathName", "path.name.invalid" );
         }
 
+        if ( updatePath.getPathType() == null ) {
+            logger.info( "Path_Type is empty" );
+            errors.rejectValue( "pathType", "pathValidator.pathType.empty" );
+        }
     }
 
 }

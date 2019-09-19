@@ -66,7 +66,7 @@ public class Path {
     private Type         type;
 
     @Transient
-    private String       pathType;
+    private Integer      pathType;
 
     public Path() {
 
@@ -75,6 +75,11 @@ public class Path {
     @Transient
     public String typeOfPath() {
         return type.getTypeName();
+    }
+
+    @Transient
+    public Integer typeIdOfPath() {
+        return type.getId();
     }
 
     public Integer getId() {
@@ -133,11 +138,11 @@ public class Path {
         this.type = type;
     }
 
-    public String getPathType() {
+    public Integer getPathType() {
         return pathType;
     }
 
-    public void setPathType( String pathType ) {
+    public void setPathType( Integer pathType ) {
         this.pathType = pathType;
     }
 
