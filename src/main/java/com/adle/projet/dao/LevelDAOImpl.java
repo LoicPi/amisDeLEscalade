@@ -47,23 +47,13 @@ public class LevelDAOImpl implements LevelDAO {
     }
 
     @Override
-    public Map<String, String> getLevelNameOfLevels( List<Level> levels ) {
-        Map<String, String> levelName = new HashMap<String, String>();
-        for ( int i = 0; i < levels.size(); i++ ) {
-            levelName.put( levels.get( i ).getLevelName(), levels.get( i ).getLevelName() );
+    public Map<Integer, String> getLevelNameOfLevels( List<Level> levels ) {
+        Map<Integer, String> levelName = new HashMap<Integer, String>();
+        for ( int i = 1; i <= levels.size(); i++ ) {
+            levelName.put( i, levels.get( i - 1 ).getLevelName() );
         }
         logger.info( "MapOfLevel : " + levelName );
         return levelName;
-    }
-
-    @Override
-    public Level findLevelByNameOfLevel( String nameLevel ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        Query<Level> query = currentSession.createNamedQuery( "Level_findByName", Level.class );
-        query.setParameter( "levelName", nameLevel );
-        Level levelResult = query.getSingleResult();
-        logger.info( "Level : " + levelResult );
-        return levelResult;
     }
 
 }

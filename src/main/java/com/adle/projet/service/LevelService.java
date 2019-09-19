@@ -11,8 +11,6 @@ public interface LevelService {
 
     public Level getLevel( int theId );
 
-    public Map<String, String> getLevelNameOfLevels( List<Level> levels );
-
-    public Level findLevelByNameOfLevel( String nameLevel );
+    public Map<Integer, String> getLevelNameOfLevels( List<Level> levels );
 
 }

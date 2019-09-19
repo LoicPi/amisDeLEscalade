@@ -28,13 +28,8 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public Map<String, String> getLevelNameOfLevels( List<Level> levels ) {
+    public Map<Integer, String> getLevelNameOfLevels( List<Level> levels ) {
         return levelDAO.getLevelNameOfLevels( levels );
-    }
-
-    @Override
-    public Level findLevelByNameOfLevel( String nameLevel ) {
-        return levelDAO.findLevelByNameOfLevel( nameLevel );
     }
 
 }
