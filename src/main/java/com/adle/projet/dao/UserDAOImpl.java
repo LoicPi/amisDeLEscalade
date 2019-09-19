@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.adle.projet.entity.User;
+import com.adle.projet.tools.FormattingString;
 import com.adle.projet.tools.PasswordEncryptor;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    private static final Logger logger = LogManager.getLogger( UserDAOImpl.class );
+    private static final Logger logger           = LogManager.getLogger( UserDAOImpl.class );
+
+    FormattingString            formattingString = new FormattingString();
 
     @Autowired
     private SessionFactory      sessionFactory;
@@ -44,11 +47,13 @@ public class UserDAOImpl implements UserDAO {
      * Function save a user in database
      */
     @Override
-    public void saveUser( User theUser ) {
+    public void saveUser( User user ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        theUser.setPassword( PasswordEncryptor.hashPassword( theUser.getPassword() ) );
-        currentSession.saveOrUpdate( theUser );
-        logger.info( "User saved successfully, User details = " + theUser );
+        user.setFirstName( formattingString.Formatting( user.getFirstName() ) );
+        user.setLastName( formattingString.Formatting( user.getLastName() ) );
+        user.setPassword( PasswordEncryptor.hashPassword( user.getPassword() ) );
+        currentSession.saveOrUpdate( user );
+        logger.info( "User saved successfully, User details = " + user );
     }
 
     /**
@@ -57,9 +62,15 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUser( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        User theUser = currentSession.get( User.class, theId );
-        logger.info( "User loaded successfully, User details = " + theUser );
-        return theUser;
+        Query<User> query = currentSession.createNamedQuery( "User_findById", User.class );
+        query.setParameter( "userId", theId );
+        List<User> userResult = query.getResultList();
+        if ( userResult.size() > 0 ) {
+            logger.info( "User loaded successfully, User details = " + userResult );
+            return userResult.get( 0 );
+        }
+        return null;
+
     }
 
     /**
@@ -78,11 +89,13 @@ public class UserDAOImpl implements UserDAO {
      * Function update a User in database
      */
     @Override
-    public void updateUser( User theUser ) {
+    public void updateUser( User user ) {
         Session currentsession = sessionFactory.getCurrentSession();
-        theUser.setPassword( PasswordEncryptor.hashPassword( theUser.getPassword() ) );
-        currentsession.update( theUser );
-        logger.info( "User updated successfully, User details = " + theUser );
+        user.setFirstName( formattingString.Formatting( user.getFirstName() ) );
+        user.setLastName( formattingString.Formatting( user.getLastName() ) );
+        user.setPassword( PasswordEncryptor.hashPassword( user.getPassword() ) );
+        currentsession.update( user );
+        logger.info( "User updated successfully, User details = " + user );
     }
 
 }
