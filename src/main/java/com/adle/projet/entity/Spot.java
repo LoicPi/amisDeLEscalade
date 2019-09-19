@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ import javax.validation.constraints.Size;
 @Table( name = "spots" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :user" ),
-        @org.hibernate.annotations.NamedQuery( name = "Spot_findById", query = "from Spot as s inner join fetch s.user where s.id =:spotId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Spot_findById", query = "from Spot as s left join fetch s.user left join fetch s.county left join fetch s.sectors left join fetch s.comments where s.id =:spotId" ),
 } )
 
 public class Spot {
@@ -38,47 +37,47 @@ public class Spot {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer       id;
+    private Integer      id;
 
     @Column( name = "spot_name", unique = true )
     @Size( max = 100, min = 3, message = "{spot.name.invalid}" )
-    private String        spotName;
+    private String       spotName;
 
     @Column( name = "spot_city" )
     @Size( max = 100, min = 3, message = "{spot.city.invalid}" )
-    private String        spotCity;
+    private String       spotCity;
 
     @Column( name = "spot_country" )
     @Size( max = 100, min = 3, message = "{spot.country.invalid}" )
-    private String        spotCountry;
+    private String       spotCountry;
 
     @Column( name = "spot_descriptive" )
     @Size( max = 600, min = 10, message = "{spot.descriptive.invalid}" )
-    private String        spotDescriptive;
+    private String       spotDescriptive;
 
     @Column( name = "spot_access" )
     @Size( max = 300, min = 10, message = "{spot.access.invalid}" )
-    private String        spotAccess;
+    private String       spotAccess;
 
     @Column( name = "spot_tag" )
-    private Boolean       spotTag  = false;
+    private Boolean      spotTag = false;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User          user;
+    private User         user;
 
     @OneToMany( mappedBy = "spot" )
-    private List<Sector>  sectors  = new ArrayList<>();
+    private Set<Sector>  sectors;
 
     @OneToMany( mappedBy = "spot" )
-    private List<Comment> comments = new ArrayList<>();
+    private Set<Comment> comments;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "county_id" )
-    private County        county;
+    private County       county;
 
     @Transient
-    private Integer       spotCounty;
+    private Integer      spotCounty;
 
     @Transient
     public boolean isTag() {
@@ -158,19 +157,19 @@ public class Spot {
         this.user = user;
     }
 
-    public List<Sector> getSectors() {
+    public Set<Sector> getSectors() {
         return sectors;
     }
 
-    public void setSectors( List<Sector> sectors ) {
+    public void setSectors( Set<Sector> sectors ) {
         this.sectors = sectors;
     }
 
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments( List<Comment> comments ) {
+    public void setComments( Set<Comment> comments ) {
         this.comments = comments;
     }
 

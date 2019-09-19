@@ -58,9 +58,6 @@ public class SpotDAOImpl implements SpotDAO {
         Query<Spot> query = currentSession.createNamedQuery( "Spot_findById", Spot.class );
         query.setParameter( "spotId", theId );
         Spot spotResult = (Spot) query.getSingleResult();
-        Hibernate.initialize( spotResult.getCounty() );
-        Hibernate.initialize( spotResult.getComments() );
-        Hibernate.initialize( spotResult.getSectors() );
         logger.info( "Spot loaded successfully, Spot details = " + spotResult );
         return spotResult;
     }
