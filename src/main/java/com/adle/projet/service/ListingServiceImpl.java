@@ -33,13 +33,8 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public Map<String, String> getListingNameOfListings( List<Listing> listings ) {
+    public Map<Integer, String> getListingNameOfListings( List<Listing> listings ) {
         return listingDAO.getListingNameOfListings( listings );
-    }
-
-    @Override
-    public Listing findListingByNameOfListing( String nameListing ) {
-        return listingDAO.findListingByNameOfListing( nameListing );
     }
 
 }

@@ -57,22 +57,13 @@ public class ListingDAOImpl implements ListingDAO {
     }
 
     @Override
-    public Map<String, String> getListingNameOfListings( List<Listing> listings ) {
-        Map<String, String> listingName = new HashMap<String, String>();
-        for ( int i = 0; i < listings.size(); i++ ) {
-            listingName.put( listings.get( i ).getListingName(), listings.get( i ).getListingName() );
+    public Map<Integer, String> getListingNameOfListings( List<Listing> listings ) {
+        Map<Integer, String> listingName = new HashMap<Integer, String>();
+        for ( int i = 1; i <= listings.size(); i++ ) {
+            listingName.put( i, listings.get( i - 1 ).getListingName() );
         }
         logger.info( "MapOfListing : " + listingName );
         return listingName;
     }
 
-    @Override
-    public Listing findListingByNameOfListing( String nameListing ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        Query<Listing> query = currentSession.createNamedQuery( "Listing_findByName", Listing.class );
-        query.setParameter( "listingName", nameListing );
-        Listing listingResult = query.getSingleResult();
-        logger.info( "Listing : " + listingResult );
-        return listingResult;
-    }
 }

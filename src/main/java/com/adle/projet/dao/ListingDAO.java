@@ -13,8 +13,6 @@ public interface ListingDAO {
 
     public List<Listing> findListingByLevelId( int levelId );
 
-    public Map<String, String> getListingNameOfListings( List<Listing> listings );
-
-    public Listing findListingByNameOfListing( String nameListing );
+    public Map<Integer, String> getListingNameOfListings( List<Listing> listings );
 
 }
