@@ -30,12 +30,12 @@ public class LengthUpdateValidator implements Validator {
 
         if ( ( updateLength.getUpdateLengthRelay() == 0 ) && ( updateLength.getUpdateLengthSpit() == true ) ) {
             logger.info( "UpdateLength_Relay can't be null" );
-            errors.rejectValue( "lengthRelay", "lengthValidator.lengthRelay.empty" );
+            errors.rejectValue( "updateLengthRelay", "lengthValidator.lengthRelay.empty" );
         }
 
         if ( ( updateLength.getUpdateLengthRelay() > 0 ) && ( updateLength.getUpdateLengthSpit() == false ) ) {
             logger.info( "UpdateLength_Spit can't be false" );
-            errors.rejectValue( "lengthSpit", "lengthValidator.lengthSpit.false" );
+            errors.rejectValue( "updateLengthSpit", "lengthValidator.lengthSpit.false" );
         }
 
         if ( updateLength.getUpdateLengthHeight() < 0 ) {
@@ -46,6 +46,11 @@ public class LengthUpdateValidator implements Validator {
         if ( updateLength.getUpdateLengthHeight() == 0 ) {
             logger.info( "UpdateLength_Heigth can't be null" );
             errors.rejectValue( "updateLengthHeigth", "lengthValidator.lengthHeigth.null" );
+        }
+
+        if ( updateLength.getUpdateLengthListing() == null ) {
+            logger.info( "UpdateLength_Listing is empty" );
+            errors.rejectValue( "updateLengthListing", "lengthValidator.lengthListing.empty" );
         }
     }
 

@@ -40,18 +40,19 @@
       						<div class="form-group">
        							<label for="lengthListing">Cotation de la longueur <span class="requis">*</span></label>
        							<form:select path = "lengthListing">
-                     				<form:option value="NONE" label = "Choix de la cotation"/>
+                     				<form:option value="" label = "Choix de la cotation"/>
                      				<form:options items = "${listing}" />
                   				</form:select>
+                  				<form:errors path="lengthListing" class="error" />
       						</div>
       						
-      						<div class="form-group">
+      						<!--  <div class="form-group">
        							<label for="lengthLevel">Niveau de la longueur <span class="requis">*</span></label>
        							<form:select path = "lengthLevel">
                      				<form:option value="NONE" label = "Choix du niveau"/>
                      				<form:options items = "${level}" />
                   				</form:select>
-      						</div>
+      						</div>-->
       						
       						<div class="form-group">
       							<label for="lengthSpit">Longueur équipées ? <span class="requis">*</span></label>

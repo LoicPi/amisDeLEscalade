@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -41,7 +42,6 @@ public class LengthDAOImpl implements LengthDAO {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.saveOrUpdate( length );
         logger.info( "Length saved successfully, Length details = " + length );
-
     }
 
     @Override
@@ -49,7 +49,6 @@ public class LengthDAOImpl implements LengthDAO {
         Session currentsession = sessionFactory.getCurrentSession();
         currentsession.update( length );
         logger.info( "Length updated successfully, Length details = " + length );
-
     }
 
     @Override
@@ -57,7 +56,6 @@ public class LengthDAOImpl implements LengthDAO {
         Session session = sessionFactory.getCurrentSession();
         Length theLength = session.byId( Length.class ).load( theId );
         session.delete( theLength );
-
     }
 
     @Override
@@ -66,6 +64,8 @@ public class LengthDAOImpl implements LengthDAO {
         Query<Length> query = currentSession.createNamedQuery( "Length_findById", Length.class );
         query.setParameter( "lengthId", theId );
         Length lengthResult = (Length) query.getSingleResult();
+        Hibernate.initialize( lengthResult.getListing() );
+        Hibernate.initialize( lengthResult.getListing().getLevel() );
         logger.info( "Length loaded successfully, Length details = " + lengthResult );
         return lengthResult;
     }

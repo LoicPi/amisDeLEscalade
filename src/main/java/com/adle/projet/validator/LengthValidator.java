@@ -38,9 +38,14 @@ public class LengthValidator implements Validator {
             errors.rejectValue( "lengthSpit", "lengthValidator.lengthSpit.false" );
         }
 
-        if ( length.getLengthHeight() < 0 ) {
+        if ( length.getLengthHeigth() < 0 ) {
             logger.info( "Length_Heigth can't be negative" );
             errors.rejectValue( "lengthHeigth", "lengthValidator.lengthHeigth.negative" );
+        }
+
+        if ( length.getLengthListing() == null ) {
+            logger.info( "Length_Listing is empty" );
+            errors.rejectValue( "lengthListing", "lengthValidator.lengthListing.empty" );
         }
     }
 

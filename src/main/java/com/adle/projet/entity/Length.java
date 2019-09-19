@@ -27,7 +27,6 @@ import javax.persistence.Transient;
         @org.hibernate.annotations.NamedQuery( name = "Length_findByUserId", query = "from Length where user_id = :user" ),
         @org.hibernate.annotations.NamedQuery( name = "Length_findByPathId", query = "from Length where path_id = :path" ),
         @org.hibernate.annotations.NamedQuery( name = "Length_findByListingId", query = "from Length where listing_id = :listing" ),
-        @org.hibernate.annotations.NamedQuery( name = "Length_findByLevelId", query = "from Length where level_id = :level" ),
         @org.hibernate.annotations.NamedQuery( name = "Length_findById", query = "from Length as l inner join fetch l.user where l.id =:lengthId" ),
 } )
 
@@ -39,7 +38,7 @@ public class Length {
     private Integer id;
 
     @Column( name = "length_height", nullable = false )
-    private Integer lengthHeight;
+    private Integer lengthHeigth;
 
     @Column( name = "length_relay" )
     private Integer lengthRelay;
@@ -59,18 +58,18 @@ public class Length {
     @JoinColumn( name = "user_id" )
     private User    user;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "level_id" )
-    private Level   level;
+    @Transient
+    private Integer lengthLevel;
 
     @Transient
-    private String  lengthLevel;
-
-    @Transient
-    private String  lengthListing;
+    private Integer lengthListing;
 
     public Length() {
 
+    }
+
+    public String isListingName() {
+        return listing.getListingName();
     }
 
     public Integer getId() {
@@ -81,12 +80,12 @@ public class Length {
         this.id = id;
     }
 
-    public Integer getLengthHeight() {
-        return lengthHeight;
+    public Integer getLengthHeigth() {
+        return lengthHeigth;
     }
 
-    public void setLengthHeight( Integer lengthHeight ) {
-        this.lengthHeight = lengthHeight;
+    public void setLengthHeigth( Integer lengthHeigth ) {
+        this.lengthHeigth = lengthHeigth;
     }
 
     public Integer getLengthRelay() {
@@ -129,33 +128,25 @@ public class Length {
         this.user = user;
     }
 
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel( Level level ) {
-        this.level = level;
-    }
-
-    public String getLengthLevel() {
+    public Integer getLengthLevel() {
         return lengthLevel;
     }
 
-    public void setLengthLevel( String lengthLevel ) {
+    public void setLengthLevel( Integer lengthLevel ) {
         this.lengthLevel = lengthLevel;
     }
 
-    public String getLengthListing() {
+    public Integer getLengthListing() {
         return lengthListing;
     }
 
-    public void setLengthListing( String lengthListing ) {
+    public void setLengthListing( Integer lengthListing ) {
         this.lengthListing = lengthListing;
     }
 
     @Override
     public String toString() {
-        return "Length {id=" + id + ", lengthHeight = " + lengthHeight + ", lengthRelay = " + lengthRelay
+        return "Length {id= " + id + ", lengthHeight = " + lengthHeigth + ", lengthRelay = " + lengthRelay
                 + ", lengthSpit = " + lengthSpit + "}";
     }
 }

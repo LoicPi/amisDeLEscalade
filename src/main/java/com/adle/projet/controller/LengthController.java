@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.UpdateLength;
 import com.adle.projet.entity.Length;
-import com.adle.projet.entity.Level;
 import com.adle.projet.entity.Listing;
 import com.adle.projet.entity.Path;
 import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.LengthService;
-import com.adle.projet.service.LevelService;
 import com.adle.projet.service.ListingService;
 import com.adle.projet.service.PathService;
 import com.adle.projet.service.SectorService;
@@ -54,8 +52,8 @@ public class LengthController {
     @Autowired
     private LengthService         lengthService;
 
-    @Autowired
-    private LevelService          levelService;
+    // @Autowired
+    // private LevelService levelService;
 
     @Autowired
     private ListingService        listingService;
@@ -101,11 +99,12 @@ public class LengthController {
             theModel.addAttribute( "sector", theSector );
             Path thePath = pathService.getPath( pathId );
             theModel.addAttribute( "path", thePath );
-            List<Level> levels = levelService.getLevels();
-            Map<String, String> levelName = levelService.getLevelNameOfLevels( levels );
-            theModel.addAttribute( "level", levelName );
+            // List<Level> levels = levelService.getLevels();
+            // Map<String, String> levelName =
+            // levelService.getLevelNameOfLevels( levels );
+            // theModel.addAttribute( "level", levelName );
             List<Listing> listings = listingService.getListings();
-            Map<String, String> listingName = listingService.getListingNameOfListings( listings );
+            Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
             theModel.addAttribute( "listing", listingName );
             Length theLength = new Length();
             theModel.addAttribute( "length", theLength );
@@ -148,24 +147,25 @@ public class LengthController {
             Sector theSector = sectorService.getSector( sectorId );
             Path thePath = pathService.getPath( pathId );
             if ( result.hasErrors() ) {
-                List<Level> levels = levelService.getLevels();
-                Map<String, String> levelName = levelService.getLevelNameOfLevels( levels );
+                // List<Level> levels = levelService.getLevels();
+                // Map<String, String> levelName =
+                // levelService.getLevelNameOfLevels( levels );
                 List<Listing> listings = listingService.getListings();
-                Map<String, String> listingName = listingService.getListingNameOfListings( listings );
+                Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
                 theModel.addAttribute( "user", theUser );
                 theModel.addAttribute( "spot", theSpot );
                 theModel.addAttribute( "sector", theSector );
                 theModel.addAttribute( "path", thePath );
-                theModel.addAttribute( "level", levelName );
+                // theModel.addAttribute( "level", levelName );
                 theModel.addAttribute( "listing", listingName );
                 theModel.addAttribute( "length", theLength );
                 return "length_registration";
             } else {
-                Level theLevel = levelService.findLevelByNameOfLevel( theLength.getLengthLevel() );
-                Listing theListing = listingService.findListingByNameOfListing( theLength.getLengthListing() );
+                // Level theLevel = levelService.findLevelByNameOfLevel(
+                // theLength.getLengthLevel() );
+                Listing theListing = listingService.getListing( theLength.getLengthListing() );
                 theLength.setPath( thePath );
                 theLength.setUser( theUser );
-                theLength.setLevel( theLevel );
                 theLength.setListing( theListing );
                 lengthService.saveLength( theLength );
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/longueur/"
@@ -256,26 +256,26 @@ public class LengthController {
             theModel.addAttribute( "sector", theSector );
             Path thePath = pathService.getPath( pathId );
             theModel.addAttribute( "path", thePath );
-            List<Level> levels = levelService.getLevels();
-            Map<String, String> levelName = levelService.getLevelNameOfLevels( levels );
-            theModel.addAttribute( "level", levelName );
+            // List<Level> levels = levelService.getLevels();
+            // Map<String, String> levelName =
+            // levelService.getLevelNameOfLevels( levels );
+            // theModel.addAttribute( "level", levelName );
             List<Listing> listings = listingService.getListings();
-            Map<String, String> listingName = listingService.getListingNameOfListings( listings );
+            Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
             theModel.addAttribute( "listing", listingName );
             UpdateLength theLength = new UpdateLength();
             Length lengthToUpdate = lengthService.getLength( lengthId );
             theLength.setId( lengthToUpdate.getId() );
-            theLength.setUpdateLengthHeight( lengthToUpdate.getLengthHeight() );
+            theLength.setUpdateLengthHeight( lengthToUpdate.getLengthHeigth() );
             theLength.setUpdateLengthRelay( lengthToUpdate.getLengthRelay() );
             theLength.setUpdateLengthSpit( lengthToUpdate.getLengthSpit() );
-            theLength.setUpdateLengthLevel( lengthToUpdate.getLevel().getLevelName() );
-            theLength.setUpdateLengthListing( lengthToUpdate.getListing().getListingName() );
+            theLength.setUpdateLengthListing( lengthToUpdate.getListing().getId() );
             if ( !( ( lengthToUpdate.getUser() ).getId().equals( userId ) ) ) {
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId +
                         "/voie/" + pathId + "/longueur/" + lengthId + "/vuelongueur";
             } else {
                 theModel.addAttribute( "updateLength", theLength );
-                return "length_uptade";
+                return "length_update";
             }
         }
     }
@@ -314,12 +314,13 @@ public class LengthController {
         Path thePath = pathService.getPath( pathId );
         lengthUpdateValidator.validate( theLength, result );
         if ( result.hasErrors() ) {
-            List<Level> levels = levelService.getLevels();
-            Map<String, String> levelName = levelService.getLevelNameOfLevels( levels );
+            // List<Level> levels = levelService.getLevels();
+            // Map<String, String> levelName =
+            // levelService.getLevelNameOfLevels( levels );
             List<Listing> listings = listingService.getListings();
-            Map<String, String> listingName = listingService.getListingNameOfListings( listings );
+            Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
             Length length = lengthService.getLength( lengthId );
-            theModel.addAttribute( "level", levelName );
+            // theModel.addAttribute( "level", levelName );
             theModel.addAttribute( "listing", listingName );
             theModel.addAttribute( "user", theUser );
             theModel.addAttribute( "spot", theSpot );
@@ -329,13 +330,13 @@ public class LengthController {
             theModel.addAttribute( "updateLength", theLength );
             return "length_update";
         } else {
-            Level theLevel = levelService.findLevelByNameOfLevel( theLength.getUpdateLengthLevel() );
-            Listing theListing = listingService.findListingByNameOfListing( theLength.getUpdateLengthListing() );
+            // Level theLevel = levelService.findLevelByNameOfLevel(
+            // theLength.getUpdateLengthLevel() );
+            Listing theListing = listingService.getListing( theLength.getUpdateLengthListing() );
             Length lengthUpdate = lengthService.getLength( lengthId );
-            lengthUpdate.setLengthHeight( theLength.getUpdateLengthHeight() );
+            lengthUpdate.setLengthHeigth( theLength.getUpdateLengthHeight() );
             lengthUpdate.setLengthRelay( theLength.getUpdateLengthRelay() );
             lengthUpdate.setLengthSpit( theLength.getUpdateLengthSpit() );
-            lengthUpdate.setLevel( theLevel );
             lengthUpdate.setListing( theListing );
             lengthService.updateLength( lengthUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/longueur" + lengthId
