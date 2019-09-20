@@ -58,7 +58,7 @@
       						<c:forEach items="${lengths}" var="length">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
-    									<h5 class="mb-1">Hauteur de la longueur : <c:out value="${length.heigth}" /> mètres</h5>
+    									<p class="mb-1">Hauteur de la longueur : <c:out value="${length.heigth}" /> mètres</p>
     									<c:choose>
     										<c:when test ="${ length.lengthSpit }">
     											<small>Longueur Equipée</small>

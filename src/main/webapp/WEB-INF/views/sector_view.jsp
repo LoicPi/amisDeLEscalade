@@ -47,6 +47,12 @@
         					<hr>
       					</div>
       					<p class="text-justify offset-1"><c:out value="${sector.sectorAccess}" /></p>
+      					<hr>
+      					<div class="row">
+							<h4 class="mb-1 col-12">Nombre de voie :</h4>
+        					<hr>
+      					</div>
+      					<p class="text-center"><c:out value ="${fn:length(sector.paths) }"/></p>
       					<hr>		
 						<div class="row justify-content-between">
 							<h4 class="col-6">Voie du secteur</h4>
@@ -62,15 +68,17 @@
 						<div class="list-group">
       						<c:forEach items="${paths}" var="path">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
-    									<h5 class="mb-1"><c:out value="${path.pathName }" /></h5>
-    									<p class="mb-1">Type de la voie : <c:out value ="${path.type.typeName}"/>						
+    								<div class="d-flex w-100 justify-content-around border-bottom">
+    									<h5 class="mb-1"><c:out value="${path.pathName }" /></h5>   															
     								</div>
-    								
     								<div class="d-flex w-100 justify-content-between">
     									<p class="mb-1">Nombre de longueur : <c:out value="${fn:length(path.lengths) }"/></p>
-    									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Détail</a>
+    									<p class="mb-1">Type de la voie : <c:out value ="${path.type.typeName}"/>
     								</div>
+    								<p class="mb-1">Niveau : ... à ...</p>
+									<p class="mb-1">Cotation : ... à ....</p>
+									<br/>
+									<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Détail</a>
     							</div>
     						</c:forEach>
     					</div>

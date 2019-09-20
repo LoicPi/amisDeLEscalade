@@ -82,11 +82,15 @@
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Description :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border" rows="5" cols="30"><c:out value="${ spot.spotDescriptive }" /></label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ spot.spotDescriptive }" /></label>
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Accès :</label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ spot.spotAccess }" /></label>
+							</div>
+							<div class="form-group row justify-content-center">
+								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Nombre de Secteur :</label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${fn:length(spot.sectors) }"/></label>
 							</div>
       					</form>	
        					<hr>
@@ -104,12 +108,17 @@
       					<div class="list-group">
       						<c:forEach items="${sectors}" var="sector">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-around">
+    								<div class="d-flex w-100 justify-content-around border-bottom">
     									<h5 class="mb-1"><c:out value="${sector.sectorName }" /></h5>
     								</div>
     								<div class="d-flex w-100 justify-content-between">
     									<p class="mb-1">Nombre de voie : <c:out value ="${fn:length(sector.paths) }"/></p>
-    									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/vuesecteur"/>" role="button">Détail</a>
+    								</div>
+    								<p class="mb-1">Niveau : ... à ...</p>
+									<p class="mb-1">Cotation : ... à ....</p>
+    								<br/>
+    								<div class="d-flex w-100 justify-content-between">	
+    									<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/vuesecteur"/>" role="button">Détail</a>
     								</div>
     							</div>
     						</c:forEach>
@@ -133,7 +142,7 @@
     									<p class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></p>
     									<p class="mb-1"><c:out value="${comment.date}" /></p>
     								</div>
-    								<p class="mb-1  border rounded border-dark"><c:out value="${comment.contents}" /></p>
+    								<p class="mb-1  border rounded border-dark text-center"><c:out value="${comment.contents}" /></p>
     								<c:choose>
      									<c:when test="${userId eq null || !(user.member)}">
      									</c:when>

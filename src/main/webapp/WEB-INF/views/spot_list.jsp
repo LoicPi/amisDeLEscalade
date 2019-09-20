@@ -33,25 +33,29 @@
     					<div class="list-group">
       						<c:forEach items="${spots}" var="spot">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
+    								<div class="d-flex w-100 justify-content-around border-bottom">
     									<h5 class="mb-1"><c:out value="${spot.spotName }" /></h5>
+    								</div>
+    								<br/>
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
     									<c:choose>
     										<c:when test ="${ spot.tag }">
-    											<small>Officiel</small>
+    											<small class ="col-12">Site Officiel</small>
     										</c:when>
     										<c:otherwise>
-    											<small>Non-Officiel</small>
+    											<small>Site Non-Officiel</small>
     										</c:otherwise>
     									</c:choose>
     								</div>
     								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
-    									<small>Nombre de sector : <c:out value="${fn:length(spot.sectors) }"/></small>
-    								</div>
-    								<div class="d-flex w-100 justify-content-between">
     									<p class="mb-1"><c:out value="${spot.county.countyName }" /></p>
-    									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
+    									<small>Nombre de secteur : <c:out value="${fn:length(spot.sectors) }"/></small>
     								</div>
+    								<p class="mb-1">Niveau : ... à ... </p>
+									<p class="mb-1">Cotation : ... à ....</p>
+									<br/>
+    								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
     							</div>
     						</c:forEach>
     					</div>		
