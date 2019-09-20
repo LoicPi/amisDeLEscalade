@@ -57,10 +57,6 @@ public class Path {
     private User        user;
 
     @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "spot_id" )
-    private Spot        spot;
-
-    @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "type_id" )
     private Type        type;
 
@@ -119,14 +115,6 @@ public class Path {
 
     public void setUser( User user ) {
         this.user = user;
-    }
-
-    public Spot getSpot() {
-        return spot;
-    }
-
-    public void setSpot( Spot spot ) {
-        this.spot = spot;
     }
 
     public Type getType() {

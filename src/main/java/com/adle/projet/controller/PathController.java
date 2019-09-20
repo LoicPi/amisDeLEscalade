@@ -144,7 +144,6 @@ public class PathController {
                 Type theType = typeService.getType( thePath.getPathType() );
                 thePath.setType( theType );
                 thePath.setUser( theUser );
-                thePath.setSpot( theSpot );
                 thePath.setSector( theSector );
                 pathService.savePath( thePath );
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + thePath.getId() + "/vuevoie";
@@ -234,7 +233,6 @@ public class PathController {
             thePath.setId( pathToUpdate.getId() );
             thePath.setUpdatePathName( pathToUpdate.getPathName() );
             thePath.setSector( pathToUpdate.getSector() );
-            thePath.setSpot( pathToUpdate.getSpot() );
             thePath.setUser( pathToUpdate.getUser() );
             thePath.setType( pathToUpdate.getType() );
             thePath.setPathType( pathToUpdate.typeIdOfPath() );

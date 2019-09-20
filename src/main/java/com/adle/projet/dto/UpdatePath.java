@@ -13,8 +13,6 @@ public class UpdatePath {
 
     private User    user;
 
-    private Spot    spot;
-
     private Sector  sector;
 
     private Type    type;
