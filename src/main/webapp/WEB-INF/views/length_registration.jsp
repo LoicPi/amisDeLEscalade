@@ -26,9 +26,9 @@
       						<form:hidden path="id" /> 
       						
       						<div class="form-group">
-       							<label for="lengthHeight">Hauteur de la longueur : <span class="requis">*</span></label>
-       							<form:input path="lengthHeight" class="form-control" type="number" />
-       							<form:errors path="lengthHeight" class="error" />
+       							<label for="heigth">Hauteur de la longueur : <span class="requis">*</span></label>
+       							<form:input path="heigth" class="form-control" type="number" />
+       							<form:errors path="heigth" class="error" />
       						</div>
       						
       						<div class="form-group">

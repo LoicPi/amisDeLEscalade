@@ -37,7 +37,7 @@
 					<div class="card-body">
        					<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Hauteur de la longueur : </label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${length.lengthHeight}" /></label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${length.heigth}" /></label>
 						</div>
 						<c:if test="${length.lengthRelay ne 0 }">
 							<div class="form-group row justify-content-center">

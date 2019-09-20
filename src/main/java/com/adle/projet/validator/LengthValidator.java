@@ -38,7 +38,7 @@ public class LengthValidator implements Validator {
             errors.rejectValue( "lengthSpit", "lengthValidator.lengthSpit.false" );
         }
 
-        if ( length.getLengthHeigth() < 0 ) {
+        if ( length.getHeigth() < 0 ) {
             logger.info( "Length_Heigth can't be negative" );
             errors.rejectValue( "lengthHeigth", "lengthValidator.lengthHeigth.negative" );
         }

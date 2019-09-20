@@ -266,7 +266,7 @@ public class LengthController {
             UpdateLength theLength = new UpdateLength();
             Length lengthToUpdate = lengthService.getLength( lengthId );
             theLength.setId( lengthToUpdate.getId() );
-            theLength.setUpdateLengthHeight( lengthToUpdate.getLengthHeigth() );
+            theLength.setUpdateLengthHeight( lengthToUpdate.getHeigth() );
             theLength.setUpdateLengthRelay( lengthToUpdate.getLengthRelay() );
             theLength.setUpdateLengthSpit( lengthToUpdate.getLengthSpit() );
             theLength.setUpdateLengthListing( lengthToUpdate.getListing().getId() );
@@ -334,7 +334,7 @@ public class LengthController {
             // theLength.getUpdateLengthLevel() );
             Listing theListing = listingService.getListing( theLength.getUpdateLengthListing() );
             Length lengthUpdate = lengthService.getLength( lengthId );
-            lengthUpdate.setLengthHeigth( theLength.getUpdateLengthHeight() );
+            lengthUpdate.setHeigth( theLength.getUpdateLengthHeight() );
             lengthUpdate.setLengthRelay( theLength.getUpdateLengthRelay() );
             lengthUpdate.setLengthSpit( theLength.getUpdateLengthSpit() );
             lengthUpdate.setListing( theListing );

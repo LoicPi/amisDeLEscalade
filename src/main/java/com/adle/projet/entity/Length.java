@@ -38,7 +38,7 @@ public class Length {
     private Integer id;
 
     @Column( name = "length_height", nullable = false )
-    private Integer lengthHeigth;
+    private Integer height;
 
     @Column( name = "length_relay" )
     private Integer lengthRelay;
@@ -80,12 +80,12 @@ public class Length {
         this.id = id;
     }
 
-    public Integer getLengthHeigth() {
-        return lengthHeigth;
+    public Integer getHeigth() {
+        return height;
     }
 
-    public void setLengthHeigth( Integer lengthHeigth ) {
-        this.lengthHeigth = lengthHeigth;
+    public void setHeigth( Integer heigth ) {
+        this.height = heigth;
     }
 
     public Integer getLengthRelay() {
@@ -146,7 +146,7 @@ public class Length {
 
     @Override
     public String toString() {
-        return "Length {id= " + id + ", lengthHeight = " + lengthHeigth + ", lengthRelay = " + lengthRelay
+        return "Length {id= " + id + ", lengthHeight = " + height + ", lengthRelay = " + lengthRelay
                 + ", lengthSpit = " + lengthSpit + "}";
     }
 }
