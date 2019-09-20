@@ -1,8 +1,8 @@
 .nav-link{
-	border : 1px solid blue;
+	border : 1px solid #06DCFB;
 	margin : 2px;
-	background-color: blue;
-	color: white;
+	background-color: #06DCFB;
+	color: black;
 }
 .img{
 	margin-bottom : 20px;
