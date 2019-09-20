@@ -1,7 +1,6 @@
 package com.adle.projet.dto;
 
 import com.adle.projet.entity.Sector;
-import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.Type;
 import com.adle.projet.entity.User;
 
@@ -21,10 +20,6 @@ public class UpdatePath {
 
     public Integer pathIdUser() {
         return user.getId();
-    }
-
-    public Integer pathIdSpot() {
-        return spot.getId();
     }
 
     public Integer pathIdSector() {
@@ -57,14 +52,6 @@ public class UpdatePath {
 
     public void setUser( User user ) {
         this.user = user;
-    }
-
-    public Spot getSpot() {
-        return spot;
-    }
-
-    public void setSpot( Spot spot ) {
-        this.spot = spot;
     }
 
     public Sector getSector() {
