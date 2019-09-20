@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -103,8 +104,11 @@
       					<div class="list-group">
       						<c:forEach items="${sectors}" var="sector">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
+    								<div class="d-flex w-100 justify-content-around">
     									<h5 class="mb-1"><c:out value="${sector.sectorName }" /></h5>
+    								</div>
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1">Nombre de voie : <c:out value ="${fn:length(sector.paths) }"/></p>
     									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/vuesecteur"/>" role="button">Détail</a>
     								</div>
     							</div>
@@ -126,8 +130,8 @@
       						<c:forEach items="${comments}" var="comment">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
-    									<h7 class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></h7>
-    									<h7 class="mb-1"><c:out value="${comment.date}" /></h7>
+    									<p class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></p>
+    									<p class="mb-1"><c:out value="${comment.date}" /></p>
     								</div>
     								<p class="mb-1  border rounded border-dark"><c:out value="${comment.contents}" /></p>
     								<c:choose>
@@ -135,7 +139,9 @@
      									</c:when>
      									<c:otherwise>
      										<hr>
-     										<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/commentaire/${comment.id}/modifiercommentaire"/>" role="button">Editer</a>
+     										<div class="d-flex w-100 justify-content-around">
+     											<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/commentaire/${comment.id}/modifiercommentaire"/>" role="button">Editer</a>
+     										</div>
      									</c:otherwise>
      								</c:choose>
     							</div>

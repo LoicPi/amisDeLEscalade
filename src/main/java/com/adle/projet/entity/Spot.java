@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
 @Table( name = "spots" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Spot_findByUserId", query = "from Spot where user_id = :user" ),
-        @org.hibernate.annotations.NamedQuery( name = "Spot_findById", query = "from Spot as s left join fetch s.user left join fetch s.county left join fetch s.sectors left join fetch s.comments where s.id =:spotId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Spot_findById", query = "from Spot as s left join fetch s.user left join fetch s.county left join fetch s.sectors as sse left join fetch s.comments left join fetch sse.paths where s.id =:spotId" ),
 } )
 
 public class Spot {
