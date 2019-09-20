@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,33 +39,33 @@ public class Path {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer      id;
+    private Integer     id;
 
     @Column( name = "path_name", unique = true )
     @Size( max = 100, min = 3, message = "{path.name.invalid}" )
-    private String       pathName;
+    private String      pathName;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "sector_id" )
-    private Sector       sector;
+    private Sector      sector;
 
     @OneToMany( mappedBy = "path" )
-    private List<Length> lengths = new ArrayList<>();
+    private Set<Length> lengths;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User         user;
+    private User        user;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "spot_id" )
-    private Spot         spot;
+    private Spot        spot;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "type_id" )
-    private Type         type;
+    private Type        type;
 
     @Transient
-    private Integer      pathType;
+    private Integer     pathType;
 
     public Path() {
 
@@ -106,11 +105,11 @@ public class Path {
         this.sector = sector;
     }
 
-    public List<Length> getLengths() {
+    public Set<Length> getLengths() {
         return lengths;
     }
 
-    public void setLengths( List<Length> lengths ) {
+    public void setLengths( Set<Length> lengths ) {
         this.lengths = lengths;
     }
 

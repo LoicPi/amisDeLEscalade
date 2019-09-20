@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +28,7 @@ import javax.validation.constraints.Size;
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Sector_findByUserId", query = "from Sector where user_id = :user" ),
         @org.hibernate.annotations.NamedQuery( name = "Sector_findBySpotId", query = "from Sector where spot_id = :spot" ),
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findById", query = "from Sector as r inner join fetch r.user where r.id =:sectorId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findById", query = "from Sector as r left join fetch r.user left join fetch r.paths as rp left join fetch rp.lengths as rpl left join fetch rp.type left join fetch rpl.listing where r.id =:sectorId" ),
 } )
 
 public class Sector {
@@ -37,30 +36,30 @@ public class Sector {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer    id;
+    private Integer   id;
 
     @Column( name = "sector_name", unique = true )
     @Size( max = 100, min = 3, message = "{sector.name.invalid}" )
-    private String     sectorName;
+    private String    sectorName;
 
     @Column( name = "sector_descriptive" )
     @Size( max = 600, min = 10, message = "{sector.descriptive.invalid}" )
-    private String     sectorDescriptive;
+    private String    sectorDescriptive;
 
     @Column( name = "sector_access" )
     @Size( max = 300, min = 10, message = "{sector.acces.invalid}" )
-    private String     sectorAccess;
+    private String    sectorAccess;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "spot_id" )
-    private Spot       spot;
+    private Spot      spot;
 
     @OneToMany( mappedBy = "sector" )
-    private List<Path> paths = new ArrayList<>();
+    private Set<Path> paths;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User       user;
+    private User      user;
 
     public Sector() {
 
@@ -98,11 +97,11 @@ public class Sector {
         this.sectorAccess = sectorAccess;
     }
 
-    public List<Path> getPaths() {
+    public Set<Path> getPaths() {
         return paths;
     }
 
-    public void setPaths( List<Path> paths ) {
+    public void setPaths( Set<Path> paths ) {
         this.paths = paths;
     }
 

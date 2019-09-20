@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -63,6 +64,11 @@
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
     									<h5 class="mb-1"><c:out value="${path.pathName }" /></h5>
+    									<p class="mb-1">Type de la voie : <c:out value ="${path.type.typeName}"/>						
+    								</div>
+    								
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1">Nombre de longueur : <c:out value="${fn:length(path.lengths) }"/></p>
     									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Détail</a>
     								</div>
     							</div>
