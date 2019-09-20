@@ -1,5 +1,6 @@
 package com.adle.projet.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,7 +9,6 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -91,6 +91,19 @@ public class SpotDAOImpl implements SpotDAO {
             session.remove( s );
         }
         session.delete( theSpot );
+    }
+
+    @Override
+    public List<Spot> findSpotWithAllInfo( List<Spot> spots ) {
+        List<Spot> spotsWithAllInfo = new ArrayList<Spot>();
+        for ( Spot spot : spots ) {
+            Session currentSession = sessionFactory.getCurrentSession();
+            Query<Spot> query = currentSession.createNamedQuery( "Spot_findById", Spot.class );
+            query.setParameter( "spotId", spot.getId() );
+            Spot spotResult = (Spot) query.getSingleResult();
+            spotsWithAllInfo.add( spotResult );
+        }
+        return spotsWithAllInfo;
     }
 
 }

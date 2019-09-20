@@ -68,7 +68,8 @@ public class SpotController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
-        List<Spot> theSpots = spotService.getSpots();
+        List<Spot> spots = spotService.getSpots();
+        List<Spot> theSpots = spotService.findSpotWithAllInfo( spots );
         theModel.addAttribute( "spots", theSpots );
         return "spot_list";
     }
