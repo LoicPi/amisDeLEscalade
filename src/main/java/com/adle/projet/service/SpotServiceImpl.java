@@ -47,9 +47,4 @@ public class SpotServiceImpl implements SpotService {
     public void deleteSpot( int theId ) {
         spotDAO.deleteSpot( theId );
     }
-
-    @Override
-    public List<Spot> findSpotWithAllInfo( List<Spot> spots ) {
-        return spotDAO.findSpotWithAllInfo( spots );
-    }
 }

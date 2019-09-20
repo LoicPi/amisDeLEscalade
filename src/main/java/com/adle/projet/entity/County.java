@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,17 +21,17 @@ public class County {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer    id;
+    private Integer   id;
 
     @Column( name = "county_name" )
     @Size( max = 100, min = 3, message = "{county.name.invalid}" )
-    private String     countyName;
+    private String    countyName;
 
     @OneToMany( mappedBy = "county" )
-    private List<Spot> spots = new ArrayList<>();
+    private Set<Spot> spots;
 
     @OneToMany( mappedBy = "county" )
-    private List<Topo> topos = new ArrayList<>();
+    private Set<Topo> topos;
 
     public County() {
 
@@ -54,19 +53,19 @@ public class County {
         this.countyName = countyName;
     }
 
-    public List<Spot> getSpots() {
+    public Set<Spot> getSpots() {
         return spots;
     }
 
-    public void setSpots( List<Spot> spots ) {
+    public void setSpots( Set<Spot> spots ) {
         this.spots = spots;
     }
 
-    public List<Topo> getTopos() {
+    public Set<Topo> getTopos() {
         return topos;
     }
 
-    public void setTopos( List<Topo> topos ) {
+    public void setTopos( Set<Topo> topos ) {
         this.topos = topos;
     }
 

@@ -1,11 +1,6 @@
 package com.adle.projet.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,14 +26,12 @@ public class SpotDAOImpl implements SpotDAO {
 
     @Override
     public List<Spot> getSpots() {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Spot> cq = cb.createQuery( Spot.class );
-        Root<Spot> root = cq.from( Spot.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Spot List : " + query.getResultList() );
-        return query.getResultList();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Spot> query = currentSession.createQuery(
+                "select distinct s from Spot as s left join fetch s.user left join fetch s.county left join fetch s.sectors as sse left join fetch s.comments left join fetch sse.paths",
+                Spot.class );
+        List<Spot> spots = query.getResultList();
+        return spots;
     }
 
     @Override
@@ -92,18 +85,4 @@ public class SpotDAOImpl implements SpotDAO {
         }
         session.delete( theSpot );
     }
-
-    @Override
-    public List<Spot> findSpotWithAllInfo( List<Spot> spots ) {
-        List<Spot> spotsWithAllInfo = new ArrayList<Spot>();
-        for ( Spot spot : spots ) {
-            Session currentSession = sessionFactory.getCurrentSession();
-            Query<Spot> query = currentSession.createNamedQuery( "Spot_findById", Spot.class );
-            query.setParameter( "spotId", spot.getId() );
-            Spot spotResult = (Spot) query.getSingleResult();
-            spotsWithAllInfo.add( spotResult );
-        }
-        return spotsWithAllInfo;
-    }
-
 }

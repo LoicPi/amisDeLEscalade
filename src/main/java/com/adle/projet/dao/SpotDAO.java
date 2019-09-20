@@ -17,7 +17,4 @@ public interface SpotDAO {
     public List<Spot> findSpotByUserId( int userId );
 
     public void deleteSpot( int theId );
-
-    public List<Spot> findSpotWithAllInfo( List<Spot> spots );
-
 }
