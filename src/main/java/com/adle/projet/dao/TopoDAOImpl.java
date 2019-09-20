@@ -2,10 +2,6 @@ package com.adle.projet.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -30,14 +26,11 @@ public class TopoDAOImpl implements TopoDAO {
 
     @Override
     public List<Topo> getTopos() {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Topo> cq = cb.createQuery( Topo.class );
-        Root<Topo> root = cq.from( Topo.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Topo List : " + query.getResultList() );
-        return query.getResultList();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Topo> query = currentSession.createQuery(
+                "select distinct t from Topo as t left join fetch t.user left join fetch t.county", Topo.class );
+        List<Topo> topos = query.getResultList();
+        return topos;
     }
 
     @Override
