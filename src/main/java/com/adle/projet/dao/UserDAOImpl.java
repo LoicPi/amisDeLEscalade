@@ -14,6 +14,12 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.adle.projet.entity.Comment;
+import com.adle.projet.entity.Length;
+import com.adle.projet.entity.Path;
+import com.adle.projet.entity.Sector;
+import com.adle.projet.entity.Spot;
+import com.adle.projet.entity.Topo;
 import com.adle.projet.entity.User;
 import com.adle.projet.tools.FormattingString;
 import com.adle.projet.tools.PasswordEncryptor;
@@ -96,6 +102,36 @@ public class UserDAOImpl implements UserDAO {
         user.setPassword( PasswordEncryptor.hashPassword( user.getPassword() ) );
         currentsession.update( user );
         logger.info( "User updated successfully, User details = " + user );
+    }
+
+    @Override
+    public void deleteUser( int theId ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        User theUser = currentSession.byId( User.class ).load( theId );
+        for ( Spot spot : theUser.getSpots() ) {
+            spot.setUser( null );
+            currentSession.saveOrUpdate( spot );
+        }
+        for ( Sector sector : theUser.getSectors() ) {
+            sector.setUser( null );
+            currentSession.saveOrUpdate( sector );
+        }
+        for ( Path path : theUser.getPaths() ) {
+            path.setUser( null );
+            currentSession.saveOrUpdate( path );
+        }
+        for ( Length length : theUser.getLengths() ) {
+            length.setUser( null );
+            currentSession.saveOrUpdate( length );
+        }
+        for ( Comment comment : theUser.getComments() ) {
+            comment.setUser( null );
+            currentSession.saveOrUpdate( comment );
+        }
+        for ( Topo topo : theUser.getTopos() ) {
+            currentSession.delete( topo );
+        }
+        currentSession.delete( theUser );
     }
 
 }

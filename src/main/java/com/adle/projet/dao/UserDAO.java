@@ -15,4 +15,6 @@ public interface UserDAO {
     public List<User> findUserByEmail( String email );
 
     public void updateUser( User theUser );
+
+    public void deleteUser( int theId );
 }

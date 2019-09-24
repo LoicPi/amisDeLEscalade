@@ -402,6 +402,29 @@ public class UserController {
                 return "redirect:/compte/" + userId + "/moncompte";
             }
         }
+    }
 
+    /*
+     * ************************* Delete User *************************
+     */
+
+    /**
+     * Page to delete user account
+     * 
+     * @param userId
+     *            the id of the user
+     * @param request
+     *            information on the session
+     * @return the home page
+     */
+    @GetMapping( "{userId}/deleteuser" )
+    public String deleteUser( @PathVariable( "userId" ) Integer userId, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            userService.deleteUser( userId );
+        }
+        return "redirect:/";
     }
 }
