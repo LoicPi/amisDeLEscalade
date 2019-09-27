@@ -1,5 +1,7 @@
 package com.adle.projet.dto;
 
+import java.util.Date;
+
 import com.adle.projet.entity.County;
 import com.adle.projet.entity.User;
 
@@ -15,7 +17,7 @@ public class UpdateTopo {
 
     private String  updateTopoDescriptive;
 
-    private String  updateTopoReleaseDate;
+    private Date    updateTopoReleaseDate;
 
     private User    user;
 
@@ -67,11 +69,11 @@ public class UpdateTopo {
         this.updateTopoDescriptive = updateTopoDescriptive;
     }
 
-    public String getUpdateTopoReleaseDate() {
+    public Date getUpdateTopoReleaseDate() {
         return updateTopoReleaseDate;
     }
 
-    public void setUpdateTopoReleaseDate( String updateTopoReleaseDate ) {
+    public void setUpdateTopoReleaseDate( Date updateTopoReleaseDate ) {
         this.updateTopoReleaseDate = updateTopoReleaseDate;
     }
 
