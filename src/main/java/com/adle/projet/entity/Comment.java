@@ -1,5 +1,7 @@
 package com.adle.projet.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table( name = "comments" )
@@ -30,7 +37,9 @@ public class Comment {
     private String  contents;
 
     @Column( name = "comment_date" )
-    private String  date;
+    @Temporal( TemporalType.TIMESTAMP )
+    @DateTimeFormat( iso = ISO.DATE )
+    private Date    date;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
@@ -60,11 +69,11 @@ public class Comment {
         this.contents = contents;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate( String date ) {
+    public void setDate( Date date ) {
         this.date = date;
     }
 

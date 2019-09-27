@@ -1,7 +1,6 @@
 package com.adle.projet.dao;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -43,8 +42,7 @@ public class CommentDAOImpl implements CommentDAO {
     public void saveComment( Comment comment ) {
         Session currentSession = sessionFactory.getCurrentSession();
         Timestamp now = new Timestamp( System.currentTimeMillis() );
-        SimpleDateFormat dateComment = new SimpleDateFormat( "dd/MM/yyyy hh:mm" );
-        comment.setDate( dateComment.format( now ) );
+        comment.setDate( now );
         currentSession.saveOrUpdate( comment );
         logger.info( "Comment saved successfully, Comment details = " + comment );
     }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -64,7 +65,7 @@
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date de parution :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoReleaseDate }" /></label>
+								<label class="col-md-6 col-10 col-form-label form-control-label border"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${ topo.topoReleaseDate }" /></label>
 							</div>
       					</form>
       					<c:choose>

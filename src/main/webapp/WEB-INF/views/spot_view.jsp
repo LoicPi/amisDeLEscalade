@@ -3,6 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -140,7 +141,7 @@
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
     								<div class="d-flex w-100 justify-content-between">
     									<p class="mb-1">Commentaire de <c:out value="${comment.user.nickName}" /></p>
-    									<p class="mb-1"><c:out value="${comment.date}" /></p>
+    									<p class="mb-1"><fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value = "${comment.date}"/></p>
     								</div>
     								<p class="mb-1  border rounded border-dark text-center"><c:out value="${comment.contents}" /></p>
     								<c:choose>

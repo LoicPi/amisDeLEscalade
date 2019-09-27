@@ -1,5 +1,7 @@
 package com.adle.projet.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * Created Topo Bean defined by id, name, city, county, country, descriptive,
@@ -53,8 +60,9 @@ public class Topo {
     private String  topoDescriptive;
 
     @Column( name = "topo_releaseDate" )
-    @Size( max = 10, min = 10, message = "{topo.releaseDate.invalid}" )
-    private String  topoReleaseDate;
+    @Temporal( TemporalType.DATE )
+    @DateTimeFormat( iso = ISO.DATE )
+    private Date    topoReleaseDate;
 
     @Column( name = "topo_availability" )
     private Boolean topoAvailability = false;
@@ -133,11 +141,11 @@ public class Topo {
         this.topoDescriptive = topoDescriptive;
     }
 
-    public String getTopoReleaseDate() {
+    public Date getTopoReleaseDate() {
         return topoReleaseDate;
     }
 
-    public void setTopoReleaseDate( String topoReleaseDate ) {
+    public void setTopoReleaseDate( Date topoReleaseDate ) {
         this.topoReleaseDate = topoReleaseDate;
     }
 
