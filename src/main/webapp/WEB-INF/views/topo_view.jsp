@@ -28,11 +28,30 @@
       					</c:if>
 						<c:set var="userId" value="${sessionScope['userId']}" />      										
 						<c:choose>
-							<c:when test="${userId eq (topo.user).id && userId ne null}">
+							<c:when test="${userId eq (topo.user).id && userId ne null || user.role.id eq 3 }">
 								<hr>
 								<div class="row justify-content-around">
         							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
-        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Supprimer</a>
+        							<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  										<div class="modal-dialog" role="document">
+    										<div class="modal-content">
+      											<div class="modal-header">
+        											<h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression du topo</h5>
+        											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          												<span aria-hidden="true">&times;</span>
+       											 	</button>
+      											</div>
+      											<div class="modal-body">
+ 													Voulez-vous vraiment supprimer le topo ?
+      											</div>
+      											<div class="modal-footer">
+      												<a class="btn btn-danger btn-sm col-4" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      											</div>
+   											</div>
+  										</div>
+									</div>
         						</div>
 							</c:when>
 							<c:otherwise>		

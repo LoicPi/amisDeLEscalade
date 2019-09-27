@@ -19,8 +19,6 @@
    				<div class="card border-secondary">
    					<div class="card-header">
 						<h3 class="text-center">Mise à jour du commentaire</h3>
-						<hr>
-						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${site.id}/commentaire/${comment.id}/deletecomment"/>" role="button">Supprimer</a>
 					</div>
 					<div class="card-body">
 						<form:form action="updatecomment" class="form" method="post" modelAttribute="updateComment">

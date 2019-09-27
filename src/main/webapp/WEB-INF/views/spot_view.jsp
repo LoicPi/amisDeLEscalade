@@ -26,7 +26,7 @@
 							<c:when test="${ spot.tag }">
 								<a class="col-md-4"><em>Site officiel les amis de l'escalade</em></a>
 								<c:choose>
-									<c:when test="${user.member && userId ne null}">
+									<c:when test="${user.member && userId ne null || user.role.id eq 3 }">
 										<hr>
 										<div class="row justify-content-around">
        										<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/removeofficialspot"/>" role="button">Rendre Non-Officiel</a>
@@ -38,7 +38,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${user.member && userId ne null}">
+									<c:when test="${user.member && userId ne null || user.role.id eq 3}">
 										<div class="row justify-content-around">
        										<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/tagofficialspot"/>" role="button">Rendre Officiel</a>
        									</div>
@@ -50,11 +50,30 @@
 						</c:choose>
 					
 						<c:choose>
-							<c:when test="${userId eq (spot.user).id && userId ne null}">
+							<c:when test="${userId eq (spot.user).id && userId ne null || user.role.id eq 3}">
 								<hr>
       							<div class="row justify-content-around">
         							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/majsite"/>" role="button">Editer</a>
-        							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${site.id}/deletespot"/>" role="button">Supprimer</a>
+        							<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  										<div class="modal-dialog" role="document">
+    										<div class="modal-content">
+      											<div class="modal-header">
+        											<h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression du site</h5>
+        											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          												<span aria-hidden="true">&times;</span>
+       											 	</button>
+      											</div>
+      											<div class="modal-body">
+ 													Voulez-vous vraiment supprimer le site ?
+      											</div>
+      											<div class="modal-footer">
+      												<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${site.id}/deletespot"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      											</div>
+   											</div>
+  										</div>
+									</div>
         						</div>
 							</c:when>
 							<c:otherwise>		
@@ -145,13 +164,33 @@
     								</div>
     								<p class="mb-1  border rounded border-dark text-center"><c:out value="${comment.contents}" /></p>
     								<c:choose>
-     									<c:when test="${userId eq null || !(user.member)}">
-     									</c:when>
-     									<c:otherwise>
+     									<c:when test="${userId eq (spot.user).id && userId ne null || user.role.id eq 3 || user.member}">
      										<hr>
      										<div class="d-flex w-100 justify-content-around">
      											<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/commentaire/${comment.id}/modifiercommentaire"/>" role="button">Editer</a>
+     											<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer le commentaire</button>
+												<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  													<div class="modal-dialog" role="document">
+    													<div class="modal-content">
+      														<div class="modal-header">
+        														<h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression du commentaire</h5>
+        														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          														<span aria-hidden="true">&times;</span>
+       															</button>
+      														</div>
+      														<div class="modal-body">
+ 																Voulez-vous vraiment supprimer le commentaire ?
+      														</div>
+      														<div class="modal-footer">
+      															<a class="btn btn-primary btn-sm" href="<c:url value="/site/${site.id}/commentaire/${comment.id}/deletecomment"/>" role="button">Oui</a>
+        														<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      														</div>
+   														</div>
+  													</div>
+												</div>
      										</div>
+     									</c:when>
+     									<c:otherwise>
      									</c:otherwise>
      								</c:choose>
     							</div>
