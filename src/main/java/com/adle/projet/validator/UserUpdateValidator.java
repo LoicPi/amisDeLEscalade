@@ -72,17 +72,17 @@ public class UserUpdateValidator implements Validator {
             }
         }
 
-        if ( userNickName.length() > 20 || userNickName.length() < 3 ) {
+        if ( userNickName.length() > 50 || userNickName.length() < 3 ) {
             logger.info( "UpdateLength of NickName is not correct." );
             errors.rejectValue( "updateNickName", "user.nickName.invalid" );
         }
 
-        if ( userFirstName.length() > 20 || userFirstName.length() < 3 ) {
+        if ( userFirstName.length() > 50 || userFirstName.length() < 3 ) {
             logger.info( "UpdateLength of FirstName is not correct." );
             errors.rejectValue( "updateFirstName", "user.firstName.invalid" );
         }
 
-        if ( userLastName.length() > 20 || userLastName.length() < 3 ) {
+        if ( userLastName.length() > 50 || userLastName.length() < 3 ) {
             logger.info( "UpdateLength of LastName is not correct." );
             errors.rejectValue( "updateLastName", "user.lastName.invalid" );
         }

@@ -46,17 +46,17 @@ public class User {
     private Integer       id;
 
     @Column( name = "first_name" )
-    @Size( max = 20, min = 3, message = "{user.firstName.invalid}" )
+    @Size( max = 50, min = 3, message = "{user.firstName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un nom" )
     private String        firstName;
 
     @Column( name = "last_name" )
-    @Size( max = 20, min = 3, message = "{user.lastName.invalid}" )
+    @Size( max = 50, min = 3, message = "{user.lastName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un prénom" )
     private String        lastName;
 
     @Column( name = "nick_name", unique = true )
-    @Size( max = 20, min = 3, message = "{user.nickName.invalid}" )
+    @Size( max = 50, min = 3, message = "{user.nickName.invalid}" )
     @NotEmpty( message = "Merci de rentrer un pseudo" )
     private String        nickName;
 

@@ -72,12 +72,12 @@
       						</div>
       					</div>
       					<c:if test="${ user.member }">
-										<div class="form-group text-center">
-											<label class="control-label">
-												<a class="col-md-4">Vous êtes membre de l'association <em>"Les amis de l'escalade"</em></a>
-											</label>
-										</div>
-									</c:if>									
+							<div class="form-group text-center">
+								<label class="control-label">
+									<a class="col-md-4">Vous êtes membre de l'association <em>"Les amis de l'escalade"</em></a>
+								</label>
+							</div>
+						</c:if>									
 						<hr>
       					<div class="row justify-content-around">
 							<h4 class="col-lg-8 col-sm-6">Mes topos</h4>

@@ -92,12 +92,9 @@ public class UserController {
             if ( !( email.contentEquals( "lesamisdelescalade@gmail.com" ) ) ) {
                 return "redirect:/home/";
             } else {
-                List<User> userMember = userService.findUserByRole( "member" );
-                List<User> userNotMember = userService.findUserByRole( "normal" );
-                List<User> userPotentialMember = userService.findUserByRole( "potentialMember" );
-                theModel.addAttribute( "userMember", userMember );
-                theModel.addAttribute( "userNotMember", userNotMember );
-                theModel.addAttribute( "userPotentialMember", userPotentialMember );
+                List<User> users = userService.getUsers();
+                theModel.addAttribute( "user", user );
+                theModel.addAttribute( "users", users );
                 return "user_list";
             }
         }
@@ -335,7 +332,7 @@ public class UserController {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
             session.setAttribute( "userId", userLogin.getId() );
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
-                return "redirect:/compte/adm";
+                return "redirect:/compte/";
             } else {
                 return "redirect:/compte/" + userLogin.getId() + "/moncompte";
             }
@@ -366,21 +363,25 @@ public class UserController {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
-
-            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
-
-            path = Paths.get( rootDirectory + "resources/uploaded-images/" + userId + ".png" );
-
-            if ( Files.exists( path ) ) {
-                theUser.isImage = true;
+            if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+                return "redirect:/compte/";
             } else {
-                theUser.isImage = false;
-            }
 
-            theModel.addAttribute( "topos", theUser.getTopos() );
-            theModel.addAttribute( "spots", theUser.getSpots() );
-            theModel.addAttribute( "user", theUser );
-            return "user_view";
+                String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+                path = Paths.get( rootDirectory + "resources/uploaded-images/" + userId + ".png" );
+
+                if ( Files.exists( path ) ) {
+                    theUser.isImage = true;
+                } else {
+                    theUser.isImage = false;
+                }
+
+                theModel.addAttribute( "topos", theUser.getTopos() );
+                theModel.addAttribute( "spots", theUser.getSpots() );
+                theModel.addAttribute( "user", theUser );
+                return "user_view";
+            }
         }
     }
 
@@ -521,5 +522,59 @@ public class UserController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    /*
+     * ************************* Delete User *************************
+     */
+
+    /**
+     * Button to delete statut member to user
+     * 
+     * @param userId
+     *            id of the user
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the user list
+     */
+    @GetMapping( "{userId}/memberuserdelete" )
+    public String deleteRoleMemberOfUser( @PathVariable( "userId" ) Integer userId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            User theUser = userService.getUser( userId );
+            theUser.setRole( roleService.findUserRoleByCode( false ) );
+            userService.updateUser( theUser );
+            return "redirect:/compte/";
+        }
+    }
+
+    /**
+     * Button to give statut member to user
+     * 
+     * @param userId
+     *            id of the user
+     * @param theModel
+     *            attribute to page jsp
+     * @param request
+     *            information on the session
+     * @return the user list
+     */
+    @GetMapping( "{userId}/memberuser" )
+    public String putRoleMemberToUser( @PathVariable( "userId" ) Integer userId, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) == null ) {
+            return "redirect:/compte/connexion";
+        } else {
+            User theUser = userService.getUser( userId );
+            theUser.setRole( roleService.findUserRoleByCode( true ) );
+            userService.updateUser( theUser );
+            return "redirect:/compte/";
+        }
     }
 }

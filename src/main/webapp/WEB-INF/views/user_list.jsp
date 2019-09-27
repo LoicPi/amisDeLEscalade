@@ -2,81 +2,81 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import = "java.util.logging.Logger" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Liste des utilisateurs</title>
-		<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/all.css" />" rel="stylesheet">
- 		<link href="<c:url value="/resources/css/stylesheet.css" />" rel="stylesheet">
- 		<script src="<c:url value="/resources/js/jquery-3.4.1.min.js" />"></script> 
-		<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-		<script src="<c:url value="/resources/js/all.js" />"></script>
+		<title>Vue administrateur</title>
+		<c:import url="inc/head_page.jsp" />
 	</head>
 	
 	<body>
  		<div class="container">
 			<header class="container">
-
-        		<img class="col-sm-12 col-md-4 offset-md-4 img" src="<c:url value="/resources/image/logo.png"/>" />
-
-        		<nav class="row nav nav-pills nav-justified flex-column flex-sm-row">          
-            		<a class="nav-link nav-item" href="<c:url value="/"/>"> <span class="fa fa-home"></span> Accueil </a>
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-mountain"></span> Site d'escalade </a>
-            		<a class="nav-link nav-item" href="#"> <span class="fa fa-book"></span> Topo </a>
-            		<a class="nav-link nav-item" id="lastNav" href="<c:url value="/compte/connexion"/>"> <span class="fa fa-user-circle"></span>    Compte </a>
-        		</nav>
+        		<c:import url="inc/header_page.jsp" />
       		</header>
-      		<input type="button" value="Nouvel Inscription" onclick="window.location.href='inscription'; return false;" class="btn btn-primary" />
-    		<br/><br/>
-   			<div class="card">
-    			<div class="card-header text-center">
-    				<h3>Liste des inscrits</h3>
-    			</div>
-    			<div class="card-body table-responsive">
-    				<% Logger logger = Logger.getLogger(this.getClass().getName());%>
-     				<table class="table table-striped table-bordered">
-      					<thead>
-      					<tr>
-       						<th>Nom</th>
-       						<th>Prénom</th>
-       						<th>Pseudo</th>
-       						<th>Email</th>
-       						<th>Mot de Passe</th>
-       						<th>Role</th>
-       						<th>Action</th>
-      					</tr>
-      					</thead>
-						<!-- loop over and print our users -->
-						<tbody>
-      					<c:forEach items="${users}" var="tempUser">
-						<% String message = "User = " + pageContext.findAttribute("tempUser");
-						logger.info( message ); %>		
-       						<!-- construct an "update" link with user id --> 
-       						<c:url var="updateLink" value="/compte/maj">
-        						<c:param name="userId" value="${tempUser.id}" />
-       						</c:url>
-       						
-       						<tr>
-        						<td>${tempUser.firstName}</td>
-        						<td>${tempUser.lastName}</td>
-        						<td>${tempUser.nickName}</td>
-        						<td>${tempUser.email}</td>
-        						<td>${tempUser.password}</td>
-        						<td>${tempUser.userRole}</td>
-        						<td>
-         							<!-- display the update link -->
-         							<a href="${updateLink}">Modifier</a>
-        						</td>
-							</tr>
-
-						</c:forEach>
-						</tbody>
-     				</table>
-				</div>
-   			</div>
-   		</div>
-	</body>	
+      		<div class="col-md-8 mx-auto">
+   				<div class="card border-secondary">
+   					<div class="card-header text-center">
+     					<h3>Liste des utilisateurs</h3>
+     					<a class="btn btn-danger btn-sm" href="<c:url value="/compte/${user.id}/deconnexion"/>" role="button">Deconnexion</a>
+    				</div>
+    				<div class="card-body">
+    					<div class="list-group">
+      						<c:forEach items="${users}" var="user">
+  								<div class="list-group-item list-group-item-action flex-column align-items-start">
+    								<div class="d-flex w-100 justify-content-around border-bottom">
+    									<h5 class="mb-1"><c:out value="${user.nickName}" /></h5>
+    								</div>
+    								<br/>
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1 col-12 col-md-6"><c:out value="${user.firstName }" /> <c:out value="${user.lastName }" /></p>
+    								</div>
+    								<div class="d-flex w-100 justify-content-between">
+    									<p class="mb-1 col-12 col-md-6"><c:out value="${user.role.roleName }" /></p>
+    								</div>
+    								<br/>
+    								<hr/>
+    								
+									<div class="form-group justify-content-around">
+										<c:choose>
+											<c:when test="${ user.member }">
+    											<a class="btn btn-warning btn-sm" href="<c:url value="/compte/${user.id}/memberuserdelete"/>" role="button">Retirer Membre</a>
+    										</c:when>
+    										<c:otherwise>
+    											<a class="btn btn-warning btn-sm" href="<c:url value="/compte/${user.id}/memberuser"/>" role="button">Ajouter Membre</a>
+    										</c:otherwise>
+    									</c:choose>
+    									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer le compte</button>
+										<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  											<div class="modal-dialog" role="document">
+    											<div class="modal-content">
+      												<div class="modal-header">
+        												<h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression du compte</h5>
+        												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          													<span aria-hidden="true">&times;</span>
+       										 			</button>
+      												</div>
+      												<div class="modal-body">
+ 														Voulez-vous vraiment supprimer le compte ?
+      												</div>
+      												<div class="modal-footer">
+      													<a class="btn btn-primary btn-sm" href="<c:url value="/compte/${userId}/deleteuser"/>" role="button">Oui</a>
+        												<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      												</div>
+   												</div>
+  											</div>
+										</div>
+    								</div>
+    							</div>
+    						</c:forEach>
+    					</div>		
+      				</div>
+      			</div>
+      		</div>
+      	</div>
+	</body>
+	<footer>
+		<c:import url="inc/footer.jsp" />
+	</footer>
 </html>
