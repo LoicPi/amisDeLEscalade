@@ -67,11 +67,6 @@ public class TopoUpdateValidator implements Validator {
             errors.rejectValue( "updateTopoReleaseDate", "topoValidator.topoReleaseDate.empty" );
         }
 
-        if ( topo.getUpdateTopoReleaseDate().length() != 10 ) {
-            logger.info( "Length of UpdateTopo_ReleaseDate is not correct." );
-            errors.rejectValue( "updateTopoReleaseDate", "topo.releaseDate.invalid" );
-        }
-
         String lowerTopoCountry = topo.getUpdateTopoCountry().toLowerCase();
 
         if ( topo.getTopoCounty() == null && lowerTopoCountry.equals( "france" ) ) {
