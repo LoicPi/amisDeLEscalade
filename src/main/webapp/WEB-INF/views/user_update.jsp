@@ -22,9 +22,25 @@
 					</div>
 					<div class="card-body">
 						<div class="personal-info">
-							<form:form action="updateuser" class="form" method="post" modelAttribute="updateUser">
+						
+							<form:form action="updateuser" class="form" method="post" enctype="multipart/form-data" modelAttribute="updateUser">
 							
 								<form:hidden path="id" />
+								
+								<div class="form-group">
+									<c:choose>
+										<c:when test="$ {not empty user.userImage}">
+											<img src="<c:url value="/resources/uploaded-images/${user.id}.png"/>" alt="image utilisateur" class="m-x-auto img-fluid rounded-circle"/>
+       	 								</c:when>
+       	 								<c:otherwise>
+       	 									<img src="<c:url value="/resources/uploaded-images/avatar.png"/>" alt="image utilisateur" class="m-x-auto img-fluid rounded-circle"/>
+       	 								</c:otherwise>
+       	 							</c:choose>  
+       	 							<h6 class="col-md-8">Mettre à jour votre photo de profil</h6>
+               						<label class="col-md-8 control-label" for="updateUserImage">
+                  						<form:input type="file" path="updateUserImage" id="updateUserImage" name="updateUserImage" class="form:input-large" />
+                					</label>     	 					
+       	 						</div>
 							
 								<div class="form-group">
 									<label class="col-md-3 control-label" for=updateFirstname>Nom :</label>
@@ -69,7 +85,7 @@
         							<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
         							<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
       							</div>
-							</form:form>
+							</form:form>	
       					</div>
       				</div>
 				</div>

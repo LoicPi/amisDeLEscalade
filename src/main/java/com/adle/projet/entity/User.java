@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created User Bean defined by id, firstName, lastName, nickName, email,
@@ -79,6 +80,9 @@ public class User {
     @Transient
     private Boolean       userMember;
 
+    @Transient
+    private MultipartFile userImage;
+
     @OneToMany( mappedBy = "user" )
     private Set<Topo>     topos;
 
@@ -105,6 +109,9 @@ public class User {
     public boolean isMember() {
         return role.getRoleCode().equals( "member" );
     }
+
+    @Transient
+    public boolean isImage;
 
     public Integer getId() {
         return id;
@@ -176,6 +183,14 @@ public class User {
 
     public void setUserMember( Boolean userMember ) {
         this.userMember = userMember;
+    }
+
+    public MultipartFile getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage( MultipartFile userImage ) {
+        this.userImage = userImage;
     }
 
     public Set<Topo> getTopos() {

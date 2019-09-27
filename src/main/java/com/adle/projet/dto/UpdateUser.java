@@ -1,22 +1,26 @@
 package com.adle.projet.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.adle.projet.entity.Role;
 
 public class UpdateUser {
 
-    private Integer id;
+    private Integer       id;
 
-    private String  updateFirstName;
+    private String        updateFirstName;
 
-    private String  updateLastName;
+    private String        updateLastName;
 
-    private String  updateNickName;
+    private String        updateNickName;
 
-    private String  updateEmail;
+    private String        updateEmail;
 
-    private Role    role;
+    private MultipartFile updateUserImage;
 
-    private Boolean userMember;
+    private Role          role;
+
+    private Boolean       userMember;
 
     public boolean getMember() {
         return role.getRoleCode().equals( "member" );
@@ -60,6 +64,14 @@ public class UpdateUser {
 
     public void setUpdateEmail( String updateEmail ) {
         this.updateEmail = updateEmail;
+    }
+
+    public MultipartFile getUpdateUserImage() {
+        return updateUserImage;
+    }
+
+    public void setUpdateUserImage( MultipartFile userImage ) {
+        this.updateUserImage = userImage;
     }
 
     public Role getRole() {

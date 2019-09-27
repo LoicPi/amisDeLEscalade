@@ -21,7 +21,7 @@
      					<h3>Inscription</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="saveuser" class="form" method="post" modelAttribute="user">
+     					<form:form action="saveuser" class="form" method="post" enctype="multipart/form-data" modelAttribute="user">
 
       						<form:hidden path="id" /> 
       					
@@ -48,7 +48,13 @@
 								<form:input path="email" class="form-control" type="email" placeholder="email@gmail.com"/>
         						<form:errors path="email" class="error" />
       						</div>
-      					
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="userImage">Photo de profil : </label>
+      							<br/>
+								<form:input type="file" path="userImage" id="userImage" name="userImage" class="form:input-large" />
+      						</div>
+      						
       						<div class="form-group">
        							<label for="password">Mot de Passe <span class="requis">*</span></label>
         						<form:input path="password" class="form-control" type="password" placeholder="Mot de Passe"/>

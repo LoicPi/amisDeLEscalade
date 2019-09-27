@@ -1,11 +1,18 @@
 package com.adle.projet.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.adle.projet.dto.UpdatePasswordUser;
 import com.adle.projet.dto.UpdateUser;
@@ -37,6 +45,8 @@ import com.adle.projet.validator.UserValidator;
 @RequestMapping( "/compte" )
 public class UserController {
 
+    private static final Logger         logger = LogManager.getLogger( UserController.class );
+
     @Autowired
     private UserValidator               userValidator;
 
@@ -55,6 +65,8 @@ public class UserController {
     @Autowired
     private RoleService                 roleService;
 
+    private Path                        path;
+
     /*
      * ***************************** List of User *****************************
      */
@@ -71,14 +83,23 @@ public class UserController {
     @GetMapping( "/" )
     public String listUsers( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userId" );
-        User theUser = userService.getUser( userId );
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            List<User> theUsers = userService.getUsers();
-            theModel.addAttribute( "users", theUsers );
-            return "user_list";
+            Integer userId = (Integer) session.getAttribute( "userId" );
+            User user = userService.getUser( userId );
+            String email = user.getEmail();
+            if ( !( email.contentEquals( "lesamisdelescalade@gmail.com" ) ) ) {
+                return "redirect:/home/";
+            } else {
+                List<User> userMember = userService.findUserByRole( "member" );
+                List<User> userNotMember = userService.findUserByRole( "normal" );
+                List<User> userPotentialMember = userService.findUserByRole( "potentialMember" );
+                theModel.addAttribute( "userMember", userMember );
+                theModel.addAttribute( "userNotMember", userNotMember );
+                theModel.addAttribute( "userPotentialMember", userPotentialMember );
+                return "user_list";
+            }
         }
     }
 
@@ -136,6 +157,30 @@ public class UserController {
         } else {
             theUser.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             userService.saveUser( theUser );
+
+            // get the provided image from the form
+            MultipartFile userImage = theUser.getUserImage();
+            // get root directory to store the image
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+            // change any provided image type to png
+            // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
+            // product.getProductId() + ".png");
+            path = Paths.get( rootDirectory + "resources/uploaded-images/" + theUser.getId() + ".png" );
+            // check whether image exists or not
+
+            if ( userImage != null && !userImage.isEmpty() ) {
+                try {
+                    // convert the image type to png
+                    userImage.transferTo( new File( path.toString() ) );
+                } catch ( IllegalStateException | IOException e ) {
+                    // oops! something did not work as expected
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving User image was not successful", e );
+                }
+            } else {
+
+            }
+
             session.setAttribute( "userId", theUser.getId() );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
         }
@@ -218,6 +263,22 @@ public class UserController {
                 userUpdate.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             }
             userService.updateUser( userUpdate );
+
+            MultipartFile userImage = theUser.getUpdateUserImage();
+
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path = Paths.get( rootDirectory + "resources/uploaded-images/" + userUpdate.getId() + ".png" );
+
+            if ( userImage != null && !userImage.isEmpty() ) {
+                try {
+                    userImage.transferTo( new File( path.toString() ) );
+                } catch ( IllegalStateException | IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving User image was not successful", e );
+                }
+            }
+
             return "redirect:/compte/" + userId + "/moncompte";
         }
     }
@@ -273,7 +334,11 @@ public class UserController {
         } else {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
             session.setAttribute( "userId", userLogin.getId() );
-            return "redirect:/compte/" + userLogin.getId() + "/moncompte";
+            if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+                return "redirect:/compte/adm";
+            } else {
+                return "redirect:/compte/" + userLogin.getId() + "/moncompte";
+            }
         }
 
     }
@@ -301,6 +366,17 @@ public class UserController {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
+
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path = Paths.get( rootDirectory + "resources/uploaded-images/" + userId + ".png" );
+
+            if ( Files.exists( path ) ) {
+                theUser.isImage = true;
+            } else {
+                theUser.isImage = false;
+            }
+
             theModel.addAttribute( "topos", theUser.getTopos() );
             theModel.addAttribute( "spots", theUser.getSpots() );
             theModel.addAttribute( "user", theUser );
@@ -423,7 +499,26 @@ public class UserController {
         if ( session.getAttribute( "userId" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            // get root directory to store the image
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            // change any provided image type to png
+            // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
+            // product.getProductId() + ".png");
+            path = Paths
+                    .get( "/home/LoicPi/amisDeLEscalade/src/main/java/webapp/resources/uploaded-images/"
+                            + userId + ".png" );
+
+            if ( Files.exists( path ) ) {
+                try {
+                    Files.delete( path );
+                } catch ( IOException e ) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
             userService.deleteUser( userId );
+            session.invalidate();
         }
         return "redirect:/";
     }
