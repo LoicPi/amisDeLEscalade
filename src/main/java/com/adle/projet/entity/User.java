@@ -70,6 +70,9 @@ public class User {
     @NotEmpty( message = "Merci de rentrer un mot de passe" )
     private String        password;
 
+    @Column( name = "image" )
+    private Boolean       image    = false;
+
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "role_id" )
     private Role          role;
@@ -109,9 +112,6 @@ public class User {
     public boolean isMember() {
         return role.getRoleCode().equals( "member" );
     }
-
-    @Transient
-    public boolean isImage;
 
     public Integer getId() {
         return id;
@@ -159,6 +159,14 @@ public class User {
 
     public void setPassword( String password ) {
         this.password = password;
+    }
+
+    public boolean isImage() {
+        return image;
+    }
+
+    public void setImage( boolean image ) {
+        this.image = image;
     }
 
     public Role getRole() {

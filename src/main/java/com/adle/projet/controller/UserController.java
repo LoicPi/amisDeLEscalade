@@ -169,15 +169,16 @@ public class UserController {
                 try {
                     // convert the image type to png
                     userImage.transferTo( new File( path.toString() ) );
+                    theUser.setImage( true );
                 } catch ( IllegalStateException | IOException e ) {
                     // oops! something did not work as expected
                     e.printStackTrace();
                     throw new RuntimeException( "Saving User image was not successful", e );
                 }
             } else {
-
+                theUser.setImage( false );
             }
-
+            userService.saveUser( theUser );
             session.setAttribute( "userId", theUser.getId() );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
         }
@@ -259,7 +260,6 @@ public class UserController {
             if ( theUser.getUserMember() ) {
                 userUpdate.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
             }
-            userService.updateUser( userUpdate );
 
             MultipartFile userImage = theUser.getUpdateUserImage();
 
@@ -270,12 +270,15 @@ public class UserController {
             if ( userImage != null && !userImage.isEmpty() ) {
                 try {
                     userImage.transferTo( new File( path.toString() ) );
+                    userUpdate.setImage( true );
                 } catch ( IllegalStateException | IOException e ) {
                     e.printStackTrace();
                     throw new RuntimeException( "Saving User image was not successful", e );
                 }
+            } else {
+                userUpdate.setImage( false );
             }
-
+            userService.updateUser( userUpdate );
             return "redirect:/compte/" + userId + "/moncompte";
         }
     }
@@ -366,17 +369,9 @@ public class UserController {
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
                 return "redirect:/compte/";
             } else {
-
                 String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
 
                 path = Paths.get( rootDirectory + "resources/uploaded-images/" + userId + ".png" );
-
-                if ( Files.exists( path ) ) {
-                    theUser.isImage = true;
-                } else {
-                    theUser.isImage = false;
-                }
-
                 theModel.addAttribute( "topos", theUser.getTopos() );
                 theModel.addAttribute( "spots", theUser.getSpots() );
                 theModel.addAttribute( "user", theUser );

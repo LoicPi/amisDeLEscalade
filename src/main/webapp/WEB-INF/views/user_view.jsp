@@ -22,12 +22,6 @@
 						<a class="btn btn-danger btn-sm" href="<c:url value="/compte/${user.id}/deconnexion"/>" role="button">Deconnexion</a>
 					</div>
 					<div class="card-body">
-						
-						<!--<div class="alert alert-info alert-dismissable">
-						<a class="panel-close close" data-dismiss="alert">×</a> 
-						<i class="fas fa-info-circle"></i>
-							Votre qualité de membre sera efective dès qu'elle sera validé par l'administrateur.
-						</div>-->
 						<div class="row justify-content-around">
 							<h4 class="col-lg-8 col-sm-6 text-center">Mes infos</h4>
         					<a class="btn btn-info btn-sm" href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
@@ -36,7 +30,7 @@
 						<div class="row m-y-2">
 							<div class="col-lg-4 pull-lg-8 text-center">
 								<c:choose>
-									<c:when test="$ {user.isImage}">
+									<c:when test="${user.image}">
 										<img src="<c:url value="/resources/uploaded-images/${user.id}.png"/>" alt="photo de profil" class="m-x-auto img-fluid rounded-circle"/>
        	 							</c:when>
        	 							<c:otherwise>
