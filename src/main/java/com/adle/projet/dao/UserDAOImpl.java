@@ -99,8 +99,15 @@ public class UserDAOImpl implements UserDAO {
         Session currentsession = sessionFactory.getCurrentSession();
         user.setFirstName( formattingString.Formatting( user.getFirstName() ) );
         user.setLastName( formattingString.Formatting( user.getLastName() ) );
-        user.setPassword( PasswordEncryptor.hashPassword( user.getPassword() ) );
         currentsession.update( user );
+        logger.info( "User updated successfully, User details = " + user );
+    }
+
+    @Override
+    public void updatePasswordUser( User user ) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        user.setPassword( PasswordEncryptor.hashPassword( user.getPassword() ) );
+        currentSession.update( user );
         logger.info( "User updated successfully, User details = " + user );
     }
 

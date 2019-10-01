@@ -153,8 +153,6 @@ public class UserController {
             return "user_registration";
         } else {
             theUser.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-            userService.saveUser( theUser );
-
             // get the provided image from the form
             MultipartFile userImage = theUser.getUserImage();
             // get root directory to store the image
@@ -369,9 +367,6 @@ public class UserController {
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
                 return "redirect:/compte/";
             } else {
-                String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
-
-                path = Paths.get( rootDirectory + "resources/uploaded-images/" + userId + ".png" );
                 theModel.addAttribute( "topos", theUser.getTopos() );
                 theModel.addAttribute( "spots", theUser.getSpots() );
                 theModel.addAttribute( "user", theUser );
@@ -470,7 +465,7 @@ public class UserController {
             } else {
                 User userToUpdate = userService.getUser( userId );
                 userToUpdate.setPassword( theUser.getNewPassword() );
-                userService.updateUser( userToUpdate );
+                userService.updatePasswordUser( userToUpdate );
                 return "redirect:/compte/" + userId + "/moncompte";
             }
         }

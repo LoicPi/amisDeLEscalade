@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updatePasswordUser( User theUser ) {
+        userDAO.updatePasswordUser( theUser );
+    }
+
+    @Override
     public void deleteUser( int theId ) {
         userDAO.deleteUser( theId );
     }

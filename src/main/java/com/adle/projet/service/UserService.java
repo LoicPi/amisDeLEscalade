@@ -23,4 +23,6 @@ public interface UserService {
 
     public void deleteUser( int theId );
 
+    public void updatePasswordUser( User theUser );
+
 }
