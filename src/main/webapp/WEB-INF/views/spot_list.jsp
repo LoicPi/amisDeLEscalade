@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,6 +16,46 @@
 			<header class="container">
         		<c:import url="inc/header_page.jsp" />
       		</header>
+      		<div class="col-md-11 mx-auto">
+      			<div class="card-header text-center">
+      				<h3>Rechercher un site</h3>
+      			</div>
+      			<div class="card-body">
+      				<form:form action="searchspot" class="form" method="post" modelAttribute="searchSpot">
+      					<div class="form-group">
+      						<form:input path="name" class="form-control" type="text" placeholder="Recherche par nom du site"/>
+      					</div>
+      					<div class="form-group">
+      						<form:input path="city" class="form-control" type="text"  placeholder="Recherche par nom de ville"/>
+      					</div>		
+      					<div class="form-group">	
+      						<form:select path="county">
+                     			<form:option value="0" label = "Choix du département"/>
+                     			<form:options items = "${county}" />
+                  			</form:select>
+      					</div>
+      					<div class="form-group">
+      						<form:input path="sectors" class="form-control" type="number" placeholder="Recherche par nombre de secteur"/>
+      					</div>
+      					<div class="form-group">
+      						<form:select path="listing">
+                     			<form:option value="0" label = "Choix de la cotation"/>
+                     			<form:options items = "${listing}" />
+                  			</form:select>
+  						</div>
+  						<div class="form-group">
+      						<form:select path="level">
+                     			<form:option value="0" label = "Choix du niveaux"/>
+                     			<form:options items = "${level}" />
+                  			</form:select>
+  						</div>
+  						<div class="row justify-content-around">
+  							<button type="submit" class="btn btn-success btn-sm col-4"><i class="fas fa-search text-white" aria-hidden="true"></i></button>
+  						</div>
+      				</form:form>
+      			</div>
+      		</div>
+			<br/>
       		<div class="col-md-8 mx-auto">
    				<div class="card border-secondary">
    					<div class="card-header text-center">
@@ -52,7 +92,7 @@
     									<p class="mb-1"><c:out value="${spot.county.countyName }" /></p>
     									<small>Nombre de secteur : <c:out value="${fn:length(spot.sectors) }"/></small>
     								</div>
-    								<p class="mb-1">Niveau : ... à ... </p>
+    								<p class="mb-1">Niveau : <c:out value="${spot.highLevelOfSpot }"/> à ... </p>
 									<p class="mb-1">Cotation : ... à ....</p>
 									<br/>
     								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>

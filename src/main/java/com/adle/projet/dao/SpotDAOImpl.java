@@ -1,5 +1,6 @@
 package com.adle.projet.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -84,5 +85,74 @@ public class SpotDAOImpl implements SpotDAO {
             session.remove( s );
         }
         session.delete( theSpot );
+    }
+
+    @Override
+    public List<Spot> searchSpot( String nameSpot, String citySpot, int countySpot, String sectorsSpot, int listingSpot,
+            int levelSpot ) {
+
+        List<Spot> searchSpot = new ArrayList<Spot>();
+
+        StringBuilder request = new StringBuilder();
+
+        String varJointure = "";
+        String varTable = "";
+        String varSelect = "Select distinct s from Spot as s";
+
+        if ( listingSpot != 0 ) {
+            varTable = varTable + ", Sector as se, Path as p, Length as le, Listing as li";
+            varJointure = varJointure
+                    + "s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.id = "
+                    + listingSpot;
+        }
+
+        if ( listingSpot != 0 && levelSpot != 0 ) {
+            varTable = varTable + ", Level as lev";
+            varJointure = varJointure + " and li.level_id = lev.id and lev.id = " + levelSpot;
+        }
+
+        if ( listingSpot == 0 && levelSpot != 0 ) {
+            varTable = varTable + ", Sector as se, Path as p, Length as le, Listing as li, Level as lev";
+            varJointure = varJointure
+                    + "s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.level_id = lev.id and lev.id = "
+                    + levelSpot;
+        }
+
+        if ( nameSpot != null && !nameSpot.isEmpty() ) {
+            varJointure = varJointure + " and s.spotName like '%" + nameSpot + "%'";
+        }
+
+        if ( citySpot != "" && !citySpot.isEmpty() ) {
+            varJointure = varJointure + " and s.spotCity like '%" + citySpot + "%'";
+        }
+
+        if ( countySpot != 0 ) {
+            varJointure = varJointure + " and county_id =" + countySpot;
+        }
+
+        request.append( varSelect );
+        request.append( varTable );
+        request.append( " where 1 = 1" );
+        request.append( varJointure );
+
+        logger.info( "Requete SQL : " + request );
+
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        Query<Spot> query = currentSession.createQuery( request.toString(), Spot.class );
+        List<Spot> spots = query.getResultList();
+        logger.info( "Spot List : " + spots );
+        if ( sectorsSpot != null && sectorsSpot != "" ) {
+            int sectorSearch = Integer.parseInt( sectorsSpot );
+            for ( Spot spot : spots ) {
+                if ( spot.getSectors().size() == sectorSearch ) {
+                    searchSpot.add( spot );
+                }
+            }
+            logger.info( "Spot List : " + searchSpot );
+            return searchSpot;
+        }
+        return spots;
+
     }
 }

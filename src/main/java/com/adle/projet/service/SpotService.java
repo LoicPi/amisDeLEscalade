@@ -17,4 +17,9 @@ public interface SpotService {
     public List<Spot> findSpotByUserId( int userId );
 
     public void deleteSpot( int theId );
+
+    public void levelOfSpots( List<Spot> spots );
+
+    public List<Spot> searchSpots( String nameSpot, String citySpot, int countySpot, String sectorsSpot,
+            int listingSpot, int levelSpot );
 }

@@ -18,7 +18,7 @@
         		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
-   				<div class="card border-secondary">
+   				<div class="card border-secondary">   					
    					<div class="card-header text-center">
 						<h3><c:out value="${ spot.spotName }" /></h3>
 						<c:set var="userId" value="${sessionScope['userId']}" />

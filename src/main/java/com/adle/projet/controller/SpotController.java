@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +19,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.adle.projet.dto.SearchSpot;
 import com.adle.projet.dto.UpdateSpot;
 import com.adle.projet.entity.County;
+import com.adle.projet.entity.Level;
+import com.adle.projet.entity.Listing;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.CountyService;
+import com.adle.projet.service.LevelService;
+import com.adle.projet.service.ListingService;
 import com.adle.projet.service.SpotService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.SpotUpdateValidator;
@@ -30,6 +37,8 @@ import com.adle.projet.validator.SpotValidator;
 @Controller
 @RequestMapping( "/site" )
 public class SpotController {
+
+    private static final Logger logger = LogManager.getLogger( SpotController.class );
 
     @Autowired
     private UserService         userService;
@@ -45,6 +54,12 @@ public class SpotController {
 
     @Autowired
     private CountyService       countyService;
+
+    @Autowired
+    private LevelService        levelService;
+
+    @Autowired
+    private ListingService      listingService;
 
     /*
      * ************************* List of Spot *************************
@@ -68,9 +83,49 @@ public class SpotController {
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
+        SearchSpot searchSpot = new SearchSpot();
+        theModel.addAttribute( "searchSpot", searchSpot );
+        List<Level> levels = levelService.getLevels();
+        Map<Integer, String> levelName = levelService.getLevelNameOfLevels( levels );
+        theModel.addAttribute( "level", levelName );
+        List<Listing> listings = listingService.getListings();
+        Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
+        theModel.addAttribute( "listing", listingName );
+        List<County> countys = countyService.getCountys();
+        Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+        theModel.addAttribute( "county", nameCounty );
         List<Spot> theSpots = spotService.getSpots();
         theModel.addAttribute( "spots", theSpots );
         return "spot_list";
+    }
+
+    @PostMapping( "/searchspot" )
+    public String searchSpot( @ModelAttribute( "searchSpot" ) SearchSpot searchSpot, Model theModel,
+            HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        if ( session.getAttribute( "userId" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "userId" );
+            User theUser = userService.getUser( userId );
+            theModel.addAttribute( "user", theUser );
+        }
+
+        List<Level> levels = levelService.getLevels();
+        Map<Integer, String> levelName = levelService.getLevelNameOfLevels( levels );
+        theModel.addAttribute( "level", levelName );
+        List<Listing> listings = listingService.getListings();
+        Map<Integer, String> listingName = listingService.getListingNameOfListings( listings );
+        theModel.addAttribute( "listing", listingName );
+        List<County> countys = countyService.getCountys();
+        Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
+        theModel.addAttribute( "county", nameCounty );
+        theModel.addAttribute( "searchSpot", searchSpot );
+
+        List<Spot> theSpots = spotService.searchSpots( searchSpot.getName(), searchSpot.getCity(),
+                searchSpot.getCounty(), searchSpot.getSectors(), searchSpot.getListing(), searchSpot.getLevel() );
+        logger.info( "spots : " + theSpots );
+        theModel.addAttribute( "spots", theSpots );
+        return "spot_list";
+
     }
 
     /*

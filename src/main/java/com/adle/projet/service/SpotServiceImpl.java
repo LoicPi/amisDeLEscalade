@@ -14,7 +14,10 @@ import com.adle.projet.entity.Spot;
 public class SpotServiceImpl implements SpotService {
 
     @Autowired
-    private SpotDAO spotDAO;
+    private SpotDAO      spotDAO;
+
+    @Autowired
+    private LevelService levelService;
 
     @Override
     public List<Spot> getSpots() {
@@ -46,5 +49,19 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void deleteSpot( int theId ) {
         spotDAO.deleteSpot( theId );
+    }
+
+    @Override
+    public void levelOfSpots( List<Spot> spots ) {
+        for ( Spot spot : spots ) {
+            spot.setHighLevelOfSpot( levelService.getLevel( spot.highLevelId() ).getLevelName() );
+            spot.setLowLevelOfSpot( levelService.getLevel( spot.lowLevelId() ).getLevelName() );
+        }
+    }
+
+    @Override
+    public List<Spot> searchSpots( String nameSpot, String citySpot, int countySpot, String sectorsSpot,
+            int listingSpot, int levelSpot ) {
+        return spotDAO.searchSpot( nameSpot, citySpot, countySpot, sectorsSpot, listingSpot, levelSpot );
     }
 }
