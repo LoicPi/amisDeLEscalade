@@ -22,3 +22,44 @@
 .bouton{
 	margin-top : 40px;
 }
+
+li
+{
+  list-style-type: none;
+  margin-left: 1vw;
+}
+
+li:first-child
+{
+  margin:0;
+}
+
+footer
+{
+  padding-top: 5vh;
+}
+
+.copyright,  .impressum
+{
+  text-align: center;
+  font-size: 12px;
+}
+
+.logo
+{
+  height: 3vh;
+}
+
+@media (max-width: 768px) 
+{
+  li
+  {
+    margin-left: 0;
+    margin-bottom: 1vh;
+  }
+  
+  .sozial
+  {
+    margin-bottom: 1vh;
+  }
+}
