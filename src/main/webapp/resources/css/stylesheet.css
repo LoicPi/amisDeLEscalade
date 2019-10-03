@@ -8,6 +8,11 @@
 	margin-bottom : 20px;
 }
 
+.imgHome{
+	max-width : 65%;
+	margin-bottom : 20px;
+}
+
 .nav{
 	margin-bottom : 40px;
 }
@@ -62,4 +67,8 @@ footer
   {
     margin-bottom: 1vh;
   }
+}
+
+.searchHeader{
+	margin-bottom : 20px;
 }
