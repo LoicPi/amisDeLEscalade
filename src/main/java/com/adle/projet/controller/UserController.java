@@ -83,14 +83,14 @@ public class UserController {
     @GetMapping( "/" )
     public String listUsers( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User user = userService.getUser( userId );
             String email = user.getEmail();
             if ( !( email.contentEquals( "lesamisdelescalade@gmail.com" ) ) ) {
-                return "redirect:/home/";
+                return "redirect:/";
             } else {
                 List<User> users = userService.getUsers();
                 theModel.addAttribute( "user", user );
@@ -117,7 +117,7 @@ public class UserController {
     @GetMapping( "/inscription" )
     public String showFormForAdd( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
+        if ( session.getAttribute( "idUser" ) != null ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = new User();
@@ -160,7 +160,7 @@ public class UserController {
             // change any provided image type to png
             // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
             // product.getProductId() + ".png");
-            path = Paths.get( rootDirectory + "resources/uploaded-images/" + theUser.getId() + ".png" );
+            path = Paths.get( rootDirectory + "resources/uploaded-images/user" + theUser.getId() + ".png" );
             // check whether image exists or not
 
             if ( userImage != null && !userImage.isEmpty() ) {
@@ -177,7 +177,7 @@ public class UserController {
                 theUser.setImage( false );
             }
             userService.saveUser( theUser );
-            session.setAttribute( "userId", theUser.getId() );
+            session.setAttribute( "idUser", theUser.getId() );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
         }
     }
@@ -202,7 +202,7 @@ public class UserController {
     public String showFormForUpdate( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null || userId != (Integer) session.getAttribute( "idUser" ) ) {
             return "redirect:/compte/connexion";
         } else {
             User userToUpdate = userService.getUser( userId );
@@ -239,45 +239,56 @@ public class UserController {
     public String updateUser( @PathVariable( "userId" ) Integer userId,
             @Valid @ModelAttribute( "updateUser" ) UpdateUser theUser, BindingResult result, Model theModel,
             HttpServletRequest request ) {
-        User userUpdate = userService.getUser( userId );
-        userUpdateValidator.validate( theUser, result );
-        if ( result.hasErrors() ) {
-            User userToUpdate = userService.getUser( userId );
-            theUser.setRole( userToUpdate.getRole() );
-            theModel.addAttribute( "user", userToUpdate );
-            theModel.addAttribute( "updateUser", theUser );
-            return "user_update";
+        HttpSession session = request.getSession();
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+            return "redirect:/compte/connexion";
         } else {
-            userUpdate.setFirstName( theUser.getUpdateFirstName() );
-            userUpdate.setLastName( theUser.getUpdateLastName() );
-            userUpdate.setNickName( theUser.getUpdateNickName() );
-            userUpdate.setEmail( theUser.getUpdateEmail() );
-            if ( theUser.getUserMember() == null ) {
-                theUser.setUserMember( false );
-            }
-            if ( theUser.getUserMember() ) {
-                userUpdate.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-            }
 
-            MultipartFile userImage = theUser.getUpdateUserImage();
-
-            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
-
-            path = Paths.get( rootDirectory + "resources/uploaded-images/" + userUpdate.getId() + ".png" );
-
-            if ( userImage != null && !userImage.isEmpty() ) {
-                try {
-                    userImage.transferTo( new File( path.toString() ) );
-                    userUpdate.setImage( true );
-                } catch ( IllegalStateException | IOException e ) {
-                    e.printStackTrace();
-                    throw new RuntimeException( "Saving User image was not successful", e );
-                }
+            User userUpdate = userService.getUser( userId );
+            userUpdateValidator.validate( theUser, result );
+            if ( result.hasErrors() ) {
+                User userToUpdate = userService.getUser( userId );
+                theUser.setRole( userToUpdate.getRole() );
+                theModel.addAttribute( "user", userToUpdate );
+                theModel.addAttribute( "updateUser", theUser );
+                return "user_update";
             } else {
-                userUpdate.setImage( false );
+                userUpdate.setFirstName( theUser.getUpdateFirstName() );
+                userUpdate.setLastName( theUser.getUpdateLastName() );
+                userUpdate.setNickName( theUser.getUpdateNickName() );
+                userUpdate.setEmail( theUser.getUpdateEmail() );
+                if ( theUser.getUserMember() == null ) {
+                    theUser.setUserMember( false );
+                }
+                if ( theUser.getUserMember() ) {
+                    userUpdate.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
+                }
+
+                MultipartFile userImage = theUser.getUpdateUserImage();
+
+                String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+                path = Paths.get( rootDirectory + "resources/uploaded-images/user/" + userUpdate.getId() + ".png" );
+
+                if ( userImage != null && !userImage.isEmpty() ) {
+                    try {
+                        userImage.transferTo( new File( path.toString() ) );
+                        userUpdate.setImage( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving User image was not successful", e );
+                    }
+                } else {
+                    if ( Files.exists( path ) ) {
+                        userUpdate.setImage( true );
+                    } else {
+                        userUpdate.setImage( false );
+                    }
+                }
+                userService.updateUser( userUpdate );
+                return "redirect:/compte/" + userId + "/moncompte";
             }
-            userService.updateUser( userUpdate );
-            return "redirect:/compte/" + userId + "/moncompte";
         }
     }
 
@@ -296,8 +307,8 @@ public class UserController {
     @GetMapping( "/connexion" )
     public String showFormForLogin( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             return "redirect:/compte/" + userId + "/moncompte";
@@ -331,7 +342,7 @@ public class UserController {
             return "account_login";
         } else {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
-            session.setAttribute( "userId", userLogin.getId() );
+            session.setAttribute( "idUser", userLogin.getId() );
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
                 return "redirect:/compte/";
             } else {
@@ -360,8 +371,9 @@ public class UserController {
     public String showFormForAccountUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
-            return "redirect:/compte/connexion";
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+            return "redirect:/";
         } else {
             User theUser = userService.getUser( userId );
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
@@ -394,7 +406,8 @@ public class UserController {
     public String showFormForDeconnectionUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             session.invalidate();
@@ -421,7 +434,8 @@ public class UserController {
     public String showFormForChangePasswordUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             User user = userService.getUser( userId );
@@ -453,7 +467,8 @@ public class UserController {
             @Valid @ModelAttribute( "updatePasswordUser" ) UpdatePasswordUser theUser,
             BindingResult result, Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             userUpdatePasswordValidator.validate( theUser, result );
@@ -487,7 +502,8 @@ public class UserController {
     @GetMapping( "{userId}/deleteuser" )
     public String deleteUser( @PathVariable( "userId" ) Integer userId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             // get root directory to store the image
@@ -497,15 +513,15 @@ public class UserController {
             // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
             // product.getProductId() + ".png");
             path = Paths
-                    .get( "/home/LoicPi/amisDeLEscalade/src/main/java/webapp/resources/uploaded-images/"
+                    .get( rootDirectory + "resources/uploaded-images/user/"
                             + userId + ".png" );
 
             if ( Files.exists( path ) ) {
                 try {
                     Files.delete( path );
                 } catch ( IOException e ) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
+                    throw new RuntimeException( "Delete User image was not successful", e );
                 }
             }
             userService.deleteUser( userId );
@@ -515,7 +531,7 @@ public class UserController {
     }
 
     /*
-     * ************************* Delete User *************************
+     * ************************ User Membership Status ************************
      */
 
     /**
@@ -533,7 +549,7 @@ public class UserController {
     public String deleteRoleMemberOfUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
@@ -558,7 +574,7 @@ public class UserController {
     public String putRoleMemberToUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
