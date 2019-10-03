@@ -81,10 +81,10 @@ public class PathController {
     public String formForPathCreation( @PathVariable( "spotId" ) Integer spotId,
             @PathVariable( "sectorId" ) Integer sectorId, Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/vuesecteur";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             Spot theSpot = spotService.getSpot( spotId );
@@ -123,11 +123,11 @@ public class PathController {
             Model theModel, BindingResult result, HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/vuesecteur";
         } else {
             pathValidator.validate( thePath, result );
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             Spot theSpot = spotService.getSpot( spotId );
             Sector theSector = sectorService.getSector( sectorId );
@@ -175,8 +175,8 @@ public class PathController {
             @PathVariable( "sectorId" ) Integer sectorId, @PathVariable( "pathId" ) Integer pathId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -214,10 +214,10 @@ public class PathController {
             @PathVariable( "sectorId" ) Integer sectorId, @PathVariable( "pathId" ) Integer pathId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             Spot theSpot = spotService.getSpot( spotId );
@@ -271,7 +271,7 @@ public class PathController {
             @Valid @ModelAttribute( "updatePath" ) UpdatePath thePath, BindingResult result,
             Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userId" );
+        Integer userId = (Integer) session.getAttribute( "idUser" );
         User theUser = userService.getUser( userId );
         Spot theSpot = spotService.getSpot( spotId );
         Sector theSector = sectorService.getSector( sectorId );
@@ -319,7 +319,7 @@ public class PathController {
             @PathVariable( "pathId" ) Integer pathId,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             pathService.deletePath( pathId );

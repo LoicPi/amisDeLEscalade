@@ -62,10 +62,10 @@ public class CommentController {
     public String addACommentToTheSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             Spot theSpot = spotService.getSpot( spotId );
             Comment theComment = new Comment();
@@ -97,11 +97,11 @@ public class CommentController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             commentValidator.validate( theComment, result );
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             Spot theSpot = spotService.getSpot( spotId );
             if ( result.hasErrors() ) {
@@ -139,10 +139,10 @@ public class CommentController {
     public String editACommentOfTheSpot( @PathVariable( "spotId" ) Integer spotId,
             @PathVariable( "commentId" ) Integer commentId, Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             Spot theSpot = spotService.getSpot( spotId );
             UpdateComment theComment = new UpdateComment();
@@ -182,7 +182,7 @@ public class CommentController {
             @Valid @ModelAttribute( "updateComment" ) UpdateComment theComment, BindingResult result,
             Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userId" );
+        Integer userId = (Integer) session.getAttribute( "idUser" );
         User theUser = userService.getUser( userId );
         Spot theSpot = spotService.getSpot( spotId );
         Comment comment = commentService.getComment( commentId );
@@ -219,7 +219,7 @@ public class CommentController {
     public String deleteComment( @PathVariable( "spotId" ) Integer spotId,
             @PathVariable( "commentId" ) Integer commentId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             commentService.deleteComment( commentId );
