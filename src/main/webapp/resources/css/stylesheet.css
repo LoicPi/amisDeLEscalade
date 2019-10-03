@@ -79,6 +79,15 @@ footer
 }
 
 .media-body{
-	border : 1px solid #06DCFB;
+	border : 1px solid grey;
 	margin-bottom : 5px;
+}
+
+.imgProfil {
+	margin-bottom : 10px;
+}
+@media (max-width:800px) {
+.imgProfil {
+	max-width : 50%;
+}
 }

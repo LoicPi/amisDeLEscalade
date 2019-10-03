@@ -22,23 +22,22 @@
 						<a class="btn btn-danger btn-sm" href="<c:url value="/compte/${user.id}/deconnexion"/>" role="button">Deconnexion</a>
 					</div>
 					<div class="card-body">
-						<div class="row justify-content-around">
-							<h4 class="col-lg-8 col-sm-6 text-center">Mes infos</h4>
-        					<a class="btn btn-info btn-sm" href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
+						<div class="row justify-content-between">
+							<h4 class="col-12 col-md-6 text-center text-md-left">Mes infos</h4>
+        					<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/compte/${user.id}/maj"/>" role="button">Modifier</a>
       					</div>
 						<hr>
 						<div class="row m-y-2">
 							<div class="col-lg-4 pull-lg-8 text-center">
 								<c:choose>
 									<c:when test="${user.image}">
-										<img src="<c:url value="/resources/uploaded-images/${user.id}.png"/>" alt="photo de profil" class="m-x-auto img-fluid rounded-circle"/>
+										<img src="<c:url value="/resources/uploaded-images/${user.id}.png"/>" alt="photo de profil" class="m-x-auto img-fluid imgProfil rounded-circle"/>
        	 							</c:when>
        	 							<c:otherwise>
-       	 								<img src="<c:url value="/resources/image/avatar.png"/>" alt="pas de photo de profil" class="m-x-auto img-fluid rounded-circle"/>
+       	 								<img src="<c:url value="/resources/image/avatar.png"/>" alt="pas de photo de profil" class="m-x-auto img-fluid imgProfil rounded-circle"/>
        	 							</c:otherwise>
        	 						</c:choose>       	 					
        	 					</div>
-       	 					<br/>
        		 				<div class="col-lg-8 push-lg-4 personal-info">
 								<form class="form-horizontal" role="form">
 									<div class="form-group row justify-content-center">
@@ -75,56 +74,55 @@
 						</c:if>									
 						<hr>
       					<div class="row justify-content-around">
-							<h4 class="col-lg-8 col-sm-6">Mes topos</h4>
-        					<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer topo</a>
+							<h4 class="col-12 col-md-6 text-center text-md-left">Mes topos</h4>
+        					<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/creationtopo"/>" role="button">Créer topo</a>
       					</div>
       					<hr>
       					<div class="list-group">
       						<c:forEach items="${topos}" var="topo">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
+    								<div class="d-flex w-100 justify-content-around border-bottom">
     									<h5 class="mb-1"><c:out value="${topo.topoName }" /></h5>
-    										<c:choose>
-    											<c:when test ="${ topo.availability }">
-    												<small>Prété</small>
-    											</c:when>
-    											<c:otherwise>
-    												<small>Disponible</small>
-    											</c:otherwise>
-    									</c:choose>
     								</div>
+    								<br/>
     								<p class="mb-1"><c:out value="${topo.topoCity}" /></p>
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${topo.county.countyName}" /></p>
-    									<a class="btn btn-info btn-sm" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
-    								</div>
+    								<p class="mb-1"><c:out value="${topo.county.countyName}" /></p>
+    								<c:choose>
+    									<c:when test ="${ topo.availability }">
+    										<p class="mb-1">Prété</p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Disponible</p>
+    									</c:otherwise>
+    								</c:choose>
+    								<br/>
+    								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
     							</div>
     						</c:forEach>
     					</div>		
       					<hr>
       					<div class="row justify-content-around">
-							<h4 class="col-lg-8 col-sm-6">Mes sites</h4>
-        					<a class="btn btn-info btn-sm" href="<c:url value="/site/creationsite"/>" role="button">Créer site</a>
+							<h4 class="col-12 col-md-6 text-center text-md-left">Mes sites</h4>
+        					<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/site/creationsite"/>" role="button">Créer site</a>
       					</div>
       					<hr>
       					<div class="list-group">
       						<c:forEach items="${spots}" var="spot">
   								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
+    								<div class="d-flex w-100 justify-content-around border-bottom">
     									<h5 class="mb-1"><c:out value="${spot.spotName }" /></h5>
-    									<c:choose>
-    										<c:when test ="${ spot.tag }">
-    											<small>Officiel</small>
-    										</c:when>
-    										<c:otherwise>
-    										</c:otherwise>
-    									</c:choose>
     								</div>
     								<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${spot.county.countyName }" /></p>
-    									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
-    								</div>
+    								<p class="mb-1"><c:out value="${spot.county.countyName }" /></p>
+    								<c:choose>
+    									<c:when test ="${ spot.tag }">
+    										<p class="mb-1">Officiel</p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Site Non-Officiel</p>
+    									</c:otherwise>
+    								</c:choose>
+    								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/vuesite"/>" role="button">Détail</a>
     							</div>
     						</c:forEach>
     					</div>
