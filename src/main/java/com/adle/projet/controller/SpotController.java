@@ -96,6 +96,7 @@ public class SpotController {
         theModel.addAttribute( "county", nameCounty );
         List<Spot> theSpots = spotService.getSpots();
         spotService.levelOfSpots( theSpots );
+        spotService.listingOfSpots( theSpots );
         theModel.addAttribute( "spots", theSpots );
         return "spot_list";
     }

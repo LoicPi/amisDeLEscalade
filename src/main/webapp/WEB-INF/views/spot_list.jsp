@@ -25,13 +25,13 @@
       				<form:form action="searchspot" class="form" method="post" modelAttribute="searchSpot">
       					<div class="form-row searchHeader">
       						<div class="col">
-      							<form:input path="name" class="form-control" type="text" placeholder="Recherche par nom du site"/>
+      							<form:input path="name" class="form-control" type="text" placeholder="Nom du site"/>
       						</div>
       						<div class="col">
-      							<form:input path="city" class="form-control" type="text"  placeholder="Recherche par nom de ville"/>
+      							<form:input path="city" class="form-control" type="text"  placeholder="Nom de ville"/>
       						</div>		
       						<div class="col">
-      							<form:input path="sectors" class="form-control" type="number" placeholder="Recherche par nombre de secteur"/>
+      							<form:input path="sectors" class="form-control" type="number" placeholder="Nombre de secteur"/>
       						</div>
       					</div>
       					<div class="form-row">
@@ -86,8 +86,22 @@
     								<br/>
     								<p class="mb-1"><c:out value="${spot.spotCity }" /></p>
     								<p class="mb-1"><c:out value="${spot.county.countyName }" /></p>
-    								<p class="mb-1">Niveau : <c:out value="${spot.lowLevelOfSpot }"/> à <c:out value="${spot.highLevelOfSpot }"/> </p>
-									<p class="mb-1">Cotation : ... à ....</p>
+    								<c:choose>
+    									<c:when test="${spot.lowLevelOfSpot eq spot.highLevelOfSpot }">
+    										<p class="mb-1">Niveau : <c:out value="${spot.lowLevelOfSpot }"/></p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Niveau : <c:out value="${spot.lowLevelOfSpot }"/> à <c:out value="${spot.highLevelOfSpot }"/> </p>
+    									</c:otherwise>
+    								</c:choose>
+    								<c:choose>
+    									<c:when test="${spot.lowLevelOfSpot eq spot.highLevelOfSpot }">
+    										<p class="mb-1">Cotation : <c:out value="${spot.lowListingOfSpot }"/></p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Cotation : <c:out value="${spot.lowListingOfSpot }"/> à <c:out value="${spot.highListingOfSpot }"/> </p>
+    									</c:otherwise>
+    								</c:choose>
     								<c:choose>
     									<c:when test ="${ spot.tag }">
     										<p class="mb-1">Site Officiel</p>

@@ -133,6 +133,46 @@ public class Spot {
     @Transient
     private String lowLevelOfSpot;
 
+    @Transient
+    public Integer highListingId() {
+
+        int intOfHighListing = 0;
+        for ( Sector sector : this.getSectors() ) {
+            for ( Path path : sector.getPaths() ) {
+                for ( Length length : path.getLengths() ) {
+                    int lengthListing = length.getListing().getId();
+                    if ( lengthListing >= intOfHighListing ) {
+                        intOfHighListing = lengthListing;
+                    }
+                }
+            }
+        }
+        return intOfHighListing;
+    }
+
+    @Transient
+    public Integer lowListingId() {
+
+        int intOfLowListing = 0;
+        for ( Sector sector : this.getSectors() ) {
+            for ( Path path : sector.getPaths() ) {
+                for ( Length length : path.getLengths() ) {
+                    int lengthListing = length.getListing().getId();
+                    if ( lengthListing <= intOfLowListing || intOfLowListing == 0 ) {
+                        intOfLowListing = lengthListing;
+                    }
+                }
+            }
+        }
+        return intOfLowListing;
+    }
+
+    @Transient
+    private String highListingOfSpot;
+
+    @Transient
+    private String lowListingOfSpot;
+
     public Integer getId() {
         return id;
     }
@@ -243,6 +283,22 @@ public class Spot {
 
     public void setLowLevelOfSpot( String lowLevelOfSpot ) {
         this.lowLevelOfSpot = lowLevelOfSpot;
+    }
+
+    public String getHighListingOfSpot() {
+        return highListingOfSpot;
+    }
+
+    public void setHighListingOfSpot( String highListingOfSpot ) {
+        this.highListingOfSpot = highListingOfSpot;
+    }
+
+    public String getLowListingOfSpot() {
+        return lowListingOfSpot;
+    }
+
+    public void setLowListingOfSpot( String lowListingOfSpot ) {
+        this.lowListingOfSpot = lowListingOfSpot;
     }
 
     @Override

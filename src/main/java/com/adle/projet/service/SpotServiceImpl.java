@@ -14,10 +14,13 @@ import com.adle.projet.entity.Spot;
 public class SpotServiceImpl implements SpotService {
 
     @Autowired
-    private SpotDAO      spotDAO;
+    private SpotDAO        spotDAO;
 
     @Autowired
-    private LevelService levelService;
+    private LevelService   levelService;
+
+    @Autowired
+    private ListingService listingService;
 
     @Override
     public List<Spot> getSpots() {
@@ -63,5 +66,13 @@ public class SpotServiceImpl implements SpotService {
     public List<Spot> searchSpots( String nameSpot, String citySpot, int countySpot, String sectorsSpot,
             int listingSpot, int levelSpot ) {
         return spotDAO.searchSpot( nameSpot, citySpot, countySpot, sectorsSpot, listingSpot, levelSpot );
+    }
+
+    @Override
+    public void listingOfSpots( List<Spot> spots ) {
+        for ( Spot spot : spots ) {
+            spot.setHighListingOfSpot( listingService.getListing( spot.highListingId() ).getListingName() );
+            spot.setLowListingOfSpot( listingService.getListing( spot.lowListingId() ).getListingName() );
+        }
     }
 }

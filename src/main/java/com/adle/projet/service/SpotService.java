@@ -22,4 +22,6 @@ public interface SpotService {
 
     public List<Spot> searchSpots( String nameSpot, String citySpot, int countySpot, String sectorsSpot,
             int listingSpot, int levelSpot );
+
+    public void listingOfSpots( List<Spot> spots );
 }
