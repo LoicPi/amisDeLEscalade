@@ -1,5 +1,10 @@
 package com.adle.projet.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.adle.projet.dto.UpdateTopo;
 import com.adle.projet.entity.County;
@@ -56,6 +62,12 @@ public class TopoController {
     @Autowired
     private CountyService       countyService;
 
+    private Path                path1;
+
+    private Path                path2;
+
+    private Path                path3;
+
     /*
      * ************************* List of Topo *************************
      */
@@ -73,8 +85,8 @@ public class TopoController {
     @GetMapping( "/" )
     public String listTopos( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -98,10 +110,10 @@ public class TopoController {
     @GetMapping( "/creationtopo" )
     public String formForTopoCreation( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             List<County> countys = countyService.getCountys();
@@ -131,10 +143,10 @@ public class TopoController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             topoValidator.validate( theTopo, result );
             if ( result.hasErrors() ) {
@@ -153,6 +165,56 @@ public class TopoController {
                     theTopo.setCounty( theCounty );
                 }
                 theTopo.setUser( theUser );
+                MultipartFile topoImage1 = theTopo.getTopoImage1();
+                MultipartFile topoImage2 = theTopo.getTopoImage2();
+                MultipartFile topoImage3 = theTopo.getTopoImage3();
+
+                String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+                path1 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + theTopo.getId() + "1.png" );
+
+                path2 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + theTopo.getId() + "2.png" );
+
+                path3 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + theTopo.getId() + "3.png" );
+
+                if ( topoImage1 != null && !topoImage1.isEmpty() ) {
+                    try {
+                        topoImage1.transferTo( new File( path1.toString() ) );
+                        theTopo.setImage1( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        // oops! something did not work as expected
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Topo image1 was not successful", e );
+                    }
+                } else {
+                    theTopo.setImage1( false );
+                }
+
+                if ( topoImage2 != null && !topoImage2.isEmpty() ) {
+                    try {
+                        topoImage2.transferTo( new File( path2.toString() ) );
+                        theTopo.setImage2( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        // oops! something did not work as expected
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Topo image2 was not successful", e );
+                    }
+                } else {
+                    theTopo.setImage2( false );
+                }
+
+                if ( topoImage3 != null && !topoImage3.isEmpty() ) {
+                    try {
+                        topoImage3.transferTo( new File( path3.toString() ) );
+                        theTopo.setImage3( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        // oops! something did not work as expected
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Topo image3 was not successful", e );
+                    }
+                } else {
+                    theTopo.setImage3( false );
+                }
                 topoService.saveTopo( theTopo );
                 return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
             }
@@ -178,8 +240,8 @@ public class TopoController {
     public String formForTopoView( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -207,10 +269,10 @@ public class TopoController {
     public String formForTopoUpdate( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             List<County> countys = countyService.getCountys();
@@ -257,7 +319,7 @@ public class TopoController {
             @Valid @ModelAttribute( "updateTopo" ) UpdateTopo theTopo, BindingResult result, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userId" );
+        Integer userId = (Integer) session.getAttribute( "idUser" );
         User theUser = userService.getUser( userId );
         theModel.addAttribute( "user", theUser );
         topoUpdateValidator.validate( theTopo, result );
@@ -280,6 +342,69 @@ public class TopoController {
             topoUpdate.setTopoDescriptive( theTopo.getUpdateTopoDescriptive() );
             topoUpdate.setTopoReleaseDate( theTopo.getUpdateTopoReleaseDate() );
             topoUpdate.setCounty( theCounty );
+
+            MultipartFile topoImage1 = theTopo.getUpdateTopoImage1();
+            MultipartFile topoImage2 = theTopo.getUpdateTopoImage2();
+            MultipartFile topoImage3 = theTopo.getUpdateTopoImage3();
+
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path1 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoUpdate.getId() + "1.png" );
+
+            path2 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoUpdate.getId() + "2.png" );
+
+            path3 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoUpdate.getId() + "3.png" );
+
+            if ( topoImage1 != null && !topoImage1.isEmpty() ) {
+                try {
+                    topoImage1.transferTo( new File( path1.toString() ) );
+                    topoUpdate.setImage1( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    // oops! something did not work as expected
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Topo image1 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path1 ) ) {
+                    topoUpdate.setImage1( true );
+                } else {
+                    topoUpdate.setImage1( false );
+                }
+            }
+
+            if ( topoImage2 != null && !topoImage2.isEmpty() ) {
+                try {
+                    topoImage2.transferTo( new File( path2.toString() ) );
+                    topoUpdate.setImage2( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    // oops! something did not work as expected
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Topo image2 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path2 ) ) {
+                    topoUpdate.setImage2( true );
+                } else {
+                    topoUpdate.setImage2( false );
+                }
+            }
+
+            if ( topoImage3 != null && !topoImage3.isEmpty() ) {
+                try {
+                    topoImage3.transferTo( new File( path3.toString() ) );
+                    topoUpdate.setImage3( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    // oops! something did not work as expected
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Topo image3 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path3 ) ) {
+                    topoUpdate.setImage3( true );
+                } else {
+                    topoUpdate.setImage3( false );
+                }
+            }
             topoService.updateTopo( topoUpdate );
             return "redirect:/topo/" + topoId + "/vuetopo";
         }
@@ -297,12 +422,47 @@ public class TopoController {
      * @return view of the topo's list
      */
     @GetMapping( "{topoId}/deletetopo" )
-    public String deleteTopo( @PathVariable( "topoId" ) Integer spotId, HttpServletRequest request ) {
+    public String deleteTopo( @PathVariable( "topoId" ) Integer topoId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            topoService.deleteTopo( spotId );
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path1 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoId + "1.png" );
+
+            path2 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoId + "2.png" );
+
+            path3 = Paths.get( rootDirectory + "resources/uploaded-images/topo/" + topoId + "3.png" );
+
+            if ( Files.exists( path1 ) ) {
+                try {
+                    Files.delete( path1 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Topo image1 was not successful", e );
+                }
+            }
+
+            if ( Files.exists( path2 ) ) {
+                try {
+                    Files.delete( path2 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Topo image2 was not successful", e );
+                }
+            }
+
+            if ( Files.exists( path3 ) ) {
+                try {
+                    Files.delete( path3 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Topo image3 was not successful", e );
+                }
+            }
+
+            topoService.deleteTopo( topoId );
             return "redirect:/topo/";
         }
     }
@@ -326,10 +486,10 @@ public class TopoController {
     public String bookTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User userTaker = userService.getUser( userId );
             Topo theTopo = topoService.getTopo( topoId );
             User userLender = theTopo.getUser();
@@ -369,7 +529,7 @@ public class TopoController {
     public String availableTopo( @PathVariable( "topoId" ) Integer topoId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             Topo theTopo = topoService.getTopo( topoId );

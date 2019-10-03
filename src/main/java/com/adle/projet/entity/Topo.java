@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created Topo Bean defined by id, name, city, county, country, descriptive,
@@ -41,42 +42,60 @@ public class Topo {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer id;
+    private Integer       id;
 
     @Column( name = "topo_name" )
     @Size( max = 100, min = 3, message = "{topo.name.invalid}" )
-    private String  topoName;
+    private String        topoName;
 
     @Column( name = "topo_city" )
     @Size( max = 100, min = 3, message = "{topo.city.invalid}" )
-    private String  topoCity;
+    private String        topoCity;
 
     @Column( name = "topo_country" )
     @Size( max = 100, min = 3, message = "{topo.country.invalid}" )
-    private String  topoCountry;
+    private String        topoCountry;
 
     @Column( name = "topo_descriptive" )
     @Size( max = 600, min = 10, message = "La description doit contenir entre {2} et {1} charactères." )
-    private String  topoDescriptive;
+    private String        topoDescriptive;
 
     @Column( name = "topo_releaseDate" )
     @Temporal( TemporalType.DATE )
     @DateTimeFormat( iso = ISO.DATE )
-    private Date    topoReleaseDate;
+    private Date          topoReleaseDate;
 
     @Column( name = "topo_availability" )
-    private Boolean topoAvailability = false;
+    private Boolean       topoAvailability = false;
+
+    @Column( name = "image1" )
+    private Boolean       image1           = false;
+
+    @Column( name = "image2" )
+    private Boolean       image2           = false;
+
+    @Column( name = "image3" )
+    private Boolean       image3           = false;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
-    private User    user;
+    private User          user;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "county_id" )
-    private County  county;
+    private County        county;
 
     @Transient
-    private Integer topoCounty;
+    private Integer       topoCounty;
+
+    @Transient
+    private MultipartFile topoImage1;
+
+    @Transient
+    private MultipartFile topoImage2;
+
+    @Transient
+    private MultipartFile topoImage3;
 
     public Topo() {
 
@@ -157,6 +176,30 @@ public class Topo {
         this.topoAvailability = topoAvailability;
     }
 
+    public Boolean getImage1() {
+        return image1;
+    }
+
+    public void setImage1( Boolean image1 ) {
+        this.image1 = image1;
+    }
+
+    public Boolean getImage2() {
+        return image2;
+    }
+
+    public void setImage2( Boolean image2 ) {
+        this.image2 = image2;
+    }
+
+    public Boolean getImage3() {
+        return image3;
+    }
+
+    public void setImage3( Boolean image3 ) {
+        this.image3 = image3;
+    }
+
     public User getUser() {
         return user;
     }
@@ -179,6 +222,30 @@ public class Topo {
 
     public void setTopoCounty( Integer topoCounty ) {
         this.topoCounty = topoCounty;
+    }
+
+    public MultipartFile getTopoImage1() {
+        return topoImage1;
+    }
+
+    public void setTopoImage1( MultipartFile topoImage1 ) {
+        this.topoImage1 = topoImage1;
+    }
+
+    public MultipartFile getTopoImage2() {
+        return topoImage2;
+    }
+
+    public void setTopoImage2( MultipartFile topoImage2 ) {
+        this.topoImage2 = topoImage2;
+    }
+
+    public MultipartFile getTopoImage3() {
+        return topoImage3;
+    }
+
+    public void setTopoImage3( MultipartFile topoImage3 ) {
+        this.topoImage3 = topoImage3;
     }
 
     @Override

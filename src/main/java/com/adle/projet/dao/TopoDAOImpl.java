@@ -28,7 +28,10 @@ public class TopoDAOImpl implements TopoDAO {
     public List<Topo> getTopos() {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Topo> query = currentSession.createQuery(
-                "select distinct t from Topo as t left join fetch t.user left join fetch t.county", Topo.class );
+                "select distinct t from Topo as t "
+                        + "left join fetch t.user "
+                        + "left join fetch t.county",
+                Topo.class );
         List<Topo> topos = query.getResultList();
         return topos;
     }

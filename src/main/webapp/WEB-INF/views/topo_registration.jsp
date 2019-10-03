@@ -21,7 +21,7 @@
      					<h3>Création du topo</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="savetopo" class="form" method="post" modelAttribute="topo">
+     					<form:form action="savetopo" class="form" method="post" enctype="multipart/form-data" modelAttribute="topo">
 
       						<form:hidden path="id" /> 
       						
@@ -64,6 +64,25 @@
        							<form:input path="topoReleaseDate" class="form-control" type="date" />
        							<form:errors path="topoReleaseDate" class="error" />
       						</div>    						
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="topoImage1">Photo du topo 1 : </label>
+      							<br/>
+								<form:input type="file" path="topoImage1" id="topoImage1" name="topoImage1" class="form:input-large" />
+      						</div>
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="topoImage2">Photo du topo 2 : </label>
+      							<br/>
+								<form:input type="file" path="topoImage2" id="topoImage2" name="topoImage2" class="form:input-large" />
+      						</div>
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="topoImage3">Photo du topo 3 : </label>
+      							<br/>
+								<form:input type="file" path="topoImage3" id="topoImage3" name="topoImage3" class="form:input-large" />
+      						</div>
+      						
       						
       						<hr>
 							<div class="row justify-content-around">

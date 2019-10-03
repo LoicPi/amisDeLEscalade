@@ -2,28 +2,36 @@ package com.adle.projet.dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.adle.projet.entity.County;
 import com.adle.projet.entity.User;
 
 public class UpdateTopo {
 
-    private Integer id;
+    private Integer       id;
 
-    private String  updateTopoName;
+    private String        updateTopoName;
 
-    private String  updateTopoCity;
+    private String        updateTopoCity;
 
-    private String  updateTopoCountry;
+    private String        updateTopoCountry;
 
-    private String  updateTopoDescriptive;
+    private String        updateTopoDescriptive;
 
-    private Date    updateTopoReleaseDate;
+    private Date          updateTopoReleaseDate;
 
-    private User    user;
+    private MultipartFile updateTopoImage1;
 
-    private County  county;
+    private MultipartFile updateTopoImage2;
 
-    private Integer topoCounty;
+    private MultipartFile updateTopoImage3;
+
+    private User          user;
+
+    private County        county;
+
+    private Integer       topoCounty;
 
     public Integer idUser() {
         return user.getId();
@@ -75,6 +83,30 @@ public class UpdateTopo {
 
     public void setUpdateTopoReleaseDate( Date updateTopoReleaseDate ) {
         this.updateTopoReleaseDate = updateTopoReleaseDate;
+    }
+
+    public MultipartFile getUpdateTopoImage1() {
+        return updateTopoImage1;
+    }
+
+    public void setUpdateTopoImage1( MultipartFile updateTopoImage1 ) {
+        this.updateTopoImage1 = updateTopoImage1;
+    }
+
+    public MultipartFile getUpdateTopoImage2() {
+        return updateTopoImage2;
+    }
+
+    public void setUpdateTopoImage2( MultipartFile updateTopoImage2 ) {
+        this.updateTopoImage2 = updateTopoImage2;
+    }
+
+    public MultipartFile getUpdateTopoImage3() {
+        return updateTopoImage3;
+    }
+
+    public void setUpdateTopoImage3( MultipartFile updateTopoImage3 ) {
+        this.updateTopoImage3 = updateTopoImage3;
     }
 
     public User getUser() {

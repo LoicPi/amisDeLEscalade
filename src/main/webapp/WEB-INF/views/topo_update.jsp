@@ -21,7 +21,7 @@
 						<h3 class="text-center">Mise à jour du topo : <c:out value="${ topo.topoName }" /></h3>
 					</div>
 					<div class="card-body">
-						<form:form action="updatetopo" class="form" method="post" modelAttribute="updateTopo">
+						<form:form action="updatetopo" class="form" method="post" enctype="multipart/form-data" modelAttribute="updateTopo">
 							<form:hidden path="id" />
 							<div class="form-group">
 								<label class="col-md-6 control-label" for=updateTopoName>Nom du topo :</label>
@@ -69,6 +69,22 @@
 									<form:errors path="updateTopoReleaseDate" cssClass="error" />
 								</div>
 							</div>
+							<div class="form-group">
+      							<label class="control-label" for="topoUpdateImage1">Photo du topo 1 : </label>
+      							<br/>
+								<form:input type="file" path="topoUpdateImage1" id="topoUpdateImage1" name="topoUpdateImage1" class="form:input-large" />
+      						</div>
+      						<div class="form-group">
+      							<label class="control-label" for="topoUpdateImage2">Photo du topo 2 : </label>
+      							<br/>
+								<form:input type="file" path="topoUpdateImage2" id="topoUpdateImage2" name="topoUpdateImage2" class="form:input-large" />
+      						</div>
+      						<div class="form-group">
+      							<label class="control-label" for="topoUpdateImage3">Photo du topo 3 : </label>
+      							<br/>
+								<form:input type="file" path="topoUpdateImage3" id="topoUpdateImage3" name="topoUpdateImage3" class="form:input-large" />
+      						</div>
+							
 							<hr>
 							<div class="row justify-content-around">
         						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>

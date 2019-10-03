@@ -86,6 +86,17 @@
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date de parution :</label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${ topo.topoReleaseDate }" /></label>
 							</div>
+							<div class="row">
+								<c:if test="${topo.image1}">
+              							<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}1.png"/>" class="img-responsive"></div>
+              					</c:if>
+              					<c:if test="${topo.image2}">
+                  					<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}2.png"/>" class="img-responsive"></div>
+                  				</c:if>
+                  				<c:if test="${topo.image3}">
+                  					<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}3.png"/>" class="img-responsive"></div>
+              					</c:if>
+              				</div>							
       					</form>
       					<c:choose>
 							<c:when test="${userId ne (topo.user).id && userId ne null}">
