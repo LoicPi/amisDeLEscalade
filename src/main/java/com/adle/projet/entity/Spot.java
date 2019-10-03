@@ -93,6 +93,46 @@ public class Spot {
         return county.getId();
     }
 
+    @Transient
+    public Integer highLevelId() {
+
+        int intOfHighLevel = 0;
+        for ( Sector sector : this.getSectors() ) {
+            for ( Path path : sector.getPaths() ) {
+                for ( Length length : path.getLengths() ) {
+                    int lengthLevel = length.getListing().getLevel().getId();
+                    if ( lengthLevel >= intOfHighLevel ) {
+                        intOfHighLevel = lengthLevel;
+                    }
+                }
+            }
+        }
+        return intOfHighLevel;
+    }
+
+    @Transient
+    public Integer lowLevelId() {
+
+        int intOfLowLevel = 0;
+        for ( Sector sector : this.getSectors() ) {
+            for ( Path path : sector.getPaths() ) {
+                for ( Length length : path.getLengths() ) {
+                    int lengthLevel = length.getListing().getLevel().getId();
+                    if ( lengthLevel <= intOfLowLevel || intOfLowLevel == 0 ) {
+                        intOfLowLevel = lengthLevel;
+                    }
+                }
+            }
+        }
+        return intOfLowLevel;
+    }
+
+    @Transient
+    private String highLevelOfSpot;
+
+    @Transient
+    private String lowLevelOfSpot;
+
     public Integer getId() {
         return id;
     }
@@ -187,6 +227,22 @@ public class Spot {
 
     public void setSpotCounty( Integer spotCounty ) {
         this.spotCounty = spotCounty;
+    }
+
+    public String getHighLevelOfSpot() {
+        return highLevelOfSpot;
+    }
+
+    public void setHighLevelOfSpot( String highLevelOfSpot ) {
+        this.highLevelOfSpot = highLevelOfSpot;
+    }
+
+    public String getLowLevelOfSpot() {
+        return lowLevelOfSpot;
+    }
+
+    public void setLowLevelOfSpot( String lowLevelOfSpot ) {
+        this.lowLevelOfSpot = lowLevelOfSpot;
     }
 
     @Override

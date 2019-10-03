@@ -78,8 +78,8 @@ public class SpotController {
     @GetMapping( "/" )
     public String listSpots( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -95,6 +95,7 @@ public class SpotController {
         Map<Integer, String> nameCounty = countyService.getCountyNameOfCountys( countys );
         theModel.addAttribute( "county", nameCounty );
         List<Spot> theSpots = spotService.getSpots();
+        spotService.levelOfSpots( theSpots );
         theModel.addAttribute( "spots", theSpots );
         return "spot_list";
     }
@@ -103,8 +104,8 @@ public class SpotController {
     public String searchSpot( @ModelAttribute( "searchSpot" ) SearchSpot searchSpot, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -143,10 +144,10 @@ public class SpotController {
     @GetMapping( "/creationsite" )
     public String formForSpotCreation( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             List<County> countys = countyService.getCountys();
@@ -176,10 +177,10 @@ public class SpotController {
             HttpServletRequest request ) {
 
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             spotValidator.validate( theSpot, result );
             if ( result.hasErrors() ) {
@@ -222,8 +223,8 @@ public class SpotController {
     public String formForSpotView( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
         }
@@ -253,10 +254,10 @@ public class SpotController {
     public String showFormForUpdateSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             List<County> countys = countyService.getCountys();
@@ -304,7 +305,7 @@ public class SpotController {
             @Valid @ModelAttribute( "updateSpot" ) UpdateSpot theSpot, BindingResult result,
             Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute( "userId" );
+        Integer userId = (Integer) session.getAttribute( "idUser" );
         User theUser = userService.getUser( userId );
         spotUpdateValidator.validate( theSpot, result );
         if ( result.hasErrors() ) {
@@ -347,7 +348,7 @@ public class SpotController {
     @GetMapping( "{spotId}/deletespot" )
     public String deleteSpot( @PathVariable( "spotId" ) Integer spotId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             spotService.deleteSpot( spotId );
@@ -375,7 +376,7 @@ public class SpotController {
     public String tagOfficialSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             Spot theSpot = spotService.getSpot( spotId );
@@ -401,7 +402,7 @@ public class SpotController {
     public String removeTagOfficialSpot( @PathVariable( "spotId" ) Integer spotId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
             Spot theSpot = spotService.getSpot( spotId );
