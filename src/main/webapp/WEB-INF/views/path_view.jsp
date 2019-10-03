@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,6 +17,7 @@
         		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
+      			<p class="font-italic"> Revenir au <a href="<c:url value="/site/${spot.id}/secteur/${sector.id}/vuesecteur"/>">Secteur</a></p>
    				<div class="card border-secondary">
    					<div class="card-header text-center">
 						<h3><c:out value="${ path.pathName }" /></h3>
@@ -63,7 +65,8 @@
       					</div>
       					<hr>
       					<div class="row justify-content-between">
-							<h4 class="col-12 col-md-6">Longueurs de la voie</h4>
+							<h4 class="col-12 col-md-6">Longueur de la voie</h4>
+							<h4 class="mb-1 col-12 col-md-4">Nombre : <c:out value ="${fn:length(path.lengths) }"/></h4>
      						<c:choose>
      							<c:when test="${userId eq null}">
      							</c:when>
@@ -75,21 +78,21 @@
       					<hr>
 						<div class="list-group">
       						<c:forEach items="${lengths}" var="length">
-  								<div class="list-group-item list-group-item-action flex-column align-items-start">
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1">Hauteur de la longueur : <c:out value="${length.heigth}" /> mètres</p>
-    									<c:choose>
-    										<c:when test ="${ length.lengthSpit }">
-    											<small>Longueur Equipée</small>
-    										</c:when>
-    										<c:otherwise>
-    											<small>Longueur Non Equipée</small>
-    										</c:otherwise>
-    									</c:choose>
-    								</div>
-    								<div class="d-flex w-100 justify-content-between">
-    									<a class="btn btn-info btn-sm" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/vuelongueur"/>" role="button">Détail</a>
-    								</div>
+  								<div class="list-group-item list-group-item-action flex-column align-items-start">	
+    								<p class="mb-1">Hauteur : <c:out value="${length.heigth}" /> mètres</p>
+    								<c:choose>
+    									<c:when test ="${ length.lengthSpit }">
+    										<p class="mb-1">Longueur Equipée</p>
+    										<p class="mb-1">Nombre de relais : <c:out value="${length.lengthRelay}" /></p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Longueur Non Equipée</p>
+    									</c:otherwise>
+    								</c:choose>
+    								<p class="mb-1">Cotation : <c:out value="${length.listing.listingName}" /></p>
+    								<p class="mb-1">Niveau : <c:out value="${length.listing.level.levelName}" /></p>
+    								<br/>
+    								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/vuelongueur"/>" role="button">Détail</a>
     							</div>
     						</c:forEach>
     					</div>		
