@@ -17,6 +17,7 @@
         		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
+      			<p class="font-italic"> Revenir au <a href="<c:url value="/site/${spot.id}/vuesite"/>">Site</a></p>
    				<div class="card border-secondary">
    					<div class="card-header text-center">
 						<h3><c:out value="${ sector.sectorName }" /></h3>
@@ -67,19 +68,14 @@
       					</div>
       					<p class="text-justify offset-1"><c:out value="${sector.sectorAccess}" /></p>
       					<hr>
-      					<div class="row">
-							<h4 class="mb-1 col-12">Nombre de voie :</h4>
-        					<hr>
-      					</div>
-      					<p class="text-center"><c:out value ="${fn:length(sector.paths) }"/></p>
-      					<hr>		
 						<div class="row justify-content-between">
-							<h4 class="col-6">Voie du secteur</h4>
+							<h4 class="col-12 col-md-4">Voie du secteur</h4>
+							<h4 class="mb-1 col-12 col-md-4">Nombre : <c:out value ="${fn:length(sector.paths) }"/></h4>
      						<c:choose>
      							<c:when test="${userId eq null}">
      							</c:when>
      							<c:otherwise>							
-        							<a class="btn btn-info btn-sm  col-4 ml-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/creationvoie"/>" role="button">Créer voie</a>
+        							<a class="btn btn-info btn-sm col-12 col-md-4 ml-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/creationvoie"/>" role="button">Créer voie</a>
       							</c:otherwise>
       						</c:choose>
       					</div>
@@ -90,12 +86,9 @@
     								<div class="d-flex w-100 justify-content-around border-bottom">
     									<h5 class="mb-1"><c:out value="${path.pathName }" /></h5>   															
     								</div>
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1">Nombre de longueur : <c:out value="${fn:length(path.lengths) }"/></p>
-    									<p class="mb-1">Type de la voie : <c:out value ="${path.type.typeName}"/>
-    								</div>
-    								<p class="mb-1">Niveau : ... à ...</p>
-									<p class="mb-1">Cotation : ... à ....</p>
+    								<br/>
+    								<p class="mb-1">Type de la voie : <c:out value ="${path.type.typeName}"/>
+    								<p class="mb-1">Nombre de longueur : <c:out value="${fn:length(path.lengths) }"/></p>
 									<br/>
 									<a class="btn btn-info btn-sm btn-block" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Détail</a>
     							</div>
