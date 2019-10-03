@@ -72,3 +72,13 @@ footer
 .searchHeader{
 	margin-bottom : 20px;
 }
+
+.imgComments{
+	max-width : 10%;
+	margin-right : 10px;
+}
+
+.media-body{
+	border : 1px solid #06DCFB;
+	margin-bottom : 5px;
+}
