@@ -38,6 +38,7 @@
        	 							</c:otherwise>
        	 						</c:choose>       	 					
        	 					</div>
+       	 					<br/>
        		 				<div class="col-lg-8 push-lg-4 personal-info">
 								<form class="form-horizontal" role="form">
 									<div class="form-group row justify-content-center">
