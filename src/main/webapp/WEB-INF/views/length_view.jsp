@@ -16,9 +16,13 @@
         		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
+      			<p class="font-italic"> Revenir à la <a href="<c:url value="/site/${spot.id}/secteur/${sector.id}/longeur/${path.id}/vuelongueur"/>">Voie</a></p>
    				<div class="card border-secondary">
    					<div class="card-header text-center">
 						<h3>Vue de la longeur n°<c:out value="${ length.id }" /></h3>
+						<c:if test="${ length.lengthSpit }">
+							<a class="col-md-4">La voie est dite <em>"équipées".</em></a>
+						</c:if>
 						
 						<c:set var="userId" value="${sessionScope['userId']}" />
       										
@@ -71,14 +75,7 @@
 						<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Niveau de la longueur : </label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ length.listing.level.levelName }" /></label>
-						</div>
-						<c:if test="${ length.lengthSpit }">
-							<div class="form-group">
-								<label class="control-label">
-									<a class="col-md-4">La voie est dite <em>"équipées".</em></a>
-								</label>
-							</div>
-						</c:if>
+						</div>	
 					</div>
 				</div>
 			</div>
