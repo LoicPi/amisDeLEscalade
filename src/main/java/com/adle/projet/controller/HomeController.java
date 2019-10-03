@@ -19,11 +19,11 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping( "/" )
+    @GetMapping( "" )
     public String showFormForHome( Model theModel, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "userId" ) != null ) {
-            Integer userId = (Integer) session.getAttribute( "userId" );
+        if ( session.getAttribute( "idUser" ) != null ) {
+            Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
             return "home";
