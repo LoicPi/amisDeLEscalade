@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -26,9 +27,22 @@ import javax.validation.constraints.Size;
 @Entity
 @Table( name = "sectors" )
 @org.hibernate.annotations.NamedQueries( {
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findByUserId", query = "from Sector where user_id = :user" ),
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findBySpotId", query = "from Sector where spot_id = :spot" ),
-        @org.hibernate.annotations.NamedQuery( name = "Sector_findById", query = "from Sector as r left join fetch r.user left join fetch r.paths as rp left join fetch rp.lengths as rpl left join fetch rp.type left join fetch rpl.listing where r.id =:sectorId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findByUserId", query = "from Sector as r "
+                + "left join fetch r.user "
+                + "left join fetch r.paths as rp "
+                + "left join fetch rp.type "
+                + "left join fetch rp.lengths as rpl "
+                + "left join fetch rpl.listing as rpll "
+                + "left join fetch rpll.level as rplll "
+                + "where user_id =:user" ),
+        @org.hibernate.annotations.NamedQuery( name = "Sector_findById", query = "from Sector as r "
+                + "left join fetch r.user "
+                + "left join fetch r.paths as rp "
+                + "left join fetch rp.lengths as rpl "
+                + "left join fetch rp.type "
+                + "left join fetch rpl.listing as rpll "
+                + "left join fetch rpll.level as rplll "
+                + "where r.id =:sectorId" ),
 } )
 
 public class Sector {
@@ -64,6 +78,74 @@ public class Sector {
     public Sector() {
 
     }
+
+    @Transient
+    public Integer highLevelId() {
+        int intOfHighLevel = 0;
+        for ( Path path : this.getPaths() ) {
+            for ( Length length : path.getLengths() ) {
+                int lengthLevel = length.getListing().getLevel().getId();
+                if ( lengthLevel >= intOfHighLevel ) {
+                    intOfHighLevel = lengthLevel;
+                }
+            }
+        }
+        return intOfHighLevel;
+    }
+
+    @Transient
+    public Integer lowLevelId() {
+        int intOfLowLevel = 0;
+        for ( Path path : this.getPaths() ) {
+            for ( Length length : path.getLengths() ) {
+                int lengthLevel = length.getListing().getLevel().getId();
+                if ( lengthLevel <= intOfLowLevel || intOfLowLevel == 0 ) {
+                    intOfLowLevel = lengthLevel;
+                }
+            }
+        }
+        return intOfLowLevel;
+    }
+
+    @Transient
+    private String highLevelOfSector;
+
+    @Transient
+    private String lowLevelOfSector;
+
+    @Transient
+    public Integer highListingId() {
+        int intOfHighListing = 0;
+        for ( Path path : this.getPaths() ) {
+            for ( Length length : path.getLengths() ) {
+                int lengthListing = length.getListing().getId();
+                if ( lengthListing >= intOfHighListing ) {
+                    intOfHighListing = lengthListing;
+                }
+            }
+        }
+        return intOfHighListing;
+    }
+
+    @Transient
+    public Integer lowListingId() {
+        int intOfLowListing = 0;
+        for ( Path path : this.getPaths() ) {
+            for ( Length length : path.getLengths() ) {
+                int lengthListing = length.getListing().getId();
+                if ( lengthListing <= intOfLowListing || intOfLowListing == 0 ) {
+                    intOfLowListing = lengthListing;
+                }
+            }
+        }
+        return intOfLowListing;
+    }
+
+    @Transient
+    private String highListingOfSector;
+
+    @Transient
+    private String lowListingOfSector;
 
     public Integer getId() {
         return id;
@@ -119,6 +201,38 @@ public class Sector {
 
     public void setSpot( Spot spot ) {
         this.spot = spot;
+    }
+
+    public String getHighLevelOfSector() {
+        return highLevelOfSector;
+    }
+
+    public void setHighLevelOfSector( String highLevelOfSector ) {
+        this.highLevelOfSector = highLevelOfSector;
+    }
+
+    public String getLowLevelOfSector() {
+        return lowLevelOfSector;
+    }
+
+    public void setLowLevelOfSector( String lowLevelOfSector ) {
+        this.lowLevelOfSector = lowLevelOfSector;
+    }
+
+    public String getHighListingOfSector() {
+        return highListingOfSector;
+    }
+
+    public void setHighListingOfSector( String highListingOfSector ) {
+        this.highListingOfSector = highListingOfSector;
+    }
+
+    public String getLowListingOfSector() {
+        return lowListingOfSector;
+    }
+
+    public void setLowListingOfSector( String lowListingOfSector ) {
+        this.lowListingOfSector = lowListingOfSector;
     }
 
     @Override

@@ -19,4 +19,8 @@ public interface SectorService {
     public List<Sector> findSectorBySpotId( int spotId );
 
     public void deleteSector( int theId );
+
+    public void levelOfSectors( List<Sector> theSectors );
+
+    public void listingOfSectors( List<Sector> sectors );
 }

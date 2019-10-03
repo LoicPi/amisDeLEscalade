@@ -14,7 +14,13 @@ import com.adle.projet.entity.Sector;
 public class SectorServiceImpl implements SectorService {
 
     @Autowired
-    private SectorDAO sectorDAO;
+    private SectorDAO      sectorDAO;
+
+    @Autowired
+    private LevelService   levelService;
+
+    @Autowired
+    private ListingService listingService;
 
     @Override
     public List<Sector> getSectors() {
@@ -54,4 +60,19 @@ public class SectorServiceImpl implements SectorService {
         return sectorDAO.findSectorBySpotId( spotId );
     }
 
+    @Override
+    public void levelOfSectors( List<Sector> sectors ) {
+        for ( Sector sector : sectors ) {
+            sector.setHighLevelOfSector( levelService.getLevel( sector.highLevelId() ).getLevelName() );
+            sector.setLowLevelOfSector( levelService.getLevel( sector.lowLevelId() ).getLevelName() );
+        }
+    }
+
+    @Override
+    public void listingOfSectors( List<Sector> sectors ) {
+        for ( Sector sector : sectors ) {
+            sector.setHighListingOfSector( listingService.getListing( sector.highListingId() ).getListingName() );
+            sector.setLowListingOfSector( listingService.getListing( sector.lowListingId() ).getListingName() );
+        }
+    }
 }

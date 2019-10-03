@@ -24,11 +24,13 @@ import com.adle.projet.dto.UpdateSpot;
 import com.adle.projet.entity.County;
 import com.adle.projet.entity.Level;
 import com.adle.projet.entity.Listing;
+import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
 import com.adle.projet.service.CountyService;
 import com.adle.projet.service.LevelService;
 import com.adle.projet.service.ListingService;
+import com.adle.projet.service.SectorService;
 import com.adle.projet.service.SpotService;
 import com.adle.projet.service.UserService;
 import com.adle.projet.validator.SpotUpdateValidator;
@@ -60,6 +62,9 @@ public class SpotController {
 
     @Autowired
     private ListingService      listingService;
+
+    @Autowired
+    private SectorService       sectorService;
 
     /*
      * ************************* List of Spot *************************
@@ -231,7 +236,10 @@ public class SpotController {
         }
         Spot theSpot = spotService.getSpot( spotId );
         theModel.addAttribute( "spot", theSpot );
-        theModel.addAttribute( "sectors", theSpot.getSectors() );
+        List<Sector> theSectors = sectorService.findSectorBySpotId( spotId );
+        sectorService.levelOfSectors( theSectors );
+        sectorService.listingOfSectors( theSectors );
+        theModel.addAttribute( "sectors", theSectors );
         theModel.addAttribute( "comments", theSpot.getComments() );
         return "spot_view";
     }

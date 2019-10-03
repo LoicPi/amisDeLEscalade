@@ -32,10 +32,10 @@ public class SectorDAOImpl implements SectorDAO {
                 "select distinct r from Sector as r "
                         + "left join fetch r.user "
                         + "left join fetch r.paths as rp "
-                        + "left join fetch rp.lengths as rpl "
                         + "left join fetch rp.type "
+                        + "left join fetch rp.lengths as rpl "
                         + "left join fetch rpl.listing as rpll "
-                        + "left join fetch rpll.level ",
+                        + "left join fetch rpll.level as rplll ",
                 Sector.class );
         List<Sector> sectors = query.getResultList();
         logger.info( "Sector List : " + sectors );
@@ -95,8 +95,23 @@ public class SectorDAOImpl implements SectorDAO {
     @Override
     public List<Sector> findSectorBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Sector> query = currentSession.createNamedQuery( "Sector_findBySpotId", Sector.class );
-        query.setParameter( "spot", spotId );
+        StringBuilder request = new StringBuilder();
+
+        String varSelect = "Select distinct r from Sector as r "
+                + "left join fetch r.user "
+                + "left join fetch r.spot "
+                + "left join fetch r.paths as rp "
+                + "left join fetch rp.type "
+                + "left join fetch rp.lengths as rpl "
+                + "left join fetch rpl.listing as rpll "
+                + "left join fetch rpll.level as rplll ";
+
+        String varWhere = "where r.spot.id = " + spotId;
+
+        request.append( varSelect );
+        request.append( varWhere );
+
+        Query<Sector> query = currentSession.createQuery( request.toString(), Sector.class );
         List<Sector> sectorResult = query.getResultList();
         logger.info( "Sector List : " + query.getResultList() );
         return sectorResult;
