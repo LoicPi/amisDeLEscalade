@@ -29,7 +29,15 @@ public class SpotDAOImpl implements SpotDAO {
     public List<Spot> getSpots() {
         Session currentSession = sessionFactory.getCurrentSession();
         Query<Spot> query = currentSession.createQuery(
-                "select distinct s from Spot as s left join fetch s.user left join fetch s.county left join fetch s.sectors as sse left join fetch s.comments left join fetch sse.paths",
+                "select distinct s from Spot as s "
+                        + "left join fetch s.user "
+                        + "left join fetch s.county "
+                        + "left join fetch s.sectors as sse "
+                        + "left join fetch s.comments "
+                        + "left join fetch sse.paths as ssep "
+                        + "left join fetch ssep.lengths as ssepl "
+                        + "left join fetch ssepl.listing as ssepll "
+                        + "left join fetch ssepll.level as sseplll ",
                 Spot.class );
         List<Spot> spots = query.getResultList();
         return spots;
@@ -97,7 +105,15 @@ public class SpotDAOImpl implements SpotDAO {
 
         String varJointure = "";
         String varTable = "";
-        String varSelect = "Select distinct s from Spot as s";
+        String varSelect = "Select distinct s from Spot as s "
+                + "left join fetch s.user "
+                + "left join fetch s.county "
+                + "left join fetch s.sectors as sse "
+                + "left join fetch s.comments "
+                + "left join fetch sse.paths as ssep "
+                + "left join fetch ssep.lengths as ssepl "
+                + "left join fetch ssepl.listing as ssepll "
+                + "left join fetch ssepll.level as sseplll";
 
         if ( listingSpot != 0 ) {
             varTable = varTable + ", Sector as se, Path as p, Length as le, Listing as li";
