@@ -2,10 +2,6 @@ package com.adle.projet.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -31,14 +27,19 @@ public class SectorDAOImpl implements SectorDAO {
 
     @Override
     public List<Sector> getSectors() {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Sector> cq = cb.createQuery( Sector.class );
-        Root<Sector> root = cq.from( Sector.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Sector List : " + query.getResultList() );
-        return query.getResultList();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Sector> query = currentSession.createQuery(
+                "select distinct r from Sector as r "
+                        + "left join fetch r.user "
+                        + "left join fetch r.paths as rp "
+                        + "left join fetch rp.lengths as rpl "
+                        + "left join fetch rp.type "
+                        + "left join fetch rpl.listing as rpll "
+                        + "left join fetch rpll.level ",
+                Sector.class );
+        List<Sector> sectors = query.getResultList();
+        logger.info( "Sector List : " + sectors );
+        return sectors;
     }
 
     @Override

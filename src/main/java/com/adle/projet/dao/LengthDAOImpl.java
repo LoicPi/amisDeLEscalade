@@ -2,13 +2,8 @@ package com.adle.projet.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -27,14 +22,16 @@ public class LengthDAOImpl implements LengthDAO {
 
     @Override
     public List<Length> getLengths() {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Length> cq = cb.createQuery( Length.class );
-        Root<Length> root = cq.from( Length.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Length List : " + query.getResultList() );
-        return query.getResultList();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Length> query = currentSession.createQuery(
+                "select distinct l from Length as l "
+                        + "left join fetch l.user "
+                        + "left join fetch l.path "
+                        + "left join fetch l.listing  as ll "
+                        + "left join fetch ll.level",
+                Length.class );
+        List<Length> lengths = query.getResultList();
+        return lengths;
     }
 
     @Override
@@ -64,8 +61,6 @@ public class LengthDAOImpl implements LengthDAO {
         Query<Length> query = currentSession.createNamedQuery( "Length_findById", Length.class );
         query.setParameter( "lengthId", theId );
         Length lengthResult = (Length) query.getSingleResult();
-        Hibernate.initialize( lengthResult.getListing() );
-        Hibernate.initialize( lengthResult.getListing().getLevel() );
         logger.info( "Length loaded successfully, Length details = " + lengthResult );
         return lengthResult;
     }

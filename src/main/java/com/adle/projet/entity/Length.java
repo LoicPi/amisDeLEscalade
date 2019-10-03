@@ -27,7 +27,7 @@ import javax.persistence.Transient;
         @org.hibernate.annotations.NamedQuery( name = "Length_findByUserId", query = "from Length where user_id = :user" ),
         @org.hibernate.annotations.NamedQuery( name = "Length_findByPathId", query = "from Length where path_id = :path" ),
         @org.hibernate.annotations.NamedQuery( name = "Length_findByListingId", query = "from Length where listing_id = :listing" ),
-        @org.hibernate.annotations.NamedQuery( name = "Length_findById", query = "from Length as l inner join fetch l.user where l.id =:lengthId" ),
+        @org.hibernate.annotations.NamedQuery( name = "Length_findById", query = "from Length as l left join fetch l.user left join fetch l.path left join fetch l.listing  as ll left join fetch ll.level where l.id =:lengthId" ),
 } )
 
 public class Length {

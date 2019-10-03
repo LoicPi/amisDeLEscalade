@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,17 +34,17 @@ public class Listing {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer      id;
+    private Integer     id;
 
     @Column( name = "listing_name" )
-    private String       listingName;
+    private String      listingName;
 
     @OneToMany( mappedBy = "listing" )
-    private List<Length> lengths = new ArrayList<>();
+    private Set<Length> lengths;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "level_id" )
-    private Level        level;
+    private Level       level;
 
     public Listing() {
 
@@ -67,11 +66,11 @@ public class Listing {
         this.listingName = listingName;
     }
 
-    public List<Length> getLengths() {
+    public Set<Length> getLengths() {
         return lengths;
     }
 
-    public void setLengths( List<Length> lengths ) {
+    public void setLengths( Set<Length> lengths ) {
         this.lengths = lengths;
     }
 

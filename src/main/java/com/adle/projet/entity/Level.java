@@ -1,7 +1,6 @@
 package com.adle.projet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +27,13 @@ public class Level {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column( name = "id" )
-    private Integer       id;
+    private Integer      id;
 
     @Column( name = "level_name" )
-    private String        levelName;
+    private String       levelName;
 
     @OneToMany( mappedBy = "level" )
-    private List<Listing> listings = new ArrayList<>();
+    private Set<Listing> listings;
 
     public Level() {
 
@@ -56,11 +55,11 @@ public class Level {
         this.levelName = levelName;
     }
 
-    public List<Listing> getListings() {
+    public Set<Listing> getListings() {
         return listings;
     }
 
-    public void setListings( List<Listing> listings ) {
+    public void setListings( Set<Listing> listings ) {
         this.listings = listings;
     }
 

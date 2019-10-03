@@ -2,10 +2,6 @@ package com.adle.projet.dao;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -31,14 +27,19 @@ public class PathDAOImpl implements PathDAO {
 
     @Override
     public List<Path> getPaths() {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Path> cq = cb.createQuery( Path.class );
-        Root<Path> root = cq.from( Path.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Path List : " + query.getResultList() );
-        return query.getResultList();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Path> query = currentSession.createQuery(
+                "Select distinct p from Path as p "
+                        + "left join fetch p.user "
+                        + "left join fetch p.sector "
+                        + "left join fetch p.type "
+                        + "left join fetch p.lengths as pl "
+                        + "left join fetch pl.listing as pll "
+                        + "left join fetch pll.level",
+                Path.class );
+        List<Path> paths = query.getResultList();
+        logger.info( "Path List : " + paths );
+        return paths;
     }
 
     @Override
@@ -56,7 +57,6 @@ public class PathDAOImpl implements PathDAO {
         Query<Path> query = currentSession.createNamedQuery( "Path_findById", Path.class );
         query.setParameter( "pathId", theId );
         Path pathResult = (Path) query.getSingleResult();
-        Hibernate.initialize( pathResult.getType() );
         Hibernate.initialize( pathResult.getLengths() );
         logger.info( "Path loaded successfully, Path details = " + pathResult );
         return pathResult;
