@@ -2,6 +2,8 @@ package com.adle.projet.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.adle.projet.entity.County;
@@ -19,6 +21,7 @@ public class UpdateTopo {
 
     private String        updateTopoDescriptive;
 
+    @DateTimeFormat( iso = ISO.DATE )
     private Date          updateTopoReleaseDate;
 
     private MultipartFile updateTopoImage1;
