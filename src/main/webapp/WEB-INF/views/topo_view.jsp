@@ -30,7 +30,7 @@
 						<c:choose>
 							<c:when test="${userId eq (topo.user).id && userId ne null || user.role.id eq 3 }">
 								<hr>
-								<div class="form-group d-flex flex-md-row flex-column justify-content-around">
+								<div class="d-flex flex-md-row flex-column justify-content-around">
         							<a class="btn btn-info btn-sm col-12 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
         							<button type="button" class="btn btn-danger btn-sm col-12 btnStyle col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
 									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -45,9 +45,9 @@
       											<div class="modal-body">
  													Voulez-vous vraiment supprimer le topo ?
       											</div>
-      											<div class="modal-footer">
-      												<a class="btn btn-danger btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Oui</a>
-        											<button type="button" class="btn btn-secondary btn-sm col-6 col-md-4 m-auto" data-dismiss="modal">Non</button>
+      											<div class="modal-footer d-flex flex-md-row flex-column justify-content-around">
+      												<a class="btn btn-danger btn-sm col-12 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm btnStyle col-12 col-md-4 m-md-auto" data-dismiss="modal">Non</button>
       											</div>
    											</div>
   										</div>
@@ -80,7 +80,7 @@
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Description :</label>
-								<textarea class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoDescriptive }" /></textarea>
+								<textarea class="col-md-6 col-10 col-form-label form-control-label border" rows="5" cols="30"><c:out value="${ topo.topoDescriptive }" /></textarea>
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date de parution :</label>

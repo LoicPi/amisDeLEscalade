@@ -83,7 +83,7 @@
 								<form:input type="file" path="topoImage3" id="topoImage3" name="topoImage3" class="form-control-file border" />
       						</div>
       						<hr>
-							<div class="form-group d-flex flex-md-row flex-column justify-content-around">
+							<div class="d-flex flex-md-row flex-column justify-content-around">
         						<button type="submit" class="btn btn-info btn-sm btn-success col-12 col-md-4 m-auto">Sauvegarder</button>
         						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
       						</div>	
