@@ -62,7 +62,7 @@ public class TopoUpdateValidator implements Validator {
             errors.rejectValue( "updateTopoCountry", "topo.country.invalid" );
         }
 
-        if ( topo.getUpdateTopoReleaseDate().equals( "" ) ) {
+        if ( topo.getUpdateTopoReleaseDate() == null ) {
             logger.info( "UpdateTopo_ReleaseDate is empty" );
             errors.rejectValue( "updateTopoReleaseDate", "topoValidator.topoReleaseDate.empty" );
         }
