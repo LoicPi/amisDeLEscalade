@@ -113,7 +113,7 @@ public class SectorDAOImpl implements SectorDAO {
 
         Query<Sector> query = currentSession.createQuery( request.toString(), Sector.class );
         List<Sector> sectorResult = query.getResultList();
-        logger.info( "Sector List : " + query.getResultList() );
+        logger.info( "Sector List : " + sectorResult );
         return sectorResult;
     }
 

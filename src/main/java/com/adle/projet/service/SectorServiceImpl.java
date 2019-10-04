@@ -63,16 +63,28 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public void levelOfSectors( List<Sector> sectors ) {
         for ( Sector sector : sectors ) {
-            sector.setHighLevelOfSector( levelService.getLevel( sector.highLevelId() ).getLevelName() );
-            sector.setLowLevelOfSector( levelService.getLevel( sector.lowLevelId() ).getLevelName() );
+            if ( sector.highLevelId() != 0 && sector.lowLevelId() != 0 ) {
+                sector.setHighLevelOfSector( levelService.getLevel( sector.highLevelId() ).getLevelName() );
+                sector.setLowLevelOfSector( levelService.getLevel( sector.lowLevelId() ).getLevelName() );
+            } else {
+                sector.setHighLevelOfSector( "Pas encore de niveau connu." );
+                sector.setLowLevelOfSector( "Pas encore de niveau connu." );
+            }
+
         }
     }
 
     @Override
     public void listingOfSectors( List<Sector> sectors ) {
         for ( Sector sector : sectors ) {
-            sector.setHighListingOfSector( listingService.getListing( sector.highListingId() ).getListingName() );
-            sector.setLowListingOfSector( listingService.getListing( sector.lowListingId() ).getListingName() );
+            if ( sector.highListingId() != 0 && sector.lowListingId() != 0 ) {
+                sector.setHighListingOfSector( listingService.getListing( sector.highListingId() ).getListingName() );
+                sector.setLowListingOfSector( listingService.getListing( sector.lowListingId() ).getListingName() );
+            } else {
+                sector.setHighListingOfSector( "Pas encore de cotation connu." );
+                sector.setLowListingOfSector( "Pas encore de cotation connu." );
+            }
+
         }
     }
 }
