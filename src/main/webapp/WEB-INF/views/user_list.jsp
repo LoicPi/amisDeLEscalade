@@ -38,16 +38,16 @@
     								<br/>
     								<hr/>
     								
-									<div class="form-group justify-content-around">
+									<div class="form-group d-flex flex-md-row flex-column justify-content-around">
 										<c:choose>
 											<c:when test="${ user.member }">
-    											<a class="btn btn-warning btn-sm" href="<c:url value="/compte/${user.id}/memberuserdelete"/>" role="button">Retirer Membre</a>
+    											<a class="btn btn-warning btn-sm col-12 col-md-4 m-auto" href="<c:url value="/compte/${user.id}/memberuserdelete"/>" role="button">Retirer Membre</a>
     										</c:when>
     										<c:otherwise>
-    											<a class="btn btn-warning btn-sm" href="<c:url value="/compte/${user.id}/memberuser"/>" role="button">Ajouter Membre</a>
+    											<a class="btn btn-warning btn-sm col-12 col-md-4 m-auto" href="<c:url value="/compte/${user.id}/memberuser"/>" role="button">Ajouter Membre</a>
     										</c:otherwise>
     									</c:choose>
-    									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer le compte</button>
+    									<button type="button" class="btn btn-danger btn-sm btnAdm col-12 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer le compte</button>
 										<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   											<div class="modal-dialog" role="document">
     											<div class="modal-content">
@@ -61,8 +61,8 @@
  														Voulez-vous vraiment supprimer le compte ?
       												</div>
       												<div class="modal-footer">
-      													<a class="btn btn-primary btn-sm" href="<c:url value="/compte/${userId}/deleteuser"/>" role="button">Oui</a>
-        												<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      													<a class="btn btn-primary btn-sm col-6 col-md-4 m-auto" href="<c:url value="/compte/${userId}/deleteuser"/>" role="button">Oui</a>
+        												<button type="button" class="btn btn-secondary btn-sm col-6 col-md-4 m-auto" data-dismiss="modal">Non</button>
       												</div>
    												</div>
   											</div>

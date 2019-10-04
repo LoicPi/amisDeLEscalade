@@ -31,7 +31,7 @@
 							<div class="col-lg-4 pull-lg-8 text-center">
 								<c:choose>
 									<c:when test="${user.image}">
-										<img src="<c:url value="/resources/uploaded-images/${user.id}.png"/>" alt="photo de profil" class="m-x-auto img-fluid imgProfil rounded-circle"/>
+										<img src="<c:url value="/resources/uploaded-images/user/${user.id}.png"/>" alt="photo de profil" class="m-x-auto img-fluid imgProfil rounded-circle"/>
        	 							</c:when>
        	 							<c:otherwise>
        	 								<img src="<c:url value="/resources/image/avatar.png"/>" alt="pas de photo de profil" class="m-x-auto img-fluid imgProfil rounded-circle"/>
