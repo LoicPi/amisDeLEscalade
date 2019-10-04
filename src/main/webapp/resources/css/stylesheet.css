@@ -90,4 +90,14 @@ footer
 .imgProfil {
 	max-width : 50%;
 }
+.btnStyle {
+	margin-top : 5px;
+}
+.search {
+	margin-bottom : 10px;
+}
+}
+
+.boxButton {
+	margin-bottom : 10px;
 }
