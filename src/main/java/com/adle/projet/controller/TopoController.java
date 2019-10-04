@@ -280,6 +280,7 @@ public class TopoController {
             theModel.addAttribute( "county", nameCounty );
             UpdateTopo theTopo = new UpdateTopo();
             Topo topoToUpdate = topoService.getTopo( topoId );
+            theModel.addAttribute( "topo", topoToUpdate );
             theTopo.setId( topoId );
             theTopo.setUpdateTopoName( topoToUpdate.getTopoName() );
             theTopo.setUpdateTopoCity( topoToUpdate.getTopoCity() );
