@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Longueur n°<c:out value="${ length.id }" /></title>
+		<title>Vue détaillé de la longueur</title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -19,19 +19,19 @@
       			<p class="font-italic"> Revenir à la <a href="<c:url value="/site/${spot.id}/secteur/${sector.id}/longeur/${path.id}/vuelongueur"/>">Voie</a></p>
    				<div class="card border-secondary">
    					<div class="card-header text-center">
-						<h3>Vue de la longeur n°<c:out value="${ length.id }" /></h3>
+						<h3>Vue de la longeur</h3>
 						<c:if test="${ length.lengthSpit }">
 							<a class="col-md-4">La voie est dite <em>"équipées".</em></a>
 						</c:if>
 						
-						<c:set var="userId" value="${sessionScope['userId']}" />
+						<c:set var="userId" value="${sessionScope['idUser']}" />
       										
 						<c:choose>
 							<c:when test="${userId eq (path.user).id && userId ne null || user.role.id eq 3 }">
 								<hr>
-      							<div class="row justify-content-around">
-        							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/majlongueur"/>" role="button">Editer</a>
-        							<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+      							<div class="d-flex flex-md-row flex-column justify-content-around">
+        							<a class="btn btn-info btn-sm col-12 col-md-4 m-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/majlongueur"/>" role="button">Editer</a>
+        							<button type="button" class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
 									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   										<div class="modal-dialog" role="document">
     										<div class="modal-content">
@@ -44,9 +44,9 @@
       											<div class="modal-body">
  													Voulez-vous vraiment supprimer la longueur ?
       											</div>
-      											<div class="modal-footer">
-      												<a class="btn btn-danger btn-sm col-4" href="<c:url  value="/site/${site.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/deletepath"/>" role="button">Oui</a>
-        											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      											<div class="modal-footer d-flex flex-md-row flex-column justify-content-around">
+      												<a class="btn btn-danger btn-sm col-4 col-12 col-md-4 m-auto" href="<c:url  value="/site/${site.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/deletepath"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm btnStyle col-12 col-md-4 m-md-auto" data-dismiss="modal">Non</button>
       											</div>
    											</div>
   										</div>

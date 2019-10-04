@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>MAJ de la longueur <c:out value="${ length.id }" /></title>
+		<title>MAJ de la longueur</title>
 		<c:import url="inc/head_page.jsp" />
 	</head>
 	
@@ -51,16 +51,6 @@
                   				</div>
       						</div>
       						
-      						<!--  <div class="form-group">
-      							<div class="col-md-10">
-       								<label for="updateLengthLevel">Niveau de la longueur <span class="requis">*</span></label>
-       								<form:select path = "updateLengthLevel">
-                     					<form:option value = "NONE" label = "Choix du niveau"/>
-                     					<form:options items = "${level}" />
-                  					</form:select>
-                  				</div>
-      						</div>-->
-      						
       						<c:if test="${ !updateLength.updateLengthSpit }">
 								<div class="form-group">
       								<label for="updateLengthSpit">Longueur équipées ?</label>
@@ -70,9 +60,9 @@
       						</c:if>
       						
       						<hr>  				
-      						<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/vuelongueur"/>" role="button">Annuler</a>
+      						<div class="d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/${length.id}/vuelongueur"/>" role="button">Annuler</a>
       						</div>
       						
       					</form:form>

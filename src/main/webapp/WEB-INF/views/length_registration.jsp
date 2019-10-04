@@ -46,24 +46,17 @@
                   				<form:errors path="lengthListing" class="error" />
       						</div>
       						
-      						<!--  <div class="form-group">
-       							<label for="lengthLevel">Niveau de la longueur <span class="requis">*</span></label>
-       							<form:select path = "lengthLevel">
-                     				<form:option value="NONE" label = "Choix du niveau"/>
-                     				<form:options items = "${level}" />
-                  				</form:select>
-      						</div>-->
-      						
       						<div class="form-group">
       							<label for="lengthSpit">Longueur équipées ? <span class="requis">*</span></label>
        							<form:checkbox path="lengthSpit" element="div class='col-md-8 checkbox'" value="true"/>
        							<p class="font-italic">Cochez la case si la longueur est dites "équipées".</p>
+       							<form:errors path="lengthSpit" class="error" />
       						</div>
       						
       						<hr>
-      						<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/sector/${sector.id }/voie/${voie.id}/vuevoie"/>" role="button">Annuler</a>
+      						<div class="d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id }/voie/${path.id}/vuevoie"/>" role="button">Annuler</a>
       						</div>      						
       					</form:form>
       				</div>	

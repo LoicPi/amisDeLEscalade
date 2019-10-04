@@ -28,16 +28,6 @@ public class LengthUpdateValidator implements Validator {
             errors.rejectValue( "updateLengthRelay", "lengthValidator.lengthRelay.negative" );
         }
 
-        if ( ( updateLength.getUpdateLengthRelay() == 0 ) && ( updateLength.getUpdateLengthSpit() == true ) ) {
-            logger.info( "UpdateLength_Relay can't be null" );
-            errors.rejectValue( "updateLengthRelay", "lengthValidator.lengthRelay.empty" );
-        }
-
-        if ( ( updateLength.getUpdateLengthRelay() > 0 ) && ( updateLength.getUpdateLengthSpit() == false ) ) {
-            logger.info( "UpdateLength_Spit can't be false" );
-            errors.rejectValue( "updateLengthSpit", "lengthValidator.lengthSpit.false" );
-        }
-
         if ( updateLength.getUpdateLengthHeight() < 0 ) {
             logger.info( "UpdateLength_Heigth can't be negative" );
             errors.rejectValue( "updateLengthHeigth", "lengthValidator.lengthHeigth.negative" );
