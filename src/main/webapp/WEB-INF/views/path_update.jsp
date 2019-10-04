@@ -44,9 +44,9 @@
       						</div>
       						
       						<hr>  				
-      						<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Annuler</a>
+      						<div class="d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>" role="button">Annuler</a>
       						</div>
       					</form:form>
       				</div>	

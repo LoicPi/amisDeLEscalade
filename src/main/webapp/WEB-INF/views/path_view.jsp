@@ -22,14 +22,14 @@
    					<div class="card-header text-center">
 						<h3><c:out value="${ path.pathName }" /></h3>
 						
-						<c:set var="userId" value="${sessionScope['userId']}" />
+						<c:set var="userId" value="${sessionScope['idUser']}" />
       										
 						<c:choose>
 							<c:when test="${userId eq (path.user).id && userId ne null || user.role.id eq 3 }">
 								<hr>
-      							<div class="row justify-content-around">
-        							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/majvoie"/>" role="button">Editer</a>
-        							<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+      							<div class="d-flex flex-md-row flex-column justify-content-around">
+        							<a class="btn btn-info btn-sm col-12 col-md-4 m-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/majvoie"/>" role="button">Editer</a>
+        							<button type="button" class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
 									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   										<div class="modal-dialog" role="document">
     										<div class="modal-content">
@@ -42,9 +42,9 @@
       											<div class="modal-body">
  													Voulez-vous vraiment supprimer la voie ?
       											</div>
-      											<div class="modal-footer">
-      												<a class="btn btn-danger btn-sm col-4" href="<c:url  value="/site/${site.id}/secteur/${sector.id}/voie/${path.id}/deletepath"/>" role="button">Oui</a>
-        											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      											<div class="modal-footer d-flex flex-md-row flex-column justify-content-around">
+      												<a class="btn btn-danger btn-sm col-4 col-12 col-md-4 m-auto" href="<c:url  value="/site/${site.id}/secteur/${sector.id}/voie/${path.id}/deletepath"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm btnStyle col-12 col-md-4 m-md-auto" data-dismiss="modal">Non</button>
       											</div>
    											</div>
   										</div>
@@ -60,18 +60,16 @@
 							<h4 class="mb-1 col-12">Type de la voie :</h4>
         					<hr>
       					</div>
-      					<div class="row ">
-      						<h5 class="text-center offset-md-5 offset-3"><c:out value="${path.type.typeName}" /></h5>
-      					</div>
+      					<p class="text-center"><c:out value="${path.type.typeName}" /></p>
       					<hr>
       					<div class="row justify-content-between">
-							<h4 class="col-12 col-md-6">Longueur de la voie</h4>
-							<h4 class="mb-1 col-12 col-md-4">Nombre : <c:out value ="${fn:length(path.lengths) }"/></h4>
+							<h4 class="col-12 col-md-4 text-center text-md-left">Longueur</h4>
+							<h4 class="mb-1 col-12 col-md-4 text-center">Nombre : <c:out value ="${fn:length(path.lengths) }"/></h4>
      						<c:choose>
      							<c:when test="${userId eq null}">
      							</c:when>
      							<c:otherwise>							
-        							<a class="btn btn-info btn-sm  col-12 col-md-4 ml-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/creationlongueur"/>" role="button">Créer longueur</a>
+        							<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/longueur/creationlongueur"/>" role="button">Créer longueur</a>
       							</c:otherwise>
       						</c:choose>
       					</div>
