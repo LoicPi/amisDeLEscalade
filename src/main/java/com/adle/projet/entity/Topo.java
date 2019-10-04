@@ -253,6 +253,6 @@ public class Topo {
         return "Topo {id=" + id + ", topoName =" + topoName + ",topoCity =" + topoCity +
                 ",topoCountry =" + topoCountry + ", topoDescriptive =" + topoDescriptive +
                 ", topoReleaseDate=" + topoReleaseDate + ", topoAvailability =" +
-                topoAvailability + "}";
+                topoAvailability + ", image1 = " + image1 + ", image2 = " + image2 + ",image3 = " + image3 + "}";
     }
 }

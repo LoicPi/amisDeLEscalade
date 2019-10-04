@@ -373,6 +373,7 @@ public class Spot {
     public String toString() {
         return "Spot {id=" + id + ", spotName =" + spotName + ",spotCity =" + spotCity +
                 ",spotCountry =" + spotCountry + ", spotDescriptive =" + spotDescriptive +
-                ", spotAccess=" + spotAccess + "}";
+                ", spotAccess=" + spotAccess + ", spotTag = " + spotTag + ", image1 = " + image1 + ", image2 = "
+                + image2 + ", image3 = " + image3 + "}";
     }
 }

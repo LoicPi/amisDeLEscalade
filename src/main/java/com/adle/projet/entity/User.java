@@ -252,7 +252,7 @@ public class User {
     @Override
     public String toString() {
         return "User {id=" + id + ", firstName=" + firstName + ", lastName=" + lastName +
-                ",nickName=" + nickName + ", email=" + email + ", password=" + password + "}";
+                ",nickName=" + nickName + ", email=" + email + ", password=" + password + ", image = " + image + "}";
     }
 
 }
