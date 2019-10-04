@@ -135,11 +135,11 @@ public class SpotDAOImpl implements SpotDAO {
         }
 
         if ( nameSpot != null && !nameSpot.isEmpty() ) {
-            varJointure = varJointure + " and s.spotName like '%" + nameSpot + "%'";
+            varJointure = varJointure + " and lower(s.spotName) like '%" + nameSpot.toLowerCase() + "%'";
         }
 
         if ( citySpot != "" && !citySpot.isEmpty() ) {
-            varJointure = varJointure + " and s.spotCity like '%" + citySpot + "%'";
+            varJointure = varJointure + " and lower(s.spotCity) like '%" + citySpot.toLowerCase() + "%'";
         }
 
         if ( countySpot != 0 ) {
