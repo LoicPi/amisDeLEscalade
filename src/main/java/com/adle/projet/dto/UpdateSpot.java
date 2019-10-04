@@ -1,29 +1,37 @@
 package com.adle.projet.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.adle.projet.entity.County;
 import com.adle.projet.entity.User;
 
 public class UpdateSpot {
 
-    private Integer id;
+    private Integer       id;
 
-    private String  updateSpotName;
+    private String        updateSpotName;
 
-    private String  updateSpotCity;
+    private String        updateSpotCity;
 
-    private String  updateSpotCountry;
+    private String        updateSpotCountry;
 
-    private String  updateSpotDescriptive;
+    private String        updateSpotDescriptive;
 
-    private String  updateSpotAccess;
+    private String        updateSpotAccess;
 
-    private Boolean updateSpotTag;
+    private Boolean       updateSpotTag;
 
-    private User    user;
+    private MultipartFile updateSpotImage1;
 
-    private County  county;
+    private MultipartFile updateSpotImage2;
 
-    private Integer spotCounty;
+    private MultipartFile updateSpotImage3;
+
+    private User          user;
+
+    private County        county;
+
+    private Integer       spotCounty;
 
     public Integer spotIdUser() {
         return user.getId();
@@ -83,6 +91,30 @@ public class UpdateSpot {
 
     public void setUpdateSpotTag( Boolean updateSpotTag ) {
         this.updateSpotTag = updateSpotTag;
+    }
+
+    public MultipartFile getUpdateSpotImage1() {
+        return updateSpotImage1;
+    }
+
+    public void setUpdateSpotImage1( MultipartFile updateSpotImage1 ) {
+        this.updateSpotImage1 = updateSpotImage1;
+    }
+
+    public MultipartFile getUpdateSpotImage2() {
+        return updateSpotImage2;
+    }
+
+    public void setUpdateSpotImage2( MultipartFile updateSpotImage2 ) {
+        this.updateSpotImage2 = updateSpotImage2;
+    }
+
+    public MultipartFile getUpdateSpotImage3() {
+        return updateSpotImage3;
+    }
+
+    public void setUpdateSpotImage3( MultipartFile updateSpotImage3 ) {
+        this.updateSpotImage3 = updateSpotImage3;
     }
 
     public User getUser() {

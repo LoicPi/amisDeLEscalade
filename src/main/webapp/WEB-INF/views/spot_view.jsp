@@ -107,9 +107,33 @@
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Accès :</label>
 								<textarea class="col-md-6 col-10 col-form-label form-control-label border" rows="5" cols="30"><c:out value="${ spot.spotAccess }" /></textarea>
-							</div>
+							</div>							
       					</form>	
        					<hr>
+						<div class="row">
+							<h4 class="col-12 col-md-4 text-center text-left">Photo du site</h4>
+						</div>
+						<hr>
+						<div id="carouselControls" class="carousel slide col-12" data-ride="carousel">
+  							<div class="carousel-inner">
+  								<c:if test="${spot.image1}">
+   				 					<div class="carousel-item active">
+     		 							<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}1.png"/>" class="d-block w-100">
+    								</div>
+    							</c:if>
+    							<c:if test="${spot.image2}">
+    								<div class="carousel-item">
+      									<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}2.png"/>" class="d-block w-100">
+    								</div>
+    							</c:if>
+    							<c:if test="${spot.image3}">
+    								<div class="carousel-item">
+      									<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}3.png"/>" class="d-block w-100">
+    								</div>
+    							</c:if>
+  							</div>
+						</div>
+						<hr>
        					<div class="row justify-content-between">
 							<h4 class="col-12 col-md-4 text-center text-md-left">Secteur du site</h4>
 							<h4 class="mb-1 col-12 col-md-4 text-center">Nombre : <c:out value ="${fn:length(spot.sectors) }"/></h4>

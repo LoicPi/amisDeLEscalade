@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * Created Spot Bean defined by id, name, city, county, country, descriptive,
  * access and tag
@@ -62,6 +64,15 @@ public class Spot {
     @Column( name = "spot_tag" )
     private Boolean      spotTag = false;
 
+    @Column( name = "image1" )
+    private Boolean      image1  = false;
+
+    @Column( name = "image2" )
+    private Boolean      image2  = false;
+
+    @Column( name = "image3" )
+    private Boolean      image3  = false;
+
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "user_id" )
     private User         user;
@@ -83,6 +94,15 @@ public class Spot {
     public boolean isTag() {
         return spotTag;
     }
+
+    @Transient
+    private MultipartFile spotImage1;
+
+    @Transient
+    private MultipartFile spotImage2;
+
+    @Transient
+    private MultipartFile spotImage3;
 
     public Spot() {
 
@@ -229,6 +249,30 @@ public class Spot {
         this.spotTag = spotTag;
     }
 
+    public Boolean getImage1() {
+        return image1;
+    }
+
+    public void setImage1( Boolean image1 ) {
+        this.image1 = image1;
+    }
+
+    public Boolean getImage2() {
+        return image2;
+    }
+
+    public void setImage2( Boolean image2 ) {
+        this.image2 = image2;
+    }
+
+    public Boolean getImage3() {
+        return image3;
+    }
+
+    public void setImage3( Boolean image3 ) {
+        this.image3 = image3;
+    }
+
     public User getUser() {
         return user;
     }
@@ -299,6 +343,30 @@ public class Spot {
 
     public void setLowListingOfSpot( String lowListingOfSpot ) {
         this.lowListingOfSpot = lowListingOfSpot;
+    }
+
+    public MultipartFile getSpotImage1() {
+        return spotImage1;
+    }
+
+    public void setSpotImage1( MultipartFile spotImage1 ) {
+        this.spotImage1 = spotImage1;
+    }
+
+    public MultipartFile getSpotImage2() {
+        return spotImage2;
+    }
+
+    public void setSpotImage2( MultipartFile spotImage2 ) {
+        this.spotImage2 = spotImage2;
+    }
+
+    public MultipartFile getSpotImage3() {
+        return spotImage3;
+    }
+
+    public void setSpotImage3( MultipartFile spotImage3 ) {
+        this.spotImage3 = spotImage3;
     }
 
     @Override

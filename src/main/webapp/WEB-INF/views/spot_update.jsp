@@ -21,7 +21,7 @@
 						<h3 class="text-center">Mise à jour du site : <c:out value="${ spot.spotName }" /></h3>
 					</div>
 					<div class="card-body">
-						<form:form action="updatespot" class="form" method="post" modelAttribute="updateSpot">
+						<form:form action="updatespot" class="form" method="post" enctype="multipart/form-data" modelAttribute="updateSpot">
 							<form:hidden path="id" />
 								<div class="form-group">
 									<label class="col-md-6 control-label" for=updateSpotName>Nom du site :</label>
@@ -69,6 +69,20 @@
        									<form:errors path="updateSpotAccess" class="error" />
 									</div>
 								</div>
+								<div class="col-12 col-md-10 text-left">
+      								<h6>Photo n°1 du site : </h6>
+									<form:input type="file" path="updateSpotImage1" id="updateSpotImage1" name="updateSpotImage1" class="form-control-file border" />
+      							</div>
+      							<br/>
+      							<div class="col-12 col-md-10 text-left">
+      								<h6>Photo n°2 du site : </h6>
+									<form:input type="file" path="updateSpotImage2" id="updateSpotImage2" name="updateSpotImage2" class="form-control-file border" />
+      							</div>
+      							<br/>
+      							<div class="col-12 col-md-10 text-left">
+      								<h6>Photo n°3 du site : </h6>
+									<form:input type="file" path="updateSpotImage3" id="updateSpotImage3" name="updateSpotImage3" class="form-control-file border" />
+      							</div>
 								<hr>
 								<div class="d-flex flex-md-row flex-column justify-content-around">
         							<button type="submit" class="btn btn-sm btn-success col-12 col-md-4 m-auto">Sauvegarder</button>

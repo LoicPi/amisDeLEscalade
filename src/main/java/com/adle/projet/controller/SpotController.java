@@ -1,5 +1,10 @@
 package com.adle.projet.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.adle.projet.dto.SearchSpot;
 import com.adle.projet.dto.UpdateSpot;
@@ -70,6 +76,12 @@ public class SpotController {
 
     @Autowired
     private CommentService      commentService;
+
+    private Path                path1;
+
+    private Path                path2;
+
+    private Path                path3;
 
     /*
      * ************************* List of Spot *************************
@@ -210,6 +222,54 @@ public class SpotController {
                     theSpot.setCounty( theCounty );
                 }
                 theSpot.setUser( theUser );
+                MultipartFile spotImage1 = theSpot.getSpotImage1();
+                MultipartFile spotImage2 = theSpot.getSpotImage2();
+                MultipartFile spotImage3 = theSpot.getSpotImage3();
+
+                String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+                path1 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + theSpot.getId() + "1.png" );
+
+                path2 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + theSpot.getId() + "2.png" );
+
+                path3 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + theSpot.getId() + "3.png" );
+
+                if ( spotImage1 != null && !spotImage1.isEmpty() ) {
+                    try {
+                        spotImage1.transferTo( new File( path1.toString() ) );
+                        theSpot.setImage1( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Spot image1 was not successful", e );
+                    }
+                } else {
+                    theSpot.setImage1( false );
+                }
+
+                if ( spotImage2 != null && !spotImage2.isEmpty() ) {
+                    try {
+                        spotImage2.transferTo( new File( path2.toString() ) );
+                        theSpot.setImage2( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Spot image2 was not successful", e );
+                    }
+                } else {
+                    theSpot.setImage2( false );
+                }
+
+                if ( spotImage3 != null && !spotImage3.isEmpty() ) {
+                    try {
+                        spotImage3.transferTo( new File( path3.toString() ) );
+                        theSpot.setImage3( true );
+                    } catch ( IllegalStateException | IOException e ) {
+                        e.printStackTrace();
+                        throw new RuntimeException( "Saving Spot image3 was not successful", e );
+                    }
+                } else {
+                    theSpot.setImage3( false );
+                }
+
                 spotService.saveSpot( theSpot );
                 return "redirect:/site/" + theSpot.getId() + "/vuesite";
             }
@@ -334,7 +394,12 @@ public class SpotController {
             theModel.addAttribute( "updateSpot", theSpot );
             return "spot_update";
         } else {
-            County theCounty = countyService.getCounty( theSpot.getSpotCounty() );
+            County theCounty = new County();
+            if ( theSpot.getSpotCounty() == null ) {
+                theCounty = countyService.getCounty( 102 );
+            } else {
+                theCounty = countyService.getCounty( theSpot.getSpotCounty() );
+            }
             Spot spotUpdate = spotService.getSpot( spotId );
             spotUpdate.setSpotName( theSpot.getUpdateSpotName() );
             spotUpdate.setSpotCity( theSpot.getUpdateSpotCity() );
@@ -343,6 +408,68 @@ public class SpotController {
             spotUpdate.setSpotDescriptive( theSpot.getUpdateSpotDescriptive() );
             spotUpdate.setSpotAccess( theSpot.getUpdateSpotAccess() );
             spotUpdate.setCounty( theCounty );
+
+            MultipartFile spotImage1 = theSpot.getUpdateSpotImage1();
+            MultipartFile spotImage2 = theSpot.getUpdateSpotImage2();
+            MultipartFile spotImage3 = theSpot.getUpdateSpotImage3();
+
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path1 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotUpdate.getId() + "1.png" );
+
+            path2 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotUpdate.getId() + "2.png" );
+
+            path3 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotUpdate.getId() + "3.png" );
+
+            if ( spotImage1 != null && !spotImage1.isEmpty() ) {
+                try {
+                    spotImage1.transferTo( new File( path1.toString() ) );
+                    spotUpdate.setImage1( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Spot image1 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path1 ) ) {
+                    spotUpdate.setImage1( true );
+                } else {
+                    spotUpdate.setImage1( false );
+                }
+            }
+
+            if ( spotImage2 != null && !spotImage2.isEmpty() ) {
+                try {
+                    spotImage2.transferTo( new File( path2.toString() ) );
+                    spotUpdate.setImage2( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    // oops! something did not work as expected
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Topo image2 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path2 ) ) {
+                    spotUpdate.setImage2( true );
+                } else {
+                    spotUpdate.setImage2( false );
+                }
+            }
+
+            if ( spotImage3 != null && !spotImage3.isEmpty() ) {
+                try {
+                    spotImage3.transferTo( new File( path3.toString() ) );
+                    spotUpdate.setImage3( true );
+                } catch ( IllegalStateException | IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Saving Topo image3 was not successful", e );
+                }
+            } else {
+                if ( Files.exists( path3 ) ) {
+                    spotUpdate.setImage3( true );
+                } else {
+                    spotUpdate.setImage3( false );
+                }
+            }
+
             spotService.updateSpot( spotUpdate );
             return "redirect:/site/" + spotId + "/vuesite";
         }
@@ -367,6 +494,41 @@ public class SpotController {
         if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
+
+            path1 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotId + "1.png" );
+
+            path2 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotId + "2.png" );
+
+            path3 = Paths.get( rootDirectory + "resources/uploaded-images/spot/" + spotId + "3.png" );
+
+            if ( Files.exists( path1 ) ) {
+                try {
+                    Files.delete( path1 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Spot image1 was not successful", e );
+                }
+            }
+
+            if ( Files.exists( path2 ) ) {
+                try {
+                    Files.delete( path2 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Spot image2 was not successful", e );
+                }
+            }
+
+            if ( Files.exists( path3 ) ) {
+                try {
+                    Files.delete( path3 );
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                    throw new RuntimeException( "Delete Spot image3 was not successful", e );
+                }
+            }
+
             spotService.deleteSpot( spotId );
             return "redirect:/site/";
         }

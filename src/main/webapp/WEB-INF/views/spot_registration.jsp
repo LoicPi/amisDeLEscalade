@@ -21,7 +21,7 @@
      					<h3>Création d'un site</h3>
     				</div>
     				<div class="card-body">
-     					<form:form action="savespot" class="form" method="post" modelAttribute="spot">
+     					<form:form action="savespot" class="form" method="post" enctype="multipart/form-data" modelAttribute="spot">
 
       						<form:hidden path="id" /> 
       						
@@ -76,7 +76,24 @@
        							<c:otherwise>
        							</c:otherwise>
        						</c:choose>
-      											
+       						
+      						<div class="form-group">
+      							<label class="control-label" for="spotImage1">Photo n°1 du site : </label>
+      							<br/>
+								<form:input type="file" path="spotImage1" id="spotImage1" name="spotImage1" class="form-control-file border" />
+      						</div>
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="spotImage2">Photo n°2 du site : </label>
+      							<br/>
+								<form:input type="file" path="spotImage2" id="spotImage2" name="spotImage2" class="form-control-file border" />
+      						</div>
+      						
+      						<div class="form-group">
+      							<label class="control-label" for="spotImage3">Photo n°3 du site : </label>
+      							<br/>
+								<form:input type="file" path="spotImage3" id="spotImage3" name="spotImage3" class="form-control-file border" />
+      						</div>					
       						<hr>
 							<div class="d-flex flex-md-row flex-column justify-content-around">
         						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
