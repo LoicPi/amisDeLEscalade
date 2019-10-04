@@ -3,10 +3,6 @@ package com.adle.projet.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -29,13 +25,14 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> getComments() {
         Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Comment> cq = cb.createQuery( Comment.class );
-        Root<Comment> root = cq.from( Comment.class );
-        cq.select( root );
-        Query query = session.createQuery( cq );
-        logger.info( "Comment List : " + query.getResultList() );
-        return query.getResultList();
+        Query<Comment> query = session.createQuery(
+                "select distinct c from Comment as c "
+                        + "left join fetch c.user "
+                        + "left join fetch c.spot ",
+                Comment.class );
+        List<Comment> comments = query.getResultList();
+        logger.info( "Comment List : " + comments );
+        return comments;
     }
 
     @Override
@@ -85,8 +82,19 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> findCommentBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Comment> query = currentSession.createNamedQuery( "Comment_findBySpotId", Comment.class );
-        query.setParameter( "spot", spotId );
+
+        StringBuilder request = new StringBuilder();
+
+        String varSelect = "Select distinct c from Comment as c "
+                + "left join fetch c.user "
+                + "left join fetch c.spot ";
+
+        String varWhere = "where spot_id = " + spotId;
+
+        request.append( varSelect );
+        request.append( varWhere );
+
+        Query<Comment> query = currentSession.createQuery( request.toString(), Comment.class );
         List<Comment> commentResult = query.getResultList();
         logger.info( "Comment List : " + commentResult );
         return commentResult;
