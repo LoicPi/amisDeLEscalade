@@ -68,28 +68,25 @@
       						<div class="form-group">
       							<label class="control-label" for="topoImage1">Photo du topo 1 : </label>
       							<br/>
-								<form:input type="file" path="topoImage1" id="topoImage1" name="topoImage1" class="form:input-large" />
+								<form:input type="file" path="topoImage1" id="topoImage1" name="topoImage1" class="form-control-file border" />
       						</div>
       						
       						<div class="form-group">
       							<label class="control-label" for="topoImage2">Photo du topo 2 : </label>
       							<br/>
-								<form:input type="file" path="topoImage2" id="topoImage2" name="topoImage2" class="form:input-large" />
+								<form:input type="file" path="topoImage2" id="topoImage2" name="topoImage2" class="form-control-file border" />
       						</div>
       						
       						<div class="form-group">
       							<label class="control-label" for="topoImage3">Photo du topo 3 : </label>
       							<br/>
-								<form:input type="file" path="topoImage3" id="topoImage3" name="topoImage3" class="form:input-large" />
+								<form:input type="file" path="topoImage3" id="topoImage3" name="topoImage3" class="form-control-file border" />
       						</div>
-      						
-      						
       						<hr>
-							<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a class="btn btn-danger btn-sm col-4" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
-      						</div>
-      						
+							<div class="form-group d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-info btn-sm btn-success col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
+      						</div>	
       					</form:form>
       				</div>	
 				</div>

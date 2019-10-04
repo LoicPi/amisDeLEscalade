@@ -23,16 +23,16 @@
       					<c:if test ="${ topo.availability }">
       					    <hr>
        						<div class="row justify-content-around">
-       							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
+       							<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
        						</div>
       					</c:if>
-						<c:set var="userId" value="${sessionScope['userId']}" />      										
+						<c:set var="userId" value="${sessionScope['idUser']}" />      										
 						<c:choose>
 							<c:when test="${userId eq (topo.user).id && userId ne null || user.role.id eq 3 }">
 								<hr>
-								<div class="row justify-content-around">
-        							<a class="btn btn-info btn-sm  col-4" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
-        							<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+								<div class="form-group d-flex flex-md-row flex-column justify-content-around">
+        							<a class="btn btn-info btn-sm col-12 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
+        							<button type="button" class="btn btn-danger btn-sm col-12 btnStyle col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
 									<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   										<div class="modal-dialog" role="document">
     										<div class="modal-content">
@@ -46,8 +46,8 @@
  													Voulez-vous vraiment supprimer le topo ?
       											</div>
       											<div class="modal-footer">
-      												<a class="btn btn-danger btn-sm col-4" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Oui</a>
-        											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      												<a class="btn btn-danger btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/deletetopo"/>" role="button">Oui</a>
+        											<button type="button" class="btn btn-secondary btn-sm col-6 col-md-4 m-auto" data-dismiss="modal">Non</button>
       											</div>
    											</div>
   										</div>
@@ -80,30 +80,46 @@
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Description :</label>
-								<label class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoDescriptive }" /></label>
+								<textarea class="col-md-6 col-10 col-form-label form-control-label border"><c:out value="${ topo.topoDescriptive }" /></textarea>
 							</div>
 							<div class="form-group row justify-content-center">
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date de parution :</label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${ topo.topoReleaseDate }" /></label>
 							</div>
-							<div class="row">
-								<c:if test="${topo.image1}">
-              							<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}1.png"/>" class="img-responsive"></div>
-              					</c:if>
-              					<c:if test="${topo.image2}">
-                  					<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}2.png"/>" class="img-responsive"></div>
-                  				</c:if>
-                  				<c:if test="${topo.image3}">
-                  					<div class="col-md-4"><img src="<c:url value="/resources/uploaded-images/topo/${topo.id}3.png"/>" class="img-responsive"></div>
-              					</c:if>
-              				</div>							
+							<div id="carouselControls" class="carousel slide" data-ride="carousel">
+  								<div class="carousel-inner">
+  									<c:if test="${topo.image1}">
+   					 					<div class="carousel-item active">
+     		 								<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}1.png"/>" class="d-block w-100">
+    									</div>
+    								</c:if>
+    								<c:if test="${topo.image2}">
+    									<div class="carousel-item">
+      										<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}2.png"/>" class="d-block w-100">
+    									</div>
+    								</c:if>
+    								<c:if test="${topo.image3}">
+    									<div class="carousel-item">
+      										<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}3.png"/>" class="d-block w-100">
+    									</div>
+    								</c:if>
+  								</div>
+  								<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    								<span class="sr-only">Previous</span>
+  								</a>
+  								<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+   				 					<span class="sr-only">Next</span>
+  								</a>
+							</div>						
       					</form>
       					<c:choose>
 							<c:when test="${userId ne (topo.user).id && userId ne null}">
 								<hr>
 								<c:if test ="${ ! topo.availability }">
 									<div class="row justify-content-around">
-        								<a class="btn btn-info btn-sm col-4" href="<c:url value="/topo/${topo.id}/bookingtopo"/>" role="button">Réserver ce Topo</a>
+        								<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/bookingtopo"/>" role="button">Réserver ce Topo</a>
 									</div>
 								</c:if>
 							</c:when>

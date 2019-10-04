@@ -19,12 +19,12 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Liste des topos</h3>
-     					<c:set var="userId" value="${sessionScope['userId']}" />
+     					<c:set var="userId" value="${sessionScope['idUser']}" />
      					<c:choose>
      						<c:when test="${userId eq null}">
      						</c:when>
      						<c:otherwise>
-     							<a class="btn btn-info btn-sm" href="<c:url value="/topo/creationtopo"/>" role="button">Créer Topo</a>
+     							<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/creationtopo"/>" role="button">Créer Topo</a>
      						</c:otherwise>
         				</c:choose>
     				</div>
@@ -36,20 +36,16 @@
     									<h5 class="mb-1"><c:out value="${topo.topoName }" /></h5>
     								</div>
     								<br/>
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
-    									<c:choose>
-    										<c:when test ="${ topo.availability }">
-    											<small>Prété</small>
-    										</c:when>
-    										<c:otherwise>
-    											<small>Disponible</small>
-    										</c:otherwise>
-    									</c:choose>
-    								</div>
-    								<div class="d-flex w-100 justify-content-between">
-    									<p class="mb-1"><c:out value="${topo.county.countyName }" /></p>
-    								</div>
+    								<p class="mb-1"><c:out value="${topo.topoCity }" /></p>
+    								<p class="mb-1"><c:out value="${topo.county.countyName }" /></p>
+    								<c:choose>
+    									<c:when test ="${ topo.availability }">
+    										<p class="mb-1">Prété</p>
+    									</c:when>
+    									<c:otherwise>
+    										<p class="mb-1">Disponible</p>
+    									</c:otherwise>
+    								</c:choose>
     								<br/>
     								<a class="btn btn-info btn-sm btn-block" href="<c:url value="/topo/${topo.id}/vuetopo"/>" role="button">Détail</a>
     							</div>

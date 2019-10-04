@@ -69,26 +69,24 @@
 									<form:errors path="updateTopoReleaseDate" cssClass="error" />
 								</div>
 							</div>
-							<div class="form-group">
-      							<label class="control-label" for="topoUpdateImage1">Photo du topo 1 : </label>
-      							<br/>
-								<form:input type="file" path="topoUpdateImage1" id="topoUpdateImage1" name="topoUpdateImage1" class="form:input-large" />
+							<div class="col-12 col-md-10 text-left">
+      							<h6>Photo du topo 1 : </h6>
+								<form:input type="file" path="updateTopoImage1" id="updateTopoImage1" name="updateTopoImage1" class="form-control-file border" />
       						</div>
-      						<div class="form-group">
-      							<label class="control-label" for="topoUpdateImage2">Photo du topo 2 : </label>
-      							<br/>
-								<form:input type="file" path="topoUpdateImage2" id="topoUpdateImage2" name="topoUpdateImage2" class="form:input-large" />
+      						<br/>
+      						<div class="col-12 col-md-10 text-left">
+      							<h6>Photo du topo 2 : </h6>
+								<form:input type="file" path="updateTopoImage2" id="updateTopoImage2" name="updateTopoImage2" class="form-control-file border" />
       						</div>
-      						<div class="form-group">
-      							<label class="control-label" for="topoUpdateImage3">Photo du topo 3 : </label>
-      							<br/>
-								<form:input type="file" path="topoUpdateImage3" id="topoUpdateImage3" name="topoUpdateImage3" class="form:input-large" />
+      						<br/>
+      						<div class="col-12 col-md-10 text-left">
+      							<h6>Photo du topo 3 : </h6>
+								<form:input type="file" path="updateTopoImage3" id="updateTopoImage3" name="updateTopoImage3" class="form-control-file border" />
       						</div>
-							
 							<hr>
-							<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-4">Sauvegarder</button>
-        						<a  class="btn btn-danger btn-sm col-4" href="<c:url value="/topo/${topo.id}/vuetopo"/>">Annuler</a>
+							<div class="form-group d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        						<a  class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/topo/${topo.id}/vuetopo"/>">Annuler</a>
       						</div>
       					</form:form>
 					</div>
