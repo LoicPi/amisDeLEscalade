@@ -49,9 +49,9 @@
                         </div>
                             
                        	<hr>
-						<div class="row justify-content-around">
-        					<button type="submit" class="btn btn-success btn-sm col-6 col-md-4 m-auto">Sauvegarder</button>
-        					<a class="btn btn-danger btn-sm col-6 col-md-4 m-auto" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
+						<div class="d-flex flex-md-row flex-column justify-content-around">
+        					<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Sauvegarder</button>
+        					<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/compte/${user.id}/moncompte"/>" role="button">Annuler</a>
       					</div>
                   	</form:form>
                	</div>

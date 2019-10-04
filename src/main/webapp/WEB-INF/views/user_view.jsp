@@ -141,9 +141,9 @@
       									<div class="modal-body">
  											Voulez-vous vraiment supprimer votre compte ?
       									</div>
-      									<div class="modal-footer">
-      										<a class="btn btn-primary btn-sm" href="<c:url value="/compte/${userId}/deleteuser"/>" role="button">Oui</a>
-        									<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Non</button>
+      									<div class="modal-footer d-flex flex-md-row flex-column justify-content-around">
+      										<a class="btn btn-primary btn-sm col-12 col-md-4 m-auto" href="<c:url value="/compte/${userId}/deleteuser"/>" role="button">Oui</a>
+        									<button type="button" class="btn btn-secondary btn-sm btnStyle col-12 col-md-4 m-md-auto" data-dismiss="modal">Non</button>
       									</div>
    									</div>
   								</div>

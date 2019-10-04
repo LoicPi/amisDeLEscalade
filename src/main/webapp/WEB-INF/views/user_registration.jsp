@@ -75,9 +75,9 @@
        							<p class="font-italic">Cochez la case si vous êtes membre de l'association "Les amis de l'escalade"</p>
       						</div>
       						<hr>
-							<div class="row justify-content-around">
-        						<button type="submit" class="btn btn-success btn-sm col-6 col-md-4 m-auto">Inscription</button>	
-      							<a class="btn btn-danger btn-sm col-6 col-md-4 m-auto" href="<c:url value="/"/>" role="button">Annuler</a>
+							<div class="d-flex flex-md-row flex-column justify-content-around">
+        						<button type="submit" class="btn btn-success btn-sm col-12 col-md-4 m-auto">Inscription</button>	
+      							<a class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" href="<c:url value="/"/>" role="button">Annuler</a>
       						</div>
       					</form:form>	
 					</div>

@@ -47,7 +47,7 @@
     											<a class="btn btn-warning btn-sm col-12 col-md-4 m-auto" href="<c:url value="/compte/${user.id}/memberuser"/>" role="button">Ajouter Membre</a>
     										</c:otherwise>
     									</c:choose>
-    									<button type="button" class="btn btn-danger btn-sm btnAdm col-12 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer le compte</button>
+    									<button type="button" class="btn btn-danger btn-sm btnStyle col-12 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer le compte</button>
 										<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   											<div class="modal-dialog" role="document">
     											<div class="modal-content">
