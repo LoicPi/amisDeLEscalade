@@ -70,17 +70,17 @@
 								</div>
 							</div>
 							<div class="col-12 col-md-10 text-left">
-      							<h6>Photo du topo 1 : </h6>
+      							<h6>Photo n°1 du topo : </h6>
 								<form:input type="file" path="updateTopoImage1" id="updateTopoImage1" name="updateTopoImage1" class="form-control-file border" />
       						</div>
       						<br/>
       						<div class="col-12 col-md-10 text-left">
-      							<h6>Photo du topo 2 : </h6>
+      							<h6>Photo n°2 du topo : </h6>
 								<form:input type="file" path="updateTopoImage2" id="updateTopoImage2" name="updateTopoImage2" class="form-control-file border" />
       						</div>
       						<br/>
       						<div class="col-12 col-md-10 text-left">
-      							<h6>Photo du topo 3 : </h6>
+      							<h6>Photo n°3 du topo : </h6>
 								<form:input type="file" path="updateTopoImage3" id="updateTopoImage3" name="updateTopoImage3" class="form-control-file border" />
       						</div>
 							<hr>

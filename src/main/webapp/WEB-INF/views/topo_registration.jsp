@@ -66,19 +66,19 @@
       						</div>    						
       						
       						<div class="form-group">
-      							<label class="control-label" for="topoImage1">Photo du topo 1 : </label>
+      							<label class="control-label" for="topoImage1">Photo n°1 du topo : </label>
       							<br/>
 								<form:input type="file" path="topoImage1" id="topoImage1" name="topoImage1" class="form-control-file border" />
       						</div>
       						
       						<div class="form-group">
-      							<label class="control-label" for="topoImage2">Photo du topo 2 : </label>
+      							<label class="control-label" for="topoImage2">Photo n°2 du topo : </label>
       							<br/>
 								<form:input type="file" path="topoImage2" id="topoImage2" name="topoImage2" class="form-control-file border" />
       						</div>
       						
       						<div class="form-group">
-      							<label class="control-label" for="topoImage3">Photo du topo 3 : </label>
+      							<label class="control-label" for="topoImage3">Photo n°3 du topo : </label>
       							<br/>
 								<form:input type="file" path="topoImage3" id="topoImage3" name="topoImage3" class="form-control-file border" />
       						</div>
