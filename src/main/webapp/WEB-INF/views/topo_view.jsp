@@ -86,7 +86,12 @@
 								<label class="col-md-4 col-10 col-form-label form-control-label border bg-light">Date de parution :</label>
 								<label class="col-md-6 col-10 col-form-label form-control-label border"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${ topo.topoReleaseDate }" /></label>
 							</div>
-							<div id="carouselControls" class="carousel slide" data-ride="carousel">
+							<hr>
+							<div class="row">
+								<h4 class="col-12 col-md-4 text-center text-left">Photo du Topo</h4>
+							</div>
+							<hr>
+							<div id="carouselControls" class="carousel slide col-12" data-ride="carousel">
   								<div class="carousel-inner">
   									<c:if test="${topo.image1}">
    					 					<div class="carousel-item active">
@@ -104,14 +109,6 @@
     									</div>
     								</c:if>
   								</div>
-  								<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    								<span class="sr-only">Previous</span>
-  								</a>
-  								<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-   				 					<span class="sr-only">Next</span>
-  								</a>
 							</div>						
       					</form>
       					<c:choose>

@@ -19,6 +19,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan( basePackages = { "com.adle.projet" } )
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private int maxUploadSizeInMb = 5 * 1024 * 1024;
+
     @Bean
     public InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -38,7 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean( name = "multipartResolver" )
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize( 100000 );
+        multipartResolver.setMaxUploadSize( maxUploadSizeInMb * 2 );
+        multipartResolver.setMaxUploadSizePerFile( maxUploadSizeInMb );
         return multipartResolver;
     }
 
