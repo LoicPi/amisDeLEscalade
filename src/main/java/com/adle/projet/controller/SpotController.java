@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.adle.projet.dto.SearchSpot;
 import com.adle.projet.dto.UpdateSpot;
+import com.adle.projet.entity.Comment;
 import com.adle.projet.entity.County;
 import com.adle.projet.entity.Level;
 import com.adle.projet.entity.Listing;
 import com.adle.projet.entity.Sector;
 import com.adle.projet.entity.Spot;
 import com.adle.projet.entity.User;
+import com.adle.projet.service.CommentService;
 import com.adle.projet.service.CountyService;
 import com.adle.projet.service.LevelService;
 import com.adle.projet.service.ListingService;
@@ -65,6 +67,9 @@ public class SpotController {
 
     @Autowired
     private SectorService       sectorService;
+
+    @Autowired
+    private CommentService      commentService;
 
     /*
      * ************************* List of Spot *************************
@@ -197,8 +202,9 @@ public class SpotController {
                 theModel.addAttribute( "spot", theSpot );
                 return "spot_registration";
             } else {
-                if ( theSpot.getSpotCounty() == 0 ) {
-                    theSpot.setCounty( null );
+                if ( theSpot.getSpotCounty() == null ) {
+                    County theCounty = countyService.getCounty( 102 );
+                    theSpot.setCounty( theCounty );
                 } else {
                     County theCounty = countyService.getCounty( theSpot.getSpotCounty() );
                     theSpot.setCounty( theCounty );
@@ -239,8 +245,9 @@ public class SpotController {
         List<Sector> theSectors = sectorService.findSectorBySpotId( spotId );
         sectorService.levelOfSectors( theSectors );
         sectorService.listingOfSectors( theSectors );
+        List<Comment> theComments = commentService.findCommentBySpotId( spotId );
         theModel.addAttribute( "sectors", theSectors );
-        theModel.addAttribute( "comments", theSpot.getComments() );
+        theModel.addAttribute( "comments", theComments );
         return "spot_view";
     }
 

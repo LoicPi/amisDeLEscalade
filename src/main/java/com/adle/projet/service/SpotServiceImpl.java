@@ -57,8 +57,13 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void levelOfSpots( List<Spot> spots ) {
         for ( Spot spot : spots ) {
-            spot.setHighLevelOfSpot( levelService.getLevel( spot.highLevelId() ).getLevelName() );
-            spot.setLowLevelOfSpot( levelService.getLevel( spot.lowLevelId() ).getLevelName() );
+            if ( spot.highLevelId() != 0 && spot.lowLevelId() != 0 ) {
+                spot.setHighLevelOfSpot( levelService.getLevel( spot.highLevelId() ).getLevelName() );
+                spot.setLowLevelOfSpot( levelService.getLevel( spot.lowLevelId() ).getLevelName() );
+            } else {
+                spot.setHighLevelOfSpot( "Pas encore de niveau connu." );
+                spot.setLowLevelOfSpot( "Pas encore de niveau connu." );
+            }
         }
     }
 
@@ -71,8 +76,14 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void listingOfSpots( List<Spot> spots ) {
         for ( Spot spot : spots ) {
-            spot.setHighListingOfSpot( listingService.getListing( spot.highListingId() ).getListingName() );
-            spot.setLowListingOfSpot( listingService.getListing( spot.lowListingId() ).getListingName() );
+            if ( spot.highListingId() != 0 && spot.lowListingId() != 0 ) {
+                spot.setHighListingOfSpot( listingService.getListing( spot.highListingId() ).getListingName() );
+                spot.setLowListingOfSpot( listingService.getListing( spot.lowListingId() ).getListingName() );
+            } else {
+                spot.setHighListingOfSpot( "Pas encore de cotation connu." );
+                spot.setLowListingOfSpot( "Pas encore de cotation connu." );
+            }
+
         }
     }
 }

@@ -23,11 +23,11 @@
       			</div>
       			<div class="card-body">
       				<form:form action="searchspot" class="form" method="post" modelAttribute="searchSpot">
-      					<div class="form-row searchHeader">
-      						<div class="col">
+      					<div class="form-row searchHeader d-flex flex-md-row flex-column justify-content-around">
+      						<div class="col search">
       							<form:input path="name" class="form-control" type="text" placeholder="Nom du site"/>
       						</div>
-      						<div class="col">
+      						<div class="col search">
       							<form:input path="city" class="form-control" type="text"  placeholder="Nom de ville"/>
       						</div>		
       						<div class="col">
@@ -35,13 +35,13 @@
       						</div>
       					</div>
       					<div class="form-row">
-      						<div class="col">	
+      						<div class="col search">	
       							<form:select path="county">
                      				<form:option value="0" label = "Choix du département"/>
                      				<form:options items = "${county}" />
                   				</form:select>
       						</div>
-      						<div class="col">
+      						<div class="col search">
       							<form:select path="listing">
                      				<form:option value="0" label = "Choix de la cotation"/>
                      				<form:options items = "${listing}" />
@@ -67,7 +67,7 @@
    				<div class="card border-secondary">
    					<div class="card-header text-center">
      					<h3>Liste des sites d'escalade</h3>
-     					<c:set var="userId" value="${sessionScope['userId']}" />
+     					<c:set var="userId" value="${sessionScope['idUser']}" />
      					<c:choose>
      						<c:when test="${userId eq null}">
      						</c:when>
