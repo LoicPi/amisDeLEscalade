@@ -118,17 +118,17 @@
   							<div class="carousel-inner">
   								<c:if test="${spot.image1}">
    				 					<div class="carousel-item active">
-     		 							<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}1.png"/>" class="d-block w-100">
+     		 							<img src="<c:url value="/resources/uploaded-images/spot/${spot.id}1.png"/>" class="d-block w-100">
     								</div>
     							</c:if>
     							<c:if test="${spot.image2}">
     								<div class="carousel-item">
-      									<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}2.png"/>" class="d-block w-100">
+      									<img src="<c:url value="/resources/uploaded-images/spot/${spot.id}2.png"/>" class="d-block w-100">
     								</div>
     							</c:if>
     							<c:if test="${spot.image3}">
     								<div class="carousel-item">
-      									<img src="<c:url value="/resources/uploaded-images/topo/${topo.id}3.png"/>" class="d-block w-100">
+      									<img src="<c:url value="/resources/uploaded-images/spot/${spot.id}3.png"/>" class="d-block w-100">
     								</div>
     							</c:if>
   							</div>
