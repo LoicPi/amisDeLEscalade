@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
+<Configuration>
     <Properties>
-        <Property name="basePath">Log</Property>
+        <Property name="basePath">C:\\logs</Property>
     </Properties>
  
     <Appenders>
-        <RollingFile name="fileLogger" fileName="${basePath}/Amis de l escalade.log" filePattern="${basePath}/Jeux_de_logique-%d{yyyy-MM-dd}.log">
+    	<Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+        <Filters>
+            <ThresholdFilter level="trace" />
+            <!-- deny trace and info messages to the console -->
+            <ThresholdFilter level="info"  onMatch="DENY"   onMismatch="NEUTRAL"/>
+           </Filters>
+        
+        
+        <RollingFile name="fileLogger" fileName="${basePath}/Amis de l escalade.log" filePattern="${basePath}/ADLE-%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %msg%n</pattern>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
@@ -15,8 +25,13 @@
         </RollingFile>
     </Appenders>
     <Loggers>
+    <Logger name="com.adle.projet" level="info">
+            <AppenderRef ref="MyFile"/>
+            <AppenderRef ref="Console" level="info"/>
+        </Logger>
         <Root level="info" additivity="false">
         	<appender-ref ref="fileLogger" level="info" />
+        	<appenderRef ref="console"/>       	
         </Root>
     </Loggers>
 </Configuration>
