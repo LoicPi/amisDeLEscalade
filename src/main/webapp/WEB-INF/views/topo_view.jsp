@@ -20,16 +20,16 @@
    				<div class="card border-secondary">
    					<div class="card-header">
 						<h3 class="text-center"><c:out value="${ topo.topoName }" /></h3>
-      					<c:if test ="${ topo.availability }">
-      					    <hr>
-       						<div class="row justify-content-around">
-       							<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
-       						</div>
-      					</c:if>
-						<c:set var="userId" value="${sessionScope['idUser']}" />      										
+						<c:set var="userId" value="${sessionScope['idUser']}" />
 						<c:choose>
 							<c:when test="${userId eq (topo.user).id && userId ne null || user.role.id eq 3 }">
-								<hr>
+      							<c:if test ="${ topo.availability }">
+      					    		<hr>
+       								<div class="row justify-content-around">
+       									<a class="btn btn-info btn-sm col-6 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/availabilitytopo"/>" role="button">Remettre en disponible le topo</a>
+       								</div>
+      							</c:if>
+      							<hr>
 								<div class="d-flex flex-md-row flex-column justify-content-around">
         							<a class="btn btn-info btn-sm col-12 col-md-4 m-auto" href="<c:url value="/topo/${topo.id}/majtopo"/>" role="button">Editer</a>
         							<button type="button" class="btn btn-danger btn-sm col-12 btnStyle col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
@@ -53,10 +53,10 @@
   										</div>
 									</div>
         						</div>
-							</c:when>
-							<c:otherwise>		
-							</c:otherwise>
-						</c:choose>
+      						</c:when>
+      						<c:otherwise>
+      						</c:otherwise>
+						</c:choose>  										
 					</div>
 					<div class="card-body">
 						<form class="form-horizontal" role="form">
