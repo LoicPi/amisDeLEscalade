@@ -118,7 +118,7 @@ public class SpotDAOImpl implements SpotDAO {
         if ( listingSpot != 0 ) {
             varTable = varTable + ", Sector as se, Path as p, Length as le, Listing as li";
             varJointure = varJointure
-                    + "s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.id = "
+                    + "and s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.id = "
                     + listingSpot;
         }
 
@@ -130,7 +130,7 @@ public class SpotDAOImpl implements SpotDAO {
         if ( listingSpot == 0 && levelSpot != 0 ) {
             varTable = varTable + ", Sector as se, Path as p, Length as le, Listing as li, Level as lev";
             varJointure = varJointure
-                    + "s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.level_id = lev.id and lev.id = "
+                    + "and s.id = se.spot.id and se.id = p.sector.id and p.id = le.path.id and le.listing.id = li.id and li.level_id = lev.id and lev.id = "
                     + levelSpot;
         }
 
