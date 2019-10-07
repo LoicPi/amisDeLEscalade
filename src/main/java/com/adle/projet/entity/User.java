@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created User Bean defined by id, firstName, lastName, nickName, email,
- * password
+ * password, image
  * 
  * Join with Role by role
  * 
