@@ -26,6 +26,9 @@ public class CountyDAOImpl implements CountyDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of countys in database
+     */
     @Override
     public List<County> getCountys() {
         Session session = sessionFactory.getCurrentSession();
@@ -39,6 +42,9 @@ public class CountyDAOImpl implements CountyDAO {
         return query.getResultList();
     }
 
+    /**
+     * Function return a county by the id of the county
+     */
     @Override
     public County getCounty( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -47,6 +53,9 @@ public class CountyDAOImpl implements CountyDAO {
         return county;
     }
 
+    /**
+     * Function return a map of Countys by a list of countys
+     */
     @Override
     public Map<Integer, String> getCountyNameOfCountys( List<County> countys ) {
         Map<Integer, String> countyName = new HashMap<Integer, String>();

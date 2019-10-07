@@ -20,6 +20,9 @@ public class LengthDAOImpl implements LengthDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of lengths in database
+     */
     @Override
     public List<Length> getLengths() {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -31,9 +34,13 @@ public class LengthDAOImpl implements LengthDAO {
                         + "left join fetch ll.level",
                 Length.class );
         List<Length> lengths = query.getResultList();
+        logger.info( "The list of lengths : " + lengths );
         return lengths;
     }
 
+    /**
+     * Function save a length in database
+     */
     @Override
     public void saveLength( Length length ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -41,6 +48,9 @@ public class LengthDAOImpl implements LengthDAO {
         logger.info( "Length saved successfully, Length details = " + length );
     }
 
+    /**
+     * Function updated a length in database
+     */
     @Override
     public void updateLength( Length length ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -48,13 +58,20 @@ public class LengthDAOImpl implements LengthDAO {
         logger.info( "Length updated successfully, Length details = " + length );
     }
 
+    /**
+     * Function delete a length in database
+     */
     @Override
     public void deleteLength( int theId ) {
         Session session = sessionFactory.getCurrentSession();
         Length theLength = session.byId( Length.class ).load( theId );
+        logger.info( "The length deleted is : " + theLength );
         session.delete( theLength );
     }
 
+    /**
+     * Function return a length find with the id of the length
+     */
     @Override
     public Length getLength( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -65,6 +82,9 @@ public class LengthDAOImpl implements LengthDAO {
         return lengthResult;
     }
 
+    /**
+     * Function return a list of length find by userId
+     */
     @Override
     public List<Length> findLengthByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -75,6 +95,9 @@ public class LengthDAOImpl implements LengthDAO {
         return lengthResult;
     }
 
+    /**
+     * Function return a list of length find by pathId
+     */
     @Override
     public List<Length> findLengthByPathId( int pathId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -85,6 +108,9 @@ public class LengthDAOImpl implements LengthDAO {
         return lengthResult;
     }
 
+    /**
+     * Function return a list of length find by listingId
+     */
     @Override
     public List<Length> findLengthByListingId( int listingId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -95,6 +121,9 @@ public class LengthDAOImpl implements LengthDAO {
         return lengthResult;
     }
 
+    /**
+     * Function return a list of length find by levelId
+     */
     @Override
     public List<Length> findLengthByLevelId( int levelId ) {
         Session currentSession = sessionFactory.getCurrentSession();

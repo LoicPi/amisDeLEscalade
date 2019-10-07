@@ -25,6 +25,9 @@ public class PathDAOImpl implements PathDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of paths in database
+     */
     @Override
     public List<Path> getPaths() {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -42,6 +45,9 @@ public class PathDAOImpl implements PathDAO {
         return paths;
     }
 
+    /**
+     * Function save a path in database
+     */
     @Override
     public void savePath( Path path ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -51,6 +57,9 @@ public class PathDAOImpl implements PathDAO {
 
     }
 
+    /**
+     * Function return a path by the given id
+     */
     @Override
     public Path getPath( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -62,6 +71,9 @@ public class PathDAOImpl implements PathDAO {
         return pathResult;
     }
 
+    /**
+     * Function update a path in database
+     */
     @Override
     public void updatePath( Path path ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -71,6 +83,9 @@ public class PathDAOImpl implements PathDAO {
 
     }
 
+    /**
+     * Function find a List of Path by the given userId
+     */
     @Override
     public List<Path> findPathByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -81,6 +96,9 @@ public class PathDAOImpl implements PathDAO {
         return pathResult;
     }
 
+    /**
+     * Function find a List of Path by the given spotId
+     */
     @Override
     public List<Path> findPathBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -91,6 +109,9 @@ public class PathDAOImpl implements PathDAO {
         return pathResult;
     }
 
+    /**
+     * Function find a List of Path by the given sectorId
+     */
     @Override
     public List<Path> findPathBySectorId( int sectorId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -101,6 +122,9 @@ public class PathDAOImpl implements PathDAO {
         return pathResult;
     }
 
+    /**
+     * Function find a List of Path by the given typeId
+     */
     @Override
     public List<Path> findPathByTypeId( int typeId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -111,6 +135,9 @@ public class PathDAOImpl implements PathDAO {
         return pathResult;
     }
 
+    /**
+     * Function delete a Path in database
+     */
     @Override
     public void deletePath( int theId ) {
         Session session = sessionFactory.getCurrentSession();
@@ -118,6 +145,7 @@ public class PathDAOImpl implements PathDAO {
         for ( Length l : thePath.getLengths() ) {
             session.remove( l );
         }
+        logger.info( "Path deleted : " + thePath );
         session.delete( thePath );
 
     }

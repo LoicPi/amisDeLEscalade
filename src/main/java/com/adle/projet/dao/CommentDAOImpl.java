@@ -22,6 +22,9 @@ public class CommentDAOImpl implements CommentDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of comments in database
+     */
     @Override
     public List<Comment> getComments() {
         Session session = sessionFactory.getCurrentSession();
@@ -35,6 +38,9 @@ public class CommentDAOImpl implements CommentDAO {
         return comments;
     }
 
+    /**
+     * Function save a comment in database
+     */
     @Override
     public void saveComment( Comment comment ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -44,6 +50,9 @@ public class CommentDAOImpl implements CommentDAO {
         logger.info( "Comment saved successfully, Comment details = " + comment );
     }
 
+    /**
+     * Function update a Comment in database
+     */
     @Override
     public void updateDAO( Comment comment ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -51,6 +60,9 @@ public class CommentDAOImpl implements CommentDAO {
         logger.info( "Comment updated successfully, Comment details = " + comment );
     }
 
+    /**
+     * Function delete a Comment in database
+     */
     @Override
     public void deleteComment( int theId ) {
         Session session = sessionFactory.getCurrentSession();
@@ -58,6 +70,9 @@ public class CommentDAOImpl implements CommentDAO {
         session.delete( theComment );
     }
 
+    /**
+     * Function return a comment find with commentId
+     */
     @Override
     public Comment getComment( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -69,6 +84,9 @@ public class CommentDAOImpl implements CommentDAO {
         return commentResult;
     }
 
+    /**
+     * Function return a list of comments find with userId
+     */
     @Override
     public List<Comment> findCommentByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -79,6 +97,9 @@ public class CommentDAOImpl implements CommentDAO {
         return commentResult;
     }
 
+    /**
+     * Function return a list of comments find with spotId
+     */
     @Override
     public List<Comment> findCommentBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();

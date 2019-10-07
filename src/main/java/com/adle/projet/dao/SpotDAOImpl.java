@@ -25,6 +25,9 @@ public class SpotDAOImpl implements SpotDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return a list of spots
+     */
     @Override
     public List<Spot> getSpots() {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -40,9 +43,13 @@ public class SpotDAOImpl implements SpotDAO {
                         + "left join fetch ssepll.level as sseplll ",
                 Spot.class );
         List<Spot> spots = query.getResultList();
+        logger.info( "The list of spots : " + spots );
         return spots;
     }
 
+    /**
+     * Function save a spot in database
+     */
     @Override
     public void saveSpot( Spot spot ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -54,6 +61,9 @@ public class SpotDAOImpl implements SpotDAO {
 
     }
 
+    /**
+     * Function return a spot find by the id of the spot
+     */
     @Override
     public Spot getSpot( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -64,6 +74,9 @@ public class SpotDAOImpl implements SpotDAO {
         return spotResult;
     }
 
+    /**
+     * Function updated a spot in database
+     */
     @Override
     public void updateSpot( Spot spot ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -75,6 +88,9 @@ public class SpotDAOImpl implements SpotDAO {
 
     }
 
+    /**
+     * Function return a list of spots find by userId
+     */
     @Override
     public List<Spot> findSpotByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -85,6 +101,9 @@ public class SpotDAOImpl implements SpotDAO {
         return spotResult;
     }
 
+    /**
+     * Function delete a spot in database
+     */
     @Override
     public void deleteSpot( int theId ) {
         Session session = sessionFactory.getCurrentSession();
@@ -92,9 +111,13 @@ public class SpotDAOImpl implements SpotDAO {
         for ( Sector s : theSpot.getSectors() ) {
             session.remove( s );
         }
+        logger.info( "The spot deleted is : " + theSpot );
         session.delete( theSpot );
     }
 
+    /**
+     * Function looking for a spot according to the criteria in parameter
+     */
     @Override
     public List<Spot> searchSpot( String nameSpot, String citySpot, int countySpot, String sectorsSpot, int listingSpot,
             int levelSpot ) {

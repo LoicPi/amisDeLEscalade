@@ -12,6 +12,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * Created Type Bean defined by id, name
+ * 
+ * Join with Path Bean
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "types" )
 @org.hibernate.annotations.NamedQueries( {

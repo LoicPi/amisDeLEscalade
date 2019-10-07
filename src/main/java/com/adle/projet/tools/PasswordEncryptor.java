@@ -2,6 +2,14 @@ package com.adle.projet.tools;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Class to encrypt the password and control the password with password
+ * encrypted in database
+ * 
+ * @author Loïc
+ *
+ */
+
 public class PasswordEncryptor {
 
     private static int workload = 12;

@@ -11,6 +11,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * Created County Bean defined by id, countyName
+ * 
+ * Join with Spot Bean, Topo Bean
+ * 
+ * @author Loïc
+ *
+ * 
+ */
+
 @Entity
 @Table( name = "countys" )
 @org.hibernate.annotations.NamedQueries( {

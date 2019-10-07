@@ -60,6 +60,10 @@ public class SectorServiceImpl implements SectorService {
         return sectorDAO.findSectorBySpotId( spotId );
     }
 
+    /**
+     * Function implements in entity sector parameters HighLevelOfSector et
+     * LowLevelOfSector
+     */
     @Override
     public void levelOfSectors( List<Sector> sectors ) {
         for ( Sector sector : sectors ) {
@@ -74,6 +78,10 @@ public class SectorServiceImpl implements SectorService {
         }
     }
 
+    /**
+     * Function implements in entity sector parameters HighListingOfSector et
+     * LowListingOfSector
+     */
     @Override
     public void listingOfSectors( List<Sector> sectors ) {
         for ( Sector sector : sectors ) {

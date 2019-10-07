@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created Topo Bean defined by id, name, city, county, country, descriptive,
- * releaseDate, avaibility
+ * releaseDate, avaibility, image1, image2, image3
  * 
  * Join with User Bean by user
  * 

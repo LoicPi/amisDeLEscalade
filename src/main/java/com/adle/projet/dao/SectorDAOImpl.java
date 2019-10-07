@@ -25,6 +25,9 @@ public class SectorDAOImpl implements SectorDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return a list of sector with all elements
+     */
     @Override
     public List<Sector> getSectors() {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -42,6 +45,9 @@ public class SectorDAOImpl implements SectorDAO {
         return sectors;
     }
 
+    /**
+     * Function save a Sector in database
+     */
     @Override
     public void saveSector( Sector sector ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -51,6 +57,9 @@ public class SectorDAOImpl implements SectorDAO {
 
     }
 
+    /**
+     * Function return a sector by the given id
+     */
     @Override
     public Sector getSectors( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -62,6 +71,9 @@ public class SectorDAOImpl implements SectorDAO {
         return sectorResult;
     }
 
+    /**
+     * Function update a Sector in database
+     */
     @Override
     public void updateSector( Sector sector ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -71,6 +83,9 @@ public class SectorDAOImpl implements SectorDAO {
 
     }
 
+    /**
+     * Function find a List of Sector with userId
+     */
     @Override
     public List<Sector> findSectorByUser( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -81,6 +96,9 @@ public class SectorDAOImpl implements SectorDAO {
         return sectorResult;
     }
 
+    /**
+     * Function delete a Sector in database
+     */
     @Override
     public void deleteSector( int theId ) {
         Session session = sessionFactory.getCurrentSession();
@@ -92,6 +110,9 @@ public class SectorDAOImpl implements SectorDAO {
 
     }
 
+    /**
+     * Function find a List of Sector with spotId
+     */
     @Override
     public List<Sector> findSectorBySpotId( int spotId ) {
         Session currentSession = sessionFactory.getCurrentSession();

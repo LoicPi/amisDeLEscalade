@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created Spot Bean defined by id, name, city, county, country, descriptive,
- * access and tag
+ * access, tag image1, image2 and image3
  * 
  * Join with User Bean by user
  * 

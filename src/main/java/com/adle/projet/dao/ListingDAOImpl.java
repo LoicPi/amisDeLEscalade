@@ -26,6 +26,9 @@ public class ListingDAOImpl implements ListingDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of listings in database
+     */
     @Override
     public List<Listing> getListings() {
         Session session = sessionFactory.getCurrentSession();
@@ -38,6 +41,9 @@ public class ListingDAOImpl implements ListingDAO {
         return query.getResultList();
     }
 
+    /**
+     * Function return a listing by the given id
+     */
     @Override
     public Listing getListing( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -46,6 +52,9 @@ public class ListingDAOImpl implements ListingDAO {
         return listing;
     }
 
+    /**
+     * Function return a list of listing by the given a level id
+     */
     @Override
     public List<Listing> findListingByLevelId( int levelId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -56,6 +65,9 @@ public class ListingDAOImpl implements ListingDAO {
         return listingResult;
     }
 
+    /**
+     * Function return a map of listing by the given a list of listings
+     */
     @Override
     public Map<Integer, String> getListingNameOfListings( List<Listing> listings ) {
         Map<Integer, String> listingName = new HashMap<Integer, String>();

@@ -11,6 +11,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class EncodingFilter extends OncePerRequestFilter {
 
+    /**
+     * Function to encode the text to utf-8
+     */
     @Override
     protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain )
             throws ServletException, IOException {

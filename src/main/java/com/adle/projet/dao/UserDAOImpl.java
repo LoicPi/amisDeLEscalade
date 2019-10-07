@@ -88,6 +88,7 @@ public class UserDAOImpl implements UserDAO {
         Query<User> query = currentSession.createNamedQuery( "User_findByEmail", User.class );
         query.setParameter( "email", email );
         List<User> userResult = query.getResultList();
+        logger.info( "List of User find by email : " + userResult );
         return userResult;
     }
 
@@ -103,6 +104,9 @@ public class UserDAOImpl implements UserDAO {
         logger.info( "User updated successfully, User details = " + user );
     }
 
+    /**
+     * Function update a User's password in database
+     */
     @Override
     public void updatePasswordUser( User user ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -111,6 +115,10 @@ public class UserDAOImpl implements UserDAO {
         logger.info( "User updated successfully, User details = " + user );
     }
 
+    /**
+     * Function delete a User in database but keep is spot, sector, path and
+     * length
+     */
     @Override
     public void deleteUser( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -138,6 +146,7 @@ public class UserDAOImpl implements UserDAO {
         for ( Topo topo : theUser.getTopos() ) {
             currentSession.delete( topo );
         }
+        logger.info( "User delete : " + theUser );
         currentSession.delete( theUser );
     }
 

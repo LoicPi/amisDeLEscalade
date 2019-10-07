@@ -18,6 +18,15 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+/**
+ * Created Comment Bean defined by id, contents and date
+ * 
+ * Join with Spot Bean
+ * 
+ * @author Loïc
+ *
+ */
+
 @Entity
 @Table( name = "comments" )
 @org.hibernate.annotations.NamedQueries( {

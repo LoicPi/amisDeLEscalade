@@ -26,6 +26,9 @@ public class TypeDAOImpl implements TypeDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of types in database
+     */
     @Override
     public List<Type> getTypes() {
         Session session = sessionFactory.getCurrentSession();
@@ -39,6 +42,9 @@ public class TypeDAOImpl implements TypeDAO {
         return query.getResultList();
     }
 
+    /**
+     * Function return a type by given a id
+     */
     @Override
     public Type getType( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -47,6 +53,9 @@ public class TypeDAOImpl implements TypeDAO {
         return type;
     }
 
+    /**
+     * Function return a map of type by given a list of types
+     */
     @Override
     public Map<Integer, String> getTypeNameOfTypes( List<Type> types ) {
         Map<Integer, String> typeName = new HashMap<Integer, String>();

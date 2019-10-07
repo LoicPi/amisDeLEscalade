@@ -26,6 +26,9 @@ public class LevelDAOImpl implements LevelDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of levels in database
+     */
     @Override
     public List<Level> getLevels() {
         Session session = sessionFactory.getCurrentSession();
@@ -38,6 +41,9 @@ public class LevelDAOImpl implements LevelDAO {
         return query.getResultList();
     }
 
+    /**
+     * Function return a level by the given id
+     */
     @Override
     public Level getLevel( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -46,6 +52,9 @@ public class LevelDAOImpl implements LevelDAO {
         return level;
     }
 
+    /**
+     * Fucntion return a map of level by the given list of levels
+     */
     @Override
     public Map<Integer, String> getLevelNameOfLevels( List<Level> levels ) {
         Map<Integer, String> levelName = new HashMap<Integer, String>();

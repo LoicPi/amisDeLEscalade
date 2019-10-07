@@ -54,6 +54,10 @@ public class SpotServiceImpl implements SpotService {
         spotDAO.deleteSpot( theId );
     }
 
+    /**
+     * Function implements in entity spot parameters HighLevelOfSpot et
+     * LowLevelOfSpot
+     */
     @Override
     public void levelOfSpots( List<Spot> spots ) {
         for ( Spot spot : spots ) {
@@ -73,6 +77,10 @@ public class SpotServiceImpl implements SpotService {
         return spotDAO.searchSpot( nameSpot, citySpot, countySpot, sectorsSpot, listingSpot, levelSpot );
     }
 
+    /**
+     * Function implements in entity spot parameters HighListingOfSpot et
+     * LowListingOfSpot
+     */
     @Override
     public void listingOfSpots( List<Spot> spots ) {
         for ( Spot spot : spots ) {

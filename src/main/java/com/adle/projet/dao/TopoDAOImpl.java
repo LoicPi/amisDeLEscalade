@@ -24,6 +24,9 @@ public class TopoDAOImpl implements TopoDAO {
     @Autowired
     private SessionFactory      sessionFactory;
 
+    /**
+     * Function return the list of topos in database
+     */
     @Override
     public List<Topo> getTopos() {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -33,9 +36,13 @@ public class TopoDAOImpl implements TopoDAO {
                         + "left join fetch t.county",
                 Topo.class );
         List<Topo> topos = query.getResultList();
+        logger.info( "List of Topo : " + topos );
         return topos;
     }
 
+    /**
+     * Function save a topo in database
+     */
     @Override
     public void saveTopo( Topo topo ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -46,6 +53,9 @@ public class TopoDAOImpl implements TopoDAO {
         logger.info( "Topo saved successfully, Topo details = " + topo );
     }
 
+    /**
+     * Function return a topo by the given id
+     */
     @Override
     public Topo getTopo( int theId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -57,6 +67,9 @@ public class TopoDAOImpl implements TopoDAO {
         return topoResult;
     }
 
+    /**
+     * Function update a Topo in database
+     */
     @Override
     public void updateTopo( Topo topo ) {
         Session currentsession = sessionFactory.getCurrentSession();
@@ -67,6 +80,9 @@ public class TopoDAOImpl implements TopoDAO {
         logger.info( "Topo updated successfully, Topo details = " + topo );
     }
 
+    /**
+     * Function find a Topo with userId return a list of topo
+     */
     @Override
     public List<Topo> findTopoByUserId( int userId ) {
         Session currentSession = sessionFactory.getCurrentSession();
@@ -77,6 +93,9 @@ public class TopoDAOImpl implements TopoDAO {
         return topoResult;
     }
 
+    /**
+     * Function delete a Topo in database
+     */
     @Override
     public void deleteTopo( int theId ) {
         Session session = sessionFactory.getCurrentSession();
