@@ -16,7 +16,7 @@
         		<c:import url="inc/header_page.jsp" />
       		</header>
       		<div class="col-md-8 mx-auto">
-      			<p class="font-italic"> Revenir à la <a href="<c:url value="/site/${spot.id}/secteur/${sector.id}/longeur/${path.id}/vuelongueur"/>">Voie</a></p>
+      			<p class="font-italic"> Revenir à la <a href="<c:url value="/site/${spot.id}/secteur/${sector.id}/voie/${path.id}/vuevoie"/>">Voie</a></p>
    				<div class="card border-secondary">
    					<div class="card-header text-center">
 						<h3>Vue de la longeur</h3>
