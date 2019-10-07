@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,8 @@ import com.adle.projet.validator.LengthValidator;
 @RequestMapping( "/site/{spotId}/secteur/{sectorId}/voie/{pathId}/longueur" )
 public class LengthController {
 
+    private static final Logger   logger = LogManager.getLogger( LengthController.class );
+
     @Autowired
     private UserService           userService;
 
@@ -51,9 +55,6 @@ public class LengthController {
 
     @Autowired
     private LengthService         lengthService;
-
-    // @Autowired
-    // private LevelService levelService;
 
     @Autowired
     private ListingService        listingService;
@@ -158,6 +159,7 @@ public class LengthController {
                 theLength.setUser( theUser );
                 theLength.setListing( theListing );
                 lengthService.saveLength( theLength );
+                logger.info( "The Length has been saved successfully : " + theLength );
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/longueur/"
                         + theLength.getId() + "/vuelongueur";
             }
@@ -204,6 +206,7 @@ public class LengthController {
         theModel.addAttribute( "path", thePath );
         Length theLength = lengthService.getLength( lengthId );
         theModel.addAttribute( "length", theLength );
+        logger.info( "The Length is : " + theLength );
         return "length_view";
     }
 
@@ -324,6 +327,7 @@ public class LengthController {
             }
             lengthUpdate.setListing( theListing );
             lengthService.updateLength( lengthUpdate );
+            logger.info( "The Length has been successfully updated : " + lengthUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/longueur/" + lengthId
                     + "/vuelongueur";
         }
@@ -356,6 +360,7 @@ public class LengthController {
         if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            logger.info( "The length has been deleted  : " + lengthService.getLength( lengthId ) );
             lengthService.deleteLength( lengthId );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/vuevoie";
         }

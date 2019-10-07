@@ -145,6 +145,7 @@ public class PathController {
                 thePath.setType( theType );
                 thePath.setUser( theUser );
                 thePath.setSector( theSector );
+                logger.info( "The Path has been saved successfully : " + thePath );
                 pathService.savePath( thePath );
                 return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + thePath.getId() + "/vuevoie";
             }
@@ -187,6 +188,7 @@ public class PathController {
         Path thePath = pathService.getPath( pathId );
         theModel.addAttribute( "lengths", thePath.getLengths() );
         theModel.addAttribute( "path", thePath );
+        logger.info( "The Path is : " + thePath );
         return "path_view";
     }
 
@@ -293,6 +295,7 @@ public class PathController {
             pathUpdate.setType( theType );
             pathUpdate.setPathName( thePath.getUpdatePathName() );
             pathService.updatePath( pathUpdate );
+            logger.info( "The Path has been successfully updated : " + pathUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/voie/" + pathId + "/vuevoie";
         }
     }
@@ -322,6 +325,7 @@ public class PathController {
         if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            logger.info( "The path has been deleted  : " + pathService.getPath( pathId ) );
             pathService.deletePath( pathId );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId + "/vuesecteur";
         }

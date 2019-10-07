@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ import com.adle.projet.validator.CommentValidator;
 @Controller
 @RequestMapping( "/site/{spotId}/commentaire" )
 public class CommentController {
+
+    private static final Logger    logger = LogManager.getLogger( CommentController.class );
 
     @Autowired
     private UserService            userService;
@@ -113,6 +117,7 @@ public class CommentController {
                 theComment.setUser( theUser );
                 theComment.setSpot( theSpot );
                 commentService.saveComment( theComment );
+                logger.info( "The Comment has been saved successfully : " + theComment );
                 return "redirect:/site/" + spotId + "/vuesite";
             }
         }
@@ -196,6 +201,7 @@ public class CommentController {
         } else {
             comment.setContents( theComment.getUpdateContents() );
             commentService.updateComment( comment );
+            logger.info( "The Comment has been successfully updated : " + comment );
             return "redirect:/site/" + spotId + "/vuesite";
         }
     }
@@ -222,6 +228,7 @@ public class CommentController {
         if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            logger.info( "The comment has been deleted  : " + commentService.getComment( commentId ) );
             commentService.deleteComment( commentId );
             return "redirect:/site/" + spotId + "/vuesite";
         }

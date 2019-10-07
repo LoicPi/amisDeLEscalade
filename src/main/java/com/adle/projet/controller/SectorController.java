@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ import com.adle.projet.validator.SectorValidator;
 @Controller
 @RequestMapping( "/site/{spotId}/secteur" )
 public class SectorController {
+
+    private static final Logger   logger = LogManager.getLogger( SectorController.class );
 
     @Autowired
     private UserService           userService;
@@ -113,6 +117,7 @@ public class SectorController {
                 theSector.setUser( theUser );
                 theSector.setSpot( theSpot );
                 sectorService.saveSector( theSector );
+                logger.info( "The Sector has been saved successfully : " + theSector );
                 return "redirect:/site/" + spotId + "/secteur/" + theSector.getId() + "/vuesecteur";
             }
         }
@@ -150,6 +155,7 @@ public class SectorController {
         Sector theSector = sectorService.getSector( sectorId );
         theModel.addAttribute( "paths", theSector.getPaths() );
         theModel.addAttribute( "sector", theSector );
+        logger.info( "The Sector is : " + theSector );
         return "sector_view";
     }
 
@@ -242,6 +248,7 @@ public class SectorController {
             sectorUpdate.setSectorName( theSector.getUpdateSectorName() );
             sectorUpdate.setSectorDescriptive( theSector.getUpdateSectorDescriptive() );
             sectorService.updateSector( sectorUpdate );
+            logger.info( "The Sector has been successfully updated : " + sectorUpdate );
             return "redirect:/site/" + spotId + "/secteur/" + sectorId +
                     "/vuesecteur";
         }
@@ -269,6 +276,7 @@ public class SectorController {
         if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            logger.info( "The sector has been deleted  : " + sectorService.getSector( sectorId ) );
             sectorService.deleteSector( sectorId );
             return "redirect:/site/" + spotId + "/vuesite";
         }

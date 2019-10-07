@@ -120,6 +120,7 @@ public class SpotController {
         spotService.levelOfSpots( theSpots );
         spotService.listingOfSpots( theSpots );
         theModel.addAttribute( "spots", theSpots );
+        logger.info( "List of spots : " + theSpots );
         return "spot_list";
     }
 
@@ -148,6 +149,7 @@ public class SpotController {
                 searchSpot.getCounty(), searchSpot.getSectors(), searchSpot.getListing(), searchSpot.getLevel() );
         logger.info( "spots : " + theSpots );
         theModel.addAttribute( "spots", theSpots );
+        logger.info( "List of spots : " + theSpots );
         return "spot_list";
 
     }
@@ -269,7 +271,7 @@ public class SpotController {
                 } else {
                     theSpot.setImage3( false );
                 }
-
+                logger.info( "The Spot has been saved successfully : " + theSpot );
                 spotService.saveSpot( theSpot );
                 return "redirect:/site/" + theSpot.getId() + "/vuesite";
             }
@@ -308,6 +310,7 @@ public class SpotController {
         List<Comment> theComments = commentService.findCommentBySpotId( spotId );
         theModel.addAttribute( "sectors", theSectors );
         theModel.addAttribute( "comments", theComments );
+        logger.info( "The Spot is : " + theSpot );
         return "spot_view";
     }
 
@@ -469,7 +472,7 @@ public class SpotController {
                     spotUpdate.setImage3( false );
                 }
             }
-
+            logger.info( "The Spot has been successfully updated : " + spotUpdate );
             spotService.updateSpot( spotUpdate );
             return "redirect:/site/" + spotId + "/vuesite";
         }
@@ -528,7 +531,7 @@ public class SpotController {
                     throw new RuntimeException( "Delete Spot image3 was not successful", e );
                 }
             }
-
+            logger.info( "The spot has been deleted  : " + spotService.getSpot( spotId ) );
             spotService.deleteSpot( spotId );
             return "redirect:/site/";
         }
@@ -560,13 +563,13 @@ public class SpotController {
             Spot theSpot = spotService.getSpot( spotId );
             theSpot.setSpotTag( true );
             spotService.updateSpot( theSpot );
-            ;
+            logger.info( "The spot have official tag : " + theSpot );
             return "redirect:/site/" + spotId + "/vuesite";
         }
     }
 
     /**
-     * Command to tag a spot
+     * Command to delete tag a spot
      * 
      * @param spotId
      *            the id of the spot
@@ -586,7 +589,7 @@ public class SpotController {
             Spot theSpot = spotService.getSpot( spotId );
             theSpot.setSpotTag( false );
             spotService.updateSpot( theSpot );
-            ;
+            logger.info( "The spot no longer has the official tag : " + theSpot );
             return "redirect:/site/" + spotId + "/vuesite";
         }
     }

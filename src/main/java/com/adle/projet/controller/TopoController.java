@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +45,8 @@ import com.adle.projet.validator.TopoValidator;
 @Controller
 @RequestMapping( "/topo" )
 public class TopoController {
+
+    private static final Logger logger = LogManager.getLogger( TopoController.class );
 
     @Autowired
     private UserService         userService;
@@ -92,6 +96,7 @@ public class TopoController {
         }
         List<Topo> theTopos = topoService.getTopos();
         theModel.addAttribute( "topos", theTopos );
+        logger.info( "List of topos : " + theTopos );
         return "topo_list";
     }
 
@@ -215,6 +220,7 @@ public class TopoController {
                 } else {
                     theTopo.setImage3( false );
                 }
+                logger.info( "The Topo has been saved successfully : " + theTopo );
                 topoService.saveTopo( theTopo );
                 return "redirect:/topo/" + theTopo.getId() + "/vuetopo";
             }
@@ -247,6 +253,7 @@ public class TopoController {
         }
         Topo theTopo = topoService.getTopo( topoId );
         theModel.addAttribute( "topo", theTopo );
+        logger.info( "The Topo is : " + theTopo );
         return "topo_view";
     }
 
@@ -361,7 +368,6 @@ public class TopoController {
                     topoImage1.transferTo( new File( path1.toString() ) );
                     topoUpdate.setImage1( true );
                 } catch ( IllegalStateException | IOException e ) {
-                    // oops! something did not work as expected
                     e.printStackTrace();
                     throw new RuntimeException( "Saving Topo image1 was not successful", e );
                 }
@@ -378,7 +384,6 @@ public class TopoController {
                     topoImage2.transferTo( new File( path2.toString() ) );
                     topoUpdate.setImage2( true );
                 } catch ( IllegalStateException | IOException e ) {
-                    // oops! something did not work as expected
                     e.printStackTrace();
                     throw new RuntimeException( "Saving Topo image2 was not successful", e );
                 }
@@ -395,7 +400,6 @@ public class TopoController {
                     topoImage3.transferTo( new File( path3.toString() ) );
                     topoUpdate.setImage3( true );
                 } catch ( IllegalStateException | IOException e ) {
-                    // oops! something did not work as expected
                     e.printStackTrace();
                     throw new RuntimeException( "Saving Topo image3 was not successful", e );
                 }
@@ -407,6 +411,7 @@ public class TopoController {
                 }
             }
             topoService.updateTopo( topoUpdate );
+            logger.info( "The Topo has been successfully updated : " + topoUpdate );
             return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }
@@ -462,7 +467,7 @@ public class TopoController {
                     throw new RuntimeException( "Delete Topo image3 was not successful", e );
                 }
             }
-
+            logger.info( "The topo has been deleted  : " + topoService.getTopo( topoId ) );
             topoService.deleteTopo( topoId );
             return "redirect:/topo/";
         }
@@ -510,7 +515,7 @@ public class TopoController {
                     "\n\nCordialement," +
                     "\n\nLes amis de l'escalade";
             emailService.sendMessage( mailFrom, mailTo, mailSubject, mailText );
-
+            logger.info( "The topo : " + theTopo + " has been booked by : " + userTaker );
             return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }
@@ -536,6 +541,7 @@ public class TopoController {
             Topo theTopo = topoService.getTopo( topoId );
             theTopo.setTopoAvailability( false );
             topoService.updateTopo( theTopo );
+            logger.info( "The topo : " + theTopo + " is avaible now." );
             return "redirect:/topo/" + topoId + "/vuetopo";
         }
     }

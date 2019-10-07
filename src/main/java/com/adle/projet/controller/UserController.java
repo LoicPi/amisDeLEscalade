@@ -95,6 +95,7 @@ public class UserController {
                 List<User> users = userService.getUsers();
                 theModel.addAttribute( "user", user );
                 theModel.addAttribute( "users", users );
+                logger.info( "List of users : " + users );
                 return "user_list";
             }
         }
@@ -153,23 +154,20 @@ public class UserController {
             return "user_registration";
         } else {
             theUser.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
-            // get the provided image from the form
+
             MultipartFile userImage = theUser.getUserImage();
-            // get root directory to store the image
+
             String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
-            // change any provided image type to png
-            // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
-            // product.getProductId() + ".png");
+
             path = Paths.get( rootDirectory + "resources/uploaded-images/user" + theUser.getId() + ".png" );
-            // check whether image exists or not
 
             if ( userImage != null && !userImage.isEmpty() ) {
                 try {
-                    // convert the image type to png
+
                     userImage.transferTo( new File( path.toString() ) );
                     theUser.setImage( true );
                 } catch ( IllegalStateException | IOException e ) {
-                    // oops! something did not work as expected
+
                     e.printStackTrace();
                     throw new RuntimeException( "Saving User image was not successful", e );
                 }
@@ -178,6 +176,7 @@ public class UserController {
             }
             userService.saveUser( theUser );
             session.setAttribute( "idUser", theUser.getId() );
+            logger.info( "The User has been saved successfully : " + theUser );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
         }
     }
@@ -287,6 +286,7 @@ public class UserController {
                     }
                 }
                 userService.updateUser( userUpdate );
+                logger.info( "The User has been successfully updated : " + userUpdate );
                 return "redirect:/compte/" + userId + "/moncompte";
             }
         }
@@ -344,8 +344,10 @@ public class UserController {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
             session.setAttribute( "idUser", userLogin.getId() );
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+                logger.info( "The connected User is the Admin." );
                 return "redirect:/compte/";
             } else {
+                logger.info( "The connected user is : " + userLogin );
                 return "redirect:/compte/" + userLogin.getId() + "/moncompte";
             }
         }
@@ -372,16 +374,18 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/";
         } else {
             User theUser = userService.getUser( userId );
             if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+                logger.info( "The connected User is : " + theUser );
                 return "redirect:/compte/";
             } else {
                 theModel.addAttribute( "topos", theUser.getTopos() );
                 theModel.addAttribute( "spots", theUser.getSpots() );
                 theModel.addAttribute( "user", theUser );
+                logger.info( "The connected User is : " + theUser );
                 return "user_view";
             }
         }
@@ -407,9 +411,10 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        if ( session.getAttribute( "idUser" ) == null ) {
             return "redirect:/compte/connexion";
         } else {
+            logger.info( "The User : " + userService.getUser( userId ) + "has disconnected." );
             session.invalidate();
             return "redirect:/compte/connexion";
         }
@@ -481,6 +486,7 @@ public class UserController {
                 User userToUpdate = userService.getUser( userId );
                 userToUpdate.setPassword( theUser.getNewPassword() );
                 userService.updatePasswordUser( userToUpdate );
+                logger.info( "The password has been changed for this user : " + userToUpdate );
                 return "redirect:/compte/" + userId + "/moncompte";
             }
         }
@@ -506,12 +512,9 @@ public class UserController {
         if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
-            // get root directory to store the image
+
             String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
 
-            // change any provided image type to png
-            // path = Paths.get(rootDirectory + "/WEB-INF/resources/images" +
-            // product.getProductId() + ".png");
             path = Paths
                     .get( rootDirectory + "resources/uploaded-images/user/"
                             + userId + ".png" );
@@ -524,6 +527,7 @@ public class UserController {
                     throw new RuntimeException( "Delete User image was not successful", e );
                 }
             }
+            logger.info( "The account has been deleted for : " + userService.getUser( userId ) );
             userService.deleteUser( userId );
             session.invalidate();
         }
@@ -554,6 +558,7 @@ public class UserController {
         } else {
             User theUser = userService.getUser( userId );
             theUser.setRole( roleService.findUserRoleByCode( false ) );
+            logger.info( "The User is no longer a member : " + theUser );
             userService.updateUser( theUser );
             return "redirect:/compte/";
         }
@@ -579,6 +584,7 @@ public class UserController {
         } else {
             User theUser = userService.getUser( userId );
             theUser.setRole( roleService.findUserRoleByCode( true ) );
+            logger.info( "The User is a member : " + theUser );
             userService.updateUser( theUser );
             return "redirect:/compte/";
         }
