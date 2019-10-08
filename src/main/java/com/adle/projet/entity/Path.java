@@ -28,7 +28,6 @@ import javax.validation.constraints.Size;
 @Table( name = "paths" )
 @org.hibernate.annotations.NamedQueries( {
         @org.hibernate.annotations.NamedQuery( name = "Path_findByUserId", query = "from Path where user_id = :user" ),
-        @org.hibernate.annotations.NamedQuery( name = "Path_findBySpotId", query = "from Path where spot_id = :spot" ),
         @org.hibernate.annotations.NamedQuery( name = "Path_findBySectorId", query = "from Path where sector_id = :sector" ),
         @org.hibernate.annotations.NamedQuery( name = "Path_findByTypeId", query = "from Path where type_id = :type" ),
         @org.hibernate.annotations.NamedQuery( name = "Path_findById", query = "from Path as p left join fetch p.user left join fetch p.sector left join fetch p.type left join fetch p.lengths as pl left join fetch pl.listing as pll left join fetch pll.level where p.id =:pathId" ),

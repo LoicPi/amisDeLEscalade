@@ -97,19 +97,6 @@ public class PathDAOImpl implements PathDAO {
     }
 
     /**
-     * Function find a List of Path by the given spotId
-     */
-    @Override
-    public List<Path> findPathBySpotId( int spotId ) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        Query<Path> query = currentSession.createNamedQuery( "Path_findBySpotId", Path.class );
-        query.setParameter( "spot", spotId );
-        List<Path> pathResult = query.getResultList();
-        logger.info( "Path List : " + query.getResultList() );
-        return pathResult;
-    }
-
-    /**
      * Function find a List of Path by the given sectorId
      */
     @Override

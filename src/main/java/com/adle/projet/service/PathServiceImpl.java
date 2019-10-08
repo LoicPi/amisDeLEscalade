@@ -44,11 +44,6 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public List<Path> findPathBySpotId( int spotId ) {
-        return pathDAO.findPathBySpotId( spotId );
-    }
-
-    @Override
     public List<Path> findPathBySectorId( int sectorId ) {
         return pathDAO.findPathBySectorId( sectorId );
     }

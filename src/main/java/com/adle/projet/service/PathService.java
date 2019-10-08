@@ -16,8 +16,6 @@ public interface PathService {
 
     public List<Path> findPathByUserId( int userId );
 
-    public List<Path> findPathBySpotId( int spotId );
-
     public List<Path> findPathBySectorId( int sectorId );
 
     public List<Path> findPathByTypeId( int typeId );
