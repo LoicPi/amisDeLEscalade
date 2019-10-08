@@ -20,7 +20,7 @@
 					<img  class="rounded imgHome" src="<c:url value="/resources/image/image1.jpg"/>" />
 				</div>
 				<h3 class="text-justify">Bienvenue sur le site sociale de l'escalade ${user.nickName } !</h3> 
-				<p>
+				<p class="text-justify">
 				 Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et quam mauris. 
 				 In quis sagittis elit. Praesent tempor tortor et massa imperdiet pulvinar. 
 				 Sed velit sapien, fermentum quis facilisis malesuada, aliquet nec lorem. 
@@ -31,7 +31,7 @@
 				 accumsan vestibulum eros. Cras dignissim dui eu urna consectetur tincidunt. 
 				 Ut non eros sed ex tristique lacinia at quis lectus.
 				</p>
-				<p>
+				<p class="text-justify">
 				Curabitur vehicula eros quis purus venenatis, sed malesuada nisl scelerisque. 
 				Aliquam pharetra sit amet tortor et iaculis. Aliquam posuere, erat at aliquam ullamcorper, 
 				sem enim hendrerit augue, quis placerat nibh orci vitae orci. 
