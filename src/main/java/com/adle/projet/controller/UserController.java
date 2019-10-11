@@ -88,7 +88,6 @@ public class UserController {
         } else {
             Integer userId = (Integer) session.getAttribute( "idUser" );
             User user = userService.getUser( userId );
-            String email = user.getEmail();
             if ( !( user.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
                 return "redirect:/";
             } else {
@@ -313,7 +312,12 @@ public class UserController {
             Integer userId = (Integer) session.getAttribute( "idUser" );
             User theUser = userService.getUser( userId );
             theModel.addAttribute( "user", theUser );
-            return "redirect:/compte/" + userId + "/moncompte";
+            if ( theUser.getRole().getRoleCode().contentEquals( "adm" ) ) {
+                logger.info( "The connected User is the Admin." );
+                return "redirect:/compte/";
+            } else {
+                return "redirect:/compte/" + userId + "/moncompte";
+            }
         } else {
             User theUser = new User();
             theModel.addAttribute( "user", theUser );
@@ -345,7 +349,7 @@ public class UserController {
         } else {
             User userLogin = userService.findUserByEmail( theUser.getEmail() ).get( 0 );
             session.setAttribute( "idUser", userLogin.getId() );
-            if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+            if ( userLogin.getRole().getRoleCode().contentEquals( "adm" ) ) {
                 logger.info( "The connected User is the Admin." );
                 return "redirect:/compte/";
             } else {
@@ -376,20 +380,17 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        User userSession = userService.getUser( idSession );
+        if ( session.getAttribute( "idUser" ) == null
+                || userId != idSession && !( userSession.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
             return "redirect:/";
         } else {
             User theUser = userService.getUser( userId );
-            if ( theUser.getRole().getRoleCode().equals( "adm" ) ) {
-                logger.info( "The connected User is : " + theUser );
-                return "redirect:/compte/";
-            } else {
-                theModel.addAttribute( "topos", theUser.getTopos() );
-                theModel.addAttribute( "spots", theUser.getSpots() );
-                theModel.addAttribute( "user", theUser );
-                logger.info( "The connected User is : " + theUser );
-                return "user_view";
-            }
+            theModel.addAttribute( "topos", theUser.getTopos() );
+            theModel.addAttribute( "spots", theUser.getSpots() );
+            theModel.addAttribute( "user", theUser );
+            logger.info( "The connected User is : " + theUser );
+            return "user_view";
         }
     }
 
@@ -511,7 +512,10 @@ public class UserController {
     public String deleteUser( @PathVariable( "userId" ) Integer userId, HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        User userSession = userService.getUser( idSession );
+        User theUser = userService.getUser( userId );
+        if ( session.getAttribute( "idUser" ) == null
+                || userId != idSession && !( userSession.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
             return "redirect:/compte/connexion";
         } else {
 
@@ -529,8 +533,11 @@ public class UserController {
                     throw new RuntimeException( "Delete User image was not successful", e );
                 }
             }
-            logger.info( "The account has been deleted for : " + userService.getUser( userId ) );
+            logger.info( "The account has been deleted for : " + theUser );
             userService.deleteUser( userId );
+            if ( userSession.getRole().getRoleCode().contentEquals( "adm" ) ) {
+                return "redirect:/compte/";
+            }
             session.invalidate();
         }
         return "redirect:/";
@@ -556,7 +563,9 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        User userSession = userService.getUser( idSession );
+        if ( session.getAttribute( "idUser" ) == null
+                || !( userSession.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
@@ -583,7 +592,9 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
+        User userSession = userService.getUser( idSession );
+        if ( session.getAttribute( "idUser" ) == null
+                || !( userSession.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
