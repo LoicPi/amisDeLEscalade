@@ -22,7 +22,7 @@ Il permettra de donner de la visibilité à l’association afin d’encourager 
 - **C3** : Le site doit être sécurisé
 
 ## **Déploiement**
-1. Installer JDK d'Oracle 1.8
+1. Installer le JRE d'Oracle 1.8
 2. Cloner le projet sous GitHub
 3. Installer Maven version minimum 4
 4. Installer Tomcat 9
@@ -32,12 +32,4 @@ Il permettra de donner de la visibilité à l’association afin d’encourager 
  - jdbc.username=*"votre nom d'utilisateur de la bdd"*
  - jdbc.password=*"votre mot de passe"*
 8. Sous src/main/resources dans le fichier log4j2.xml sous appenders/rolllingfile, modifier *filename* par votre propre chemin d'enregistrement
-9. Lancement de l'application :
- - Lancement depuis l'IDE (dévellopé avec Eclipse) lancer le run sur le serveur
- - Lancement depuis le war :
-  1. Récupérer le script de création de la base de données et le script de données de la base à la racine du projet
-  2. Lancer ses scripts dans la base de données créée
-  3. Dans le terminal lancez la commande mvn package
-  4. Copier le fichier war, générer dans le dossier target, sous le répertoire webapps de Tomcat
-  5. Lancer le serveur Tomcat et rendez-vous sur l'adresse http://localhost:8080/amisDeLEscalade
-Vous pouvez maintenant accéder au site
+9. Lancement de l'application depuis l'IDE (dévellopé avec Eclipse) lancer le run sur le serveur 
