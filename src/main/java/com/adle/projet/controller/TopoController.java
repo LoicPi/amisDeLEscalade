@@ -170,6 +170,9 @@ public class TopoController {
                     theTopo.setCounty( theCounty );
                 }
                 theTopo.setUser( theUser );
+
+                topoService.saveTopo( theTopo );
+
                 MultipartFile topoImage1 = theTopo.getTopoImage1();
                 MultipartFile topoImage2 = theTopo.getTopoImage2();
                 MultipartFile topoImage3 = theTopo.getTopoImage3();

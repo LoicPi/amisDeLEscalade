@@ -224,6 +224,9 @@ public class SpotController {
                     theSpot.setCounty( theCounty );
                 }
                 theSpot.setUser( theUser );
+
+                spotService.saveSpot( theSpot );
+
                 MultipartFile spotImage1 = theSpot.getSpotImage1();
                 MultipartFile spotImage2 = theSpot.getSpotImage2();
                 MultipartFile spotImage3 = theSpot.getSpotImage3();

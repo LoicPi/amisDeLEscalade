@@ -89,7 +89,7 @@ public class UserController {
             Integer userId = (Integer) session.getAttribute( "idUser" );
             User user = userService.getUser( userId );
             String email = user.getEmail();
-            if ( !( email.contentEquals( "lesamisdelescalade@gmail.com" ) ) ) {
+            if ( !( user.getRole().getRoleCode().contentEquals( "adm" ) ) ) {
                 return "redirect:/";
             } else {
                 List<User> users = userService.getUsers();
@@ -155,11 +155,13 @@ public class UserController {
         } else {
             theUser.setRole( roleService.findUserRoleByCode( theUser.getUserMember() ) );
 
+            userService.saveUser( theUser );
+
             MultipartFile userImage = theUser.getUserImage();
 
             String rootDirectory = request.getSession().getServletContext().getRealPath( "/" );
 
-            path = Paths.get( rootDirectory + "resources/uploaded-images/user" + theUser.getId() + ".png" );
+            path = Paths.get( rootDirectory + "resources/uploaded-images/user/" + theUser.getId() + ".png" );
 
             if ( userImage != null && !userImage.isEmpty() ) {
                 try {
@@ -174,7 +176,7 @@ public class UserController {
             } else {
                 theUser.setImage( false );
             }
-            userService.saveUser( theUser );
+            userService.updateUser( theUser );
             session.setAttribute( "idUser", theUser.getId() );
             logger.info( "The User has been saved successfully : " + theUser );
             return "redirect:/compte/" + theUser.getId() + "/moncompte";
@@ -374,11 +376,11 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/";
         } else {
             User theUser = userService.getUser( userId );
-            if ( theUser.getEmail().contentEquals( "lesamisdelescalade@gmail.com" ) ) {
+            if ( theUser.getRole().getRoleCode().equals( "adm" ) ) {
                 logger.info( "The connected User is : " + theUser );
                 return "redirect:/compte/";
             } else {
@@ -411,7 +413,7 @@ public class UserController {
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
         Integer idSession = (Integer) session.getAttribute( "idUser" );
-        if ( session.getAttribute( "idUser" ) == null ) {
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             logger.info( "The User : " + userService.getUser( userId ) + "has disconnected." );
@@ -553,7 +555,8 @@ public class UserController {
     public String deleteRoleMemberOfUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "idUser" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
@@ -579,7 +582,8 @@ public class UserController {
     public String putRoleMemberToUser( @PathVariable( "userId" ) Integer userId, Model theModel,
             HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        if ( session.getAttribute( "idUser" ) == null ) {
+        Integer idSession = (Integer) session.getAttribute( "idUser" );
+        if ( session.getAttribute( "idUser" ) == null || userId != idSession ) {
             return "redirect:/compte/connexion";
         } else {
             User theUser = userService.getUser( userId );
