@@ -33,7 +33,7 @@
       						
       						<div class="form-group">
        							<label for="pathType">Type de la voie <span class="requis">*</span></label>
-       							<form:select path = "pathType">
+       							<form:select class="form-control" path = "pathType">
                      				<form:option value="" label = "Choix du type de voie"/>
                      				<form:options items = "${type}" />
                   				</form:select>

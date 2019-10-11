@@ -40,7 +40,7 @@
       						<div class="form-group">
        							<label for="spotCounty">Département : <span class="requis">*</span></label>
        							<br/>
-       							<form:select path = "spotCounty">
+       							<form:select class="form-control" path = "spotCounty">
                      				<form:option value="" label = "Choix du département"/>
                      				<form:options items = "${county}" />
                   				</form:select>

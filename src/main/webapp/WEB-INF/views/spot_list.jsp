@@ -34,21 +34,21 @@
       							<form:input path="sectors" class="form-control" type="number" placeholder="Nombre de secteur"/>
       						</div>
       					</div>
-      					<div class="form-row">
+      					<div class="form-row d-flex flex-md-row flex-column justify-content-around">
       						<div class="col search">	
-      							<form:select path="county">
+      							<form:select class="form-control" path="county">
                      				<form:option value="0" label = "Choix du département"/>
                      				<form:options items = "${county}" />
                   				</form:select>
       						</div>
       						<div class="col search">
-      							<form:select path="listing">
+      							<form:select class="form-control" path="listing">
                      				<form:option value="0" label = "Choix de la cotation"/>
                      				<form:options items = "${listing}" />
                   				</form:select>
   							</div>
   							<div class="col">
-      							<form:select path="level">
+      							<form:select class="form-control" path="level">
                      				<form:option value="0" label = "Choix du niveaux"/>
                      				<form:options items = "${level}" />
                   				</form:select>

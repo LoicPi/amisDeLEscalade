@@ -39,7 +39,7 @@
       						
       						<div class="form-group">
        							<label for="lengthListing">Cotation de la longueur <span class="requis">*</span></label>
-       							<form:select path = "lengthListing">
+       							<form:select class="form-control" path = "lengthListing">
                      				<form:option value="" label = "Choix de la cotation"/>
                      				<form:options items = "${listing}" />
                   				</form:select>
