@@ -203,8 +203,8 @@
 												<hr>
     											<div class="d-flex flex-md-row flex-column justify-content-around boxButton">
     												<a class="btn btn-info btn-sm col-10 col-md-4 m-auto" href="<c:url value="/site/${spot.id}/commentaire/${comment.id}/modifiercommentaire"/>" role="button">Editer</a>
-    												<button type="button" class="btn btn-danger btn-sm btnStyle offset-1 col-10 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteComment">Supprimer le commentaire</button>
-													<div class="modal fade" id="deleteComment" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+    												<button type="button" class="btn btn-danger btn-sm btnStyle offset-1 col-10 col-md-4 m-md-auto" data-toggle="modal" data-target="#deleteComment${comment.id}">Supprimer le commentaire</button>
+													<div class="modal fade" id="deleteComment${comment.id}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
   														<div class="modal-dialog" role="document">
     														<div class="modal-content">
     															<div class="modal-header">
@@ -217,7 +217,7 @@
  																	Voulez-vous vraiment supprimer le commentaire ?
     															</div>
    	 															<div class="modal-footer d-flex flex-md-row flex-column justify-content-around">
-    																<a class="btn btn-danger btn-sm col-10 col-md-4 m-auto" href="<c:url value="/site/${site.id}/commentaire/${comment.id}/deletecomment"/>" role="button">Oui</a>
+    																<a class="btn btn-danger btn-sm col-10 col-md-4 m-auto" href="<c:url value="/site/${spot.id}/commentaire/${comment.id}/deletecomment"/>" role="button">Oui</a>
         															<button type="button" class="btn btn-secondary btn-sm col-10 col-md-4 m-md-auto" data-dismiss="modal">Non</button>
       															</div>
    															</div>
