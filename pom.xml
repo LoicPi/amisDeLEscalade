@@ -17,7 +17,7 @@
     <tld.version>1.1.2</tld.version>
     <servlets.version>3.1.0</servlets.version>
     <jsp.version>2.3.1</jsp.version>
-    <postgresql.version>42.2.5</postgresql.version>
+    <postgresql.version>42.3.3</postgresql.version>
     <junit.version>3.8.1</junit.version>
     <log4j.version>2.11.1</log4j.version>
   </properties>
